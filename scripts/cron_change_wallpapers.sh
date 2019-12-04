@@ -12,7 +12,6 @@
 
 ### IMAGES DIRECTORY
 DIR="$HOME/Pictures/time_wallpapers"
-
 EXTENSIONS=("jpg" "png")
 
 ### TIMES ###
@@ -23,23 +22,27 @@ NIGHT_TIMES=(21 8)
 
 HOUR=$(date +%-H)
 
-# Debugging purposes.
+
 # If an hour is provided, then the script changes the wallpaper to what it will look like at said hour.
 if [ ! $# -eq 0 ]
 then
 	HOUR=$1
 fi
 
+
 # KDE 4
 change_wallpaper_kde() {
-	dbus-send --session --dest=org.kde.plasmashell --type=method_call /PlasmaShell org.kde.PlasmaShell.evaluateScript "string: 
+	qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "string: 
 	var Desktops = desktops(); for (i=0 ; i < Desktops.length ; i++) {
         d = Desktops[i]; d.wallpaperPlugin = \"org.kde.image\"; d.currentConfigGroup = Array(\"Wallpaper\", \"org.kde.image\", \"General\");
         d.writeConfig(\"Image\", \"file://$DIR/$1\");}"
 }
 
+
 change_wallpaper() {
 	FILENAME=$1
+	TIMEOUT_AT=30 # in seconds
+	CUR_DELAY=0
 
 	for ext in "${EXTENSIONS[@]}"
 	do
@@ -49,15 +52,27 @@ change_wallpaper() {
 			break
 		fi
 	done
-	if [ $XDG_CURRENT_DESKTOP = "KDE" ]
+
+	if pgrep -l kde > /dev/null;
 	then
-		change_wallpaper_kde $IMG
+		until change_wallpaper_kde $IMG || [ "$CUR_DELAY" -ge "$TIMEOUT_AT" ]
+		do
+        		echo "dbus failed, retrying..."
+        		sleep 1
+			((CUR_DELAY++))
+			echo $CUR_DELAY
+		done
 	else
 		echo "Desktop environment not supported : $XDG_CURRENT_DESKTOP"
 		exit 1
 	fi
 
-	echo "Changing to image : $IMG"
+	if [ "$CUR_DELAY" -ge "$TIMEOUT_AT" ]
+	then
+		echo "Timed out."
+	else
+		echo "Changing to image : $IMG"
+	fi
 }
 
 if [[ "$HOUR" -ge ${MORNING_TIMES[0]} && "$HOUR" -lt ${MORNING_TIMES[1]} ]]; then

@@ -1,21 +1,20 @@
+HISTFILE=~/.zsh_history
+HISTSIZE=50000
+SAVEHIST=10000
 
-# Path to your oh-my-zsh installation.
+setopt autocd correct HIST_FIND_NO_DUPS
+
 export ZSH="/home/octavel/.oh-my-zsh"
 
-# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="agnoster"
-
-# RANDOM
-# ZSH_THEME="random" # to know which specific one was loaded, run: echo $RANDOM_THEME
-# Set list of themes to pick from when loading at random
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
+#ZSH_THEME="random" # to know which specific one was loaded, run: echo $RANDOM_THEME
 
 
 ### COMPLETION FLAGS
 CASE_SENSITIVE="false"
 HYPHEN_INSENSITIVE="true"
 COMPLETION_WAITING_DOTS="false"
-ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="false"
 
 
 ### AUTO UPDATE
@@ -48,17 +47,21 @@ source $ZSH/oh-my-zsh.sh
 
 
 ### ALIASES
+
 readfile() {
     cat $@ | less
 }
 cs() {
     cd $1 ; ls
 }
+
 alias ne="emacs -nw"
 alias hibernate="sudo systemctl hibernate"
 alias q="exit"
 alias rm="gio trash"
 alias weather-report="curl wttr.in/${CITY}" # v2.wttr.in/${CITY} for v2
 alias please="sudo" # Politeness
-alias psview="pscircle --output=/tmp/proc.png ; gwenview /tmp/proc.png"
+alias psview="pscircle --output=/tmp/proc.png ; gwenview -f /tmp/proc.png"
 alias dnf="sudo dnf"
+alias re="cd .."
+alias duc="du -sh * | sort -h"

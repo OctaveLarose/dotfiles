@@ -25,87 +25,103 @@ HOUR=$(date +%-H)
 
 ### MORE PARAMETERS
 TIMEOUT_AT=30 # Time before the script gives up on changing the wallpaper, in seconds
+LOG_FILE=$HOME/log/change_wallpapers.log
 
 ### SPECIAL PARAMETERS
 I_FEEL_BLESSED=true
 BLESSED_CHANCE=42
 
-WEATHER_CHANGES='rain' # or none
-CITY=$CITY
+WEATHER_CHANGES=("rain") # or none
 
 # If an hour is provided, then the script changes the wallpaper to what it would look like at said hour.
 if [ ! $# -eq 0 ]
 then
-	HOUR=$1
+    HOUR=$1
+    unset WEATHER_CHANGES
 fi
+
+
+write_to_log() {
+    echo $1
+    echo "`date`: $1" >> $LOG_FILE
+}
 
 
 # KDE 4/5
 change_wallpaper_kde() {
-	qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "string: 
-	var Desktops = desktops(); for (i=0 ; i < Desktops.length ; i++) {
-        d = Desktops[i]; d.wallpaperPlugin = \"org.kde.image\"; d.currentConfigGroup = Array(\"Wallpaper\", \"org.kde.image\", \"General\");
-        d.writeConfig(\"Image\", \"file://$DIR/$1\");}" > /dev/null
+    qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "string: 
+    var Desktops = desktops(); for (i=0 ; i < Desktops.length ; i++) {
+    d = Desktops[i]; d.wallpaperPlugin = \"org.kde.image\"; d.currentConfigGroup = Array(\"Wallpaper\", \"org.kde.image\", \"General\");
+    d.writeConfig(\"Image\", \"file://$DIR/$1\");}" > /dev/null
 }
 
 
 # Main function.
 change_wallpaper() {
-	FILENAME=$1
-	CUR_DELAY=0
+    FILENAME=$1
+    CUR_DELAY=0
 
-	for ext in "${EXTENSIONS[@]}"
-	do
-		if [ -f "$DIR/$FILENAME.$ext" ]
-		then
-			IMG="$FILENAME.$ext"
-			break
-		fi
-	done
+    for ext in "${EXTENSIONS[@]}"
+    do
+        if [ -f "$DIR/$FILENAME.$ext" ]
+        then
+            IMG="$FILENAME.$ext"
+            break
+        fi
+    done
 
-	if pgrep -l kde > /dev/null;
-	then
-		until change_wallpaper_kde $IMG || [ "$CUR_DELAY" -ge "$TIMEOUT_AT" ]
-        	do
-            		echo "dbus failed, retrying..."
-			sleep 1
-			((CUR_DELAY++))
-			echo $CUR_DELAY/$TIMEOUT_AT tries...
-		done
-	else
-		echo "Desktop environment not supported : $XDG_CURRENT_DESKTOP"
-		exit 1
-	fi
+    if pgrep -l kde > /dev/null;
+    then
+        until change_wallpaper_kde $IMG || [ "$CUR_DELAY" -ge "$TIMEOUT_AT" ]
+        do
+            echo "dbus failed, retrying..."
+            sleep 1
+            ((CUR_DELAY++))
+            echo $CUR_DELAY/$TIMEOUT_AT tries...
+        done
+    else
+        write_to_log "Desktop environment not supported : $XDG_CURRENT_DESKTOP"
+        exit 1
+    fi
 
-	if [ "$CUR_DELAY" -ge "$TIMEOUT_AT" ]
-	then
-		echo "Timed out." # TODO: append it to a log file
-	else
-		echo "Changing to image : $IMG"
-	fi
+    if [ "$CUR_DELAY" -ge "$TIMEOUT_AT" ]
+    then
+        echo "Timed out."
+        write_to_log "Time out" 
+    else
+        echo "Changing to image : $IMG"
+    fi
 }
 
 ### BLESSED AREA
 if [ "$I_FEEL_BLESSED" = true ] && [ $((( RANDOM % $BLESSED_CHANCE ))) == 0 ]; then
-	change_wallpaper "blessed"
-	exit 0
-fi
-
-# TODO: needs to be way more flexible
-### WEATHER SPECIFIC
-if [[ $(curl -s wttr.in/$CITY 2>&1 | sed '3!d' | awk 'tolower($1) ~ /rain/') ]]; then
-    echo "The weather is rainy."
-    change_wallpaper "rain"
+    change_wallpaper "blessed"
+    write_to_log "Absolutely blessed"
     exit 0
 fi
 
+### WEATHER SPECIFIC
+if [ -n "${WEATHER_CHANGES+set}" ]; then
+    echo "Querying wttr.in for city $CITY"
+    CUR_WEATHER=$(curl -s wttr.in/$CITY 2>&1 | sed '3!d')
+
+    for weather in "${WEATHER_CHANGES[@]}"
+    do
+        if [[ $(echo $CUR_WEATHER | grep -i $weather) ]]; then
+            write_to_log "Weather: $weather"
+            change_wallpaper $weather
+            exit 0
+        fi
+    done
+    echo "No suitable weather, treating the wallpapers normally."
+fi
 
 if [[ "$HOUR" -ge ${MORNING_TIMES[0]} && "$HOUR" -lt ${MORNING_TIMES[1]} ]]; then
-	change_wallpaper "morning"
+    change_wallpaper "morning"
 elif [[ "$HOUR" -ge ${AFTERNOON_TIMES[0]} && "$HOUR" -lt ${AFTERNOON_TIMES[1]} ]]; then
-	change_wallpaper "afternoon"
+    change_wallpaper "afternoon"
 elif [[ "$HOUR" -ge ${EVENING_TIMES[0]} && "$HOUR" -lt ${EVENING_TIMES[1]} ]]; then
-	change_wallpaper "evening"
+    change_wallpaper "evening"
 elif [[ "$HOUR" -ge ${NIGHT_TIMES[0]} || "$HOUR" -lt ${NIGHT_TIMES[1]} ]]; then
-	change_wallpaper "night"
+    change_wallpaper "night"
 fi

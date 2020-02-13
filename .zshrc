@@ -2,8 +2,6 @@ HISTFILE=~/.zsh_history
 HISTSIZE=50000
 SAVEHIST=10000
 
-setopt autocd correct HIST_FIND_NO_DUPS
-
 export ZSH="/home/octavel/.oh-my-zsh"
 
 ZSH_THEME="agnoster"
@@ -47,19 +45,27 @@ source $ZSH/oh-my-zsh.sh
 
 
 ### ALIASES
-
 readfile() {
     cat $@ | less
 }
+
 cs() {
-    cd $1 ; ls
+    cd $1 && ls
+}
+
+reb () {
+    # lastcmd=$( tail -2 ~/.zsh_history | head -1 | egrep -o ';.*$' | cut -c2- )
+    lastcmd=$(fc -nl | tail -1)
+    args=$(echo $lastcmd | egrep -o ' .*$')
+    args="${args:1}"
+    $@ $args
 }
 
 alias ne="emacs -nw"
 alias hibernate="sudo systemctl hibernate"
 alias q="exit"
 alias rm="gio trash"
-alias weather-report="curl wttr.in/${CITY}" # v2.wttr.in/${CITY} for v2
+alias weather-report="curl wttr.in/$CITY" # v2.wttr.in/${CITY} for v2
 alias please="sudo" # Politeness
 alias psview="pscircle --output=/tmp/proc.png ; gwenview -f /tmp/proc.png"
 alias dnf="sudo dnf"

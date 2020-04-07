@@ -2,7 +2,7 @@ HISTFILE=~/.zsh_history
 HISTSIZE=50000
 SAVEHIST=10000
 
-export ZSH="/home/octavel/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="agnoster"
 #ZSH_THEME="random" # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -34,6 +34,9 @@ HIST_STAMPS="dd/mm/yyyy"
 # To set another custom folder than $ZSH/custom
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+# Changing the sudo password prompt to a rofi generated window
+export SUDO_ASKPASS="$HOME/bin/askpass-rofi"
+alias sudo="sudo -A"
 
 ### PLUGINS
 
@@ -45,7 +48,7 @@ source $ZSH/oh-my-zsh.sh
 
 
 ### ALIASES
-readfile() {
+rdf() {
     cat $@ | less
 }
 
@@ -65,6 +68,7 @@ alias ne="emacs -nw"
 alias hibernate="sudo systemctl hibernate"
 alias q="exit"
 alias rm="gio trash"
+alias rmf="/bin/rm"
 alias weather-report="curl wttr.in/$CITY" # v2.wttr.in/${CITY} for v2
 alias please="sudo" # Politeness
 alias psview="pscircle --output=/tmp/proc.png ; gwenview -f /tmp/proc.png"

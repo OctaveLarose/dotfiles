@@ -17,9 +17,9 @@ EXTENSIONS=("jpg" "png")
 
 ### TIMES ###
 MORNING_TIMES=(8 12)
-AFTERNOON_TIMES=(12 17)
-EVENING_TIMES=(17 21)
-NIGHT_TIMES=(21 8)
+AFTERNOON_TIMES=(12 19)
+EVENING_TIMES=(19 22)
+NIGHT_TIMES=(22 8)
 
 HOUR=$(date +%-H)
 
@@ -31,7 +31,7 @@ LOG_FILE=$HOME/log/change_wallpapers.log
 I_FEEL_BLESSED=true
 BLESSED_CHANCE=42
 
-WEATHER_CHANGES=("rain") # or none
+#WEATHER_CHANGES=("rain") # or none
 
 # If an hour is provided, then the script changes the wallpaper to what it would look like at said hour.
 if [ ! $# -eq 0 ]

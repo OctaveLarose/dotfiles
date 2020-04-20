@@ -59,8 +59,15 @@ cs() {
 reb () {
     # lastcmd=$( tail -2 ~/.zsh_history | head -1 | egrep -o ';.*$' | cut -c2- )
     lastcmd=$(fc -nl | tail -1)
-    args=$(echo $lastcmd | egrep -o ' .*$')
-    args="${args:1}"
+   
+    if [ $(echo $lastcmd | wc -w) != "1" ]
+    then
+        args=$(echo $lastcmd | egrep -o ' .*$')
+        args="${args:1}"
+    else
+        args=$lastcmd
+    fi
+
     $@ $args
 }
 

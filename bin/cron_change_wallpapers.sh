@@ -13,7 +13,6 @@
 
 ### IMAGE DIRECTORY
 DIR="$HOME/Pictures/time_wallpapers"
-EXTENSIONS=("jpg" "png")
 
 ### TIMES ###
 MORNING_TIMES=(8 12)
@@ -31,6 +30,7 @@ LOG_FILE=$HOME/log/change_wallpapers.log
 I_FEEL_BLESSED=true
 BLESSED_CHANCE=42
 
+# TODO : check if works correctly
 #WEATHER_CHANGES=("rain") # or none
 
 # If an hour is provided, then the script changes the wallpaper to what it would look like at said hour.
@@ -52,23 +52,27 @@ change_wallpaper_kde() {
     qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "string: 
     var Desktops = desktops(); for (i=0 ; i < Desktops.length ; i++) {
     d = Desktops[i]; d.wallpaperPlugin = \"org.kde.image\"; d.currentConfigGroup = Array(\"Wallpaper\", \"org.kde.image\", \"General\");
-    d.writeConfig(\"Image\", \"file://$DIR/$1\");}" > /dev/null
+    d.writeConfig(\"Image\", \"file://$1\");}" > /dev/null
 }
 
+get_image() {
+    POSSIBLE_IMAGES=($(ls $DIR/$FILENAME*))
+    IMAGE_INDEX=$(expr $RANDOM % ${#POSSIBLE_IMAGES[*]}) 
+
+    echo "${POSSIBLE_IMAGES[$IMAGE_INDEX]}"
+}
 
 # Main function.
 change_wallpaper() {
     FILENAME=$1
     CUR_DELAY=0
 
-    for ext in "${EXTENSIONS[@]}"
-    do
-        if [ -f "$DIR/$FILENAME.$ext" ]
-        then
-            IMG="$FILENAME.$ext"
-            break
-        fi
-    done
+    IMG=$(get_image)
+    if [ -z "$IMG" ]
+    then
+        write_to_log "No suitable image found for $1".
+        exit 1
+    fi
 
     if pgrep -l kde > /dev/null;
     then

@@ -7,7 +7,6 @@ cp -v ~/.*rc .
 echo -e "${MSG_COLOR}\n### Backing up personal scripts...${NO_COLOR}"
 cp -rv ~/bin .
 
-
 echo -e "${MSG_COLOR}\n### Backing up wallpapers...${NO_COLOR}"
 cp ~/Pictures/time_wallpapers/* ./wallpapers/ && echo "Done."
 

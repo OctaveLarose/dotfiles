@@ -9,7 +9,7 @@ cp -rv ~/bin .
 
 
 echo -e "${MSG_COLOR}\n### Backing up wallpapers...${NO_COLOR}"
-cp -r ~/Pictures/time_wallpapers/* ./wallpapers/ && echo "Done."
+cp ~/Pictures/time_wallpapers/* ./wallpapers/ && echo "Done."
 
 CONFIG_LIST=("neofetch" "rofi")
 

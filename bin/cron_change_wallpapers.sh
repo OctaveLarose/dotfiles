@@ -15,10 +15,10 @@
 DIR="$HOME/Pictures/time_wallpapers"
 
 ### TIMES ###
-MORNING_TIMES=(8 12)
-AFTERNOON_TIMES=(12 19)
-EVENING_TIMES=(19 22)
-NIGHT_TIMES=(22 8)
+MORNING_START=8
+AFTERNOON_START=12
+EVENING_START=19
+NIGHT_START=22
 
 HOUR=$(date +%-H)
 
@@ -56,8 +56,15 @@ change_wallpaper_kde() {
 }
 
 get_image() {
-    POSSIBLE_IMAGES=($(ls $DIR/$FILENAME*))
-    IMAGE_INDEX=$(expr $RANDOM % ${#POSSIBLE_IMAGES[*]}) 
+    local POSSIBLE_IMAGES=($(ls $DIR/$FILENAME*))
+
+    # In the case of several images, so you only get one wallpaper per timeframe (night, afternoon, etc.) per day - and for them to rotate daily.
+    local MOD_VALUE=$(date +%G%m%d) 
+    
+    # Using RNG instead, so it could change to any wallpaper.
+    # local MOD_VALUE=$RANDOM
+
+    IMAGE_INDEX=$(expr $MOD_VALUE % ${#POSSIBLE_IMAGES[*]}) 
 
     echo "${POSSIBLE_IMAGES[$IMAGE_INDEX]}"
 }
@@ -120,12 +127,14 @@ if [ -n "${WEATHER_CHANGES+set}" ]; then
     echo "No suitable weather, treating the wallpapers normally."
 fi
 
-if [[ "$HOUR" -ge ${MORNING_TIMES[0]} && "$HOUR" -lt ${MORNING_TIMES[1]} ]]; then
-    change_wallpaper "morning"
-elif [[ "$HOUR" -ge ${AFTERNOON_TIMES[0]} && "$HOUR" -lt ${AFTERNOON_TIMES[1]} ]]; then
-    change_wallpaper "afternoon"
-elif [[ "$HOUR" -ge ${EVENING_TIMES[0]} && "$HOUR" -lt ${EVENING_TIMES[1]} ]]; then
+if [[ "$HOUR" -ge $NIGHT_START ]]; then
+    change_wallpaper "night"
+elif [[ "$HOUR" -ge $EVENING_START ]]; then
     change_wallpaper "evening"
-elif [[ "$HOUR" -ge ${NIGHT_TIMES[0]} || "$HOUR" -lt ${NIGHT_TIMES[1]} ]]; then
+elif [[ "$HOUR" -ge $AFTERNOON_START ]]; then
+    change_wallpaper "afternoon"
+elif [[ "$HOUR" -ge $MORNING_START ]]; then
+    change_wallpaper "morning"
+else
     change_wallpaper "night"
 fi

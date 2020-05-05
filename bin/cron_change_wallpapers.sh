@@ -25,6 +25,8 @@ HOUR=$(date +%-H)
 ### MORE PARAMETERS
 TIMEOUT_AT=30 # Time before the script gives up on changing the wallpaper, in seconds
 LOG_FILE=$HOME/log/change_wallpapers.log
+CURR_IMG_FILE=/tmp/current_wallpaper # Used to not reset the wallpaper when unnecessary
+CURR_IMG=$(cat $CURR_IMG_FILE 2>/dev/null)
 
 ### SPECIAL PARAMETERS
 I_FEEL_BLESSED=true
@@ -57,22 +59,21 @@ change_wallpaper_kde() {
 
 get_image() {
     local POSSIBLE_IMAGES=($(ls $DIR/$FILENAME*))
-
-    # In the case of several images, so you only get one wallpaper per timeframe (night, afternoon, etc.) per day - and for them to rotate daily.
-    local MOD_VALUE=$(date +%G%m%d) 
-    
-    # Using RNG instead, so it could change to any wallpaper.
-    # local MOD_VALUE=$RANDOM
-
-    IMAGE_INDEX=$(expr $MOD_VALUE % ${#POSSIBLE_IMAGES[*]}) 
+    local IMAGE_INDEX=$(expr $RANDOM % ${#POSSIBLE_IMAGES[*]}) 
 
     echo "${POSSIBLE_IMAGES[$IMAGE_INDEX]}"
 }
 
 # Main function.
 change_wallpaper() {
+    local CUR_DELAY=0
     FILENAME=$1
-    CUR_DELAY=0
+
+    if [ -n "$CURR_IMG" ] && [[ $(basename $CURR_IMG) =~ "$FILENAME" ]]
+    then
+        write_to_log "The wallpaper doesn't need to change."
+        exit 0
+    fi
 
     IMG=$(get_image)
     if [ -z "$IMG" ]
@@ -101,6 +102,7 @@ change_wallpaper() {
         write_to_log "Time out" 
     else
         echo "Changing to image : $IMG"
+        echo $IMG > $CURR_IMG_FILE
     fi
 }
 

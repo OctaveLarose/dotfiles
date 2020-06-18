@@ -80,5 +80,6 @@ alias weather-report="curl wttr.in/$CITY" # v2.wttr.in/${CITY} for v2
 alias please="sudo" # Politeness
 alias psview="pscircle --output=/tmp/proc.png ; gwenview -f /tmp/proc.png"
 alias dnf="sudo dnf"
+alias pacman="sudo pacman"
 alias re="cd .."
 alias duc="du -sh * | sort -h"

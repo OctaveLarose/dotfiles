@@ -29,14 +29,14 @@
     # the top and down respectively.
     # The width can be negative.  In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "350x0-20+60"
+    geometry = "300x0-20+60"
 
     # Show how many messages are currently hidden (because of geometry).
     indicate_hidden = yes
 
     # Shrink window if it's smaller than the width.  Will be ignored if
     # width is 0.
-    shrink = no
+    shrink = yes
 
     # The transparency of the window.  Range: [0; 100].
     # This option will only work if a compositing window manager is
@@ -284,28 +284,23 @@
     context = ctrl+shift+period
 
 [urgency_low]
-    # IMPORTANT: colors have to be defined in quotation marks.
-    # Otherwise the "#" and following would be interpreted as a comment.
     background = "#171926"
     foreground = "#ffffff"
     timeout = 5
-    # Icon for notifications with low urgency, uncomment to enable
-    icon = /home/octavel/.local/share/icons/korla/actions/scalable/bell.svg
+    icon = /home/octavel/.config/dunst/icons/bell.svg
 
 [urgency_normal]
     background = "#171926"
     foreground = "#ffffff"
     timeout = 5
-    # Icon for notifications with normal urgency, uncomment to enable
-    icon = /home/octavel/.local/share/icons/korla/actions/scalable/bell.svg
+    icon = /home/octavel/.config/dunst/icons/bell.svg
 
 [urgency_critical]
     background = "#900000"
     foreground = "#ffffff"
     frame_color = "#ff0000"
     timeout = 5
-    # Icon for notifications with critical urgency, uncomment to enable
-    icon = /home/octavel/.local/share/icons/korla/actions/scalable/dialog-error.svg
+    icon = /home/octavel/.config/dunst/icons/dialog-error.svg
 
 # Every section that isn't one of the above is interpreted as a rules to
 # override settings for certain messages.

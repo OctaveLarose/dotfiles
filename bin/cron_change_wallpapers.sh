@@ -10,7 +10,6 @@
 # Then set up a cron job to periodically run this script, like at the start of every hour.
 # Example : (0 * * * * PATH/TO/SCRIPT) in crontab
 
-
 ### IMAGE DIRECTORY
 DIR="$HOME/Pictures/time_wallpapers"
 
@@ -35,13 +34,16 @@ BLESSED_CHANCE=42
 # TODO : check if works correctly
 #WEATHER_CHANGES=("rain") # or none
 
+# cron can't access dbus otherwise.
+export $(dbus-launch)
+DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+
 # If an hour is provided, then the script changes the wallpaper to what it would look like at said hour.
 if [ ! $# -eq 0 ]
 then
     HOUR=$1
     unset WEATHER_CHANGES
 fi
-
 
 write_to_log() {
     echo $1
@@ -55,6 +57,11 @@ change_wallpaper_kde() {
     var Desktops = desktops(); for (i=0 ; i < Desktops.length ; i++) {
     d = Desktops[i]; d.wallpaperPlugin = \"org.kde.image\"; d.currentConfigGroup = Array(\"Wallpaper\", \"org.kde.image\", \"General\");
     d.writeConfig(\"Image\", \"file://$1\");}" > /dev/null
+}
+
+# i3
+change_wallpaper_i3() {
+    feh --bg-fill $1
 }
 
 get_image() {
@@ -82,19 +89,23 @@ change_wallpaper() {
         exit 1
     fi
 
-    if pgrep -l kde > /dev/null;
+    if pgrep -l kded > /dev/null;
     then
-        until change_wallpaper_kde $IMG || [ "$CUR_DELAY" -ge "$TIMEOUT_AT" ]
+        change_wallpaper_func=change_wallpaper_kde
+    elif pgrep -l i3 > /dev/null
+    then
+        change_wallpaper_func=change_wallpaper_i3
+    else
+        write_to_log "Desktop environment not supported : exiting."
+    fi
+        
+    until $change_wallpaper_func $IMG || [ "$CUR_DELAY" -ge "$TIMEOUT_AT" ]
         do
-            echo "dbus failed, retrying..."
+            echo "Couldn't change the wallpaper, retrying..."
             sleep 1
             ((CUR_DELAY++))
             echo $CUR_DELAY/$TIMEOUT_AT tries...
         done
-    else
-        write_to_log "Desktop environment not supported : $XDG_CURRENT_DESKTOP"
-        exit 1
-    fi
 
     if [ "$CUR_DELAY" -ge "$TIMEOUT_AT" ]
     then
@@ -140,3 +151,4 @@ elif [[ "$HOUR" -ge $MORNING_START ]]; then
 else
     change_wallpaper "night"
 fi
+

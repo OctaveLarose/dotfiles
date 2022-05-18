@@ -35,8 +35,8 @@ HIST_STAMPS="dd/mm/yyyy"
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 # Changing the sudo password prompt to a rofi generated window
-export SUDO_ASKPASS="$HOME/bin/askpass-rofi"
-alias sudo="sudo -A"
+# export SUDO_ASKPASS="$HOME/bin/askpass-rofi"
+# alias sudo="sudo -A"
 
 ### PLUGINS
 
@@ -84,3 +84,7 @@ alias pacman="sudo pacman"
 alias re="cd .."
 alias duc="du -sh * | sort -h"
 alias duca="du -sh * .* | sort -h"
+
+eval $(thefuck --alias)
+
+eval "$(pyenv init -)"

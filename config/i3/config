@@ -5,10 +5,6 @@
 # this file and re-run i3-config-wizard(1).
 #
 
-# i3 config file (v4)
-#
-# Please see https://i3wm.org/docs/userguide.html for a complete reference!
-
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -24,7 +20,7 @@ font pango:monospace 8
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock-fancy --nofork
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -33,7 +29,6 @@ exec --no-startup-id nm-applet
 # Screenshotting
 bindsym Print exec --no-startup-id flameshot gui
 
-# Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
 #bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 bindsym XF86AudioLowerVolume    exec --no-startup-id amixer -q -D pulse sset Master 5%- unmute
@@ -55,7 +50,7 @@ bindsym $mod+d exec dmenu_run
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-# bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+Shift+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
 bindsym $mod+j focus left
@@ -109,15 +104,15 @@ bindsym $mod+a focus parent
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
-set $ws1 "1"
+set $ws1 "1:Main"
 set $ws2 "2"
 set $ws3 "3"
 set $ws4 "4"
-set $ws5 "5"
+set $ws5 "5:Teams/Slack"
 set $ws6 "6"
 set $ws7 "7"
-set $ws8 "8"
-set $ws9 "9"
+set $ws8 "8:Discord"
+set $ws9 "9:Music"
 set $ws10 "10"
 
 # switch to workspace
@@ -188,7 +183,7 @@ bar {
     tray_output             primary
     separator_symbol        "·"
     workspace_buttons       yes
-    strip_workspace_numbers yes
+    strip_workspace_numbers no
 
     colors {
         background  #212121
@@ -202,22 +197,27 @@ bar {
         binding_mode        #229c56 #229c56 #ffffff
     }
 }
+#exec --no-startup-id tint2
+
+### Window assignments
+assign [class="^Microsoft Teams - Preview$"] → $ws5
+assign [class="^discord$"] → $ws8
+for_window [class="^Spotify"] move --no-auto-back-and-forth to workspace $ws9
 
 ### Custom shortcuts
 # Play/pause/skip shortcuts for browser+Spotify
 bindsym Control+Mod1+space exec --no-startup-id playerctl play-pause --ignore-player=spotify
-bindsym Control+Shift+Right dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
-bindsym Control+Shift+Left dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
+bindsym Control+Shift+period exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
+bindsym Control+Shift+comma exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
 bindsym Control+Shift+space exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
 
 # Misc.
 # Error searching macro
-bindsym Control+Shift+Mod1+a exec --no-startup-id /home/octavel/bin/search_error.sh
+bindsym Control+Shift+Mod1+a exec --no-startup-id $HOME/bin/search_error.sh
 # Lock screen
-bindsym Control+Shift+Mod1+l exec --no-startup-id i3lock-fancy
+bindsym $mod+Shift+t exec --no-startup-id i3lock-fancy
 
-
-#/home/octavel/bin/search_error.sh
-
-exec --no-startup-id feh --bg-scale /home/octavel/Pictures/time_wallpapers/afternoon2.png
+### Startup programs
+#exec --no-startup-id feh --bg-scale $HOME/Pictures/time_wallpapers/afternoon2.png
+exec --no-startup-id $HOME/bin/cron_change_wallpapers.sh
 exec --no-startup-id dunst

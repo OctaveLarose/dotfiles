@@ -1,0 +1,2 @@
+30 */2 * * * $HOME/OneDrive/PhD/notorious_big/backup.sh
+0 * * * * $HOME/bin/cron_change_wallpapers.sh

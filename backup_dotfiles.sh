@@ -4,6 +4,10 @@ NO_COLOR='\033[0m'
 echo -e "${MSG_COLOR}### Backing up rc files...${NO_COLOR}"
 cp -v ~/.*rc .
 
+echo -e "${MSG_COLOR}\n### Backing up crontab...${NO_COLOR}"
+crontab -l > crontab
+echo "Done."
+
 echo -e "${MSG_COLOR}\n### Backing up personal scripts...${NO_COLOR}"
 cp -rv ~/bin .
 

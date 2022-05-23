@@ -147,6 +147,8 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # resize window (you can also use the mouse for that)
+set $resize_px 1
+set $resize_ppt 1
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
 
@@ -154,16 +156,16 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
+        bindsym j resize shrink width $resize_px px or $resize_ppt ppt
+        bindsym k resize grow height $resize_px px or $resize_ppt ppt
+        bindsym l resize shrink height $resize_px px or $resize_ppt ppt
+        bindsym semicolon resize grow width $resize_px px or $resize_ppt ppt
 
         # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+        bindsym Left resize shrink width $resize_px px or $resize_ppt ppt
+        bindsym Down resize grow height $resize_px px or $resize_ppt ppt
+        bindsym Up resize shrink height $resize_px px or $resize_ppt ppt
+        bindsym Right resize grow width $resize_px px or $resize_ppt ppt
 
         # back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
@@ -197,8 +199,12 @@ bindsym Control+Shift+Mod1+a exec --no-startup-id $HOME/bin/search_error.sh
 bindsym $mod+Shift+t exec --no-startup-id i3lock-fancy
 # Work apps
 bindsym Mod1+Shift+asciitilde exec --no-startup-id $HOME/bin/open_work_apps.sh
+# Shutdown menu
+bindsym Ctrl+Shift+Escape exec --no-startup-id $HOME/.config/rofi/applets/menu/powermenu.sh
 
 ### Startup programs
-#exec --no-startup-id feh --bg-scale $HOME/Pictures/time_wallpapers/afternoon2.png
 exec --no-startup-id $HOME/bin/cron_change_wallpapers.sh
 exec --no-startup-id dunst
+
+# Second monitor put to the left by default
+exec --no-startup-id xrandr --output HDMI-1 --auto --left-of eDP-1

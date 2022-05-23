@@ -195,6 +195,8 @@ bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 7%-
 bindsym Control+Shift+Mod1+a exec --no-startup-id $HOME/bin/search_error.sh
 # Lock screen
 bindsym $mod+Shift+t exec --no-startup-id i3lock-fancy
+# Work apps
+bindsym Mod1+Shift+asciitilde exec --no-startup-id $HOME/bin/open_work_apps.sh
 
 ### Startup programs
 #exec --no-startup-id feh --bg-scale $HOME/Pictures/time_wallpapers/afternoon2.png

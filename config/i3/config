@@ -191,8 +191,9 @@ bindsym Control+Shift+space exec --no-startup-id dbus-send --print-reply --dest=
 
 # Misc.:
 # Brightness
-bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set 7%+
-bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 7%-
+set $brightness_adjust 5
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set $brightness_adjust%+
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set $brightness_adjust%-
 # Error searching macro
 bindsym Control+Shift+Mod1+a exec --no-startup-id $HOME/bin/search_error.sh
 # Lock screen
@@ -203,8 +204,10 @@ bindsym Mod1+Shift+asciitilde exec --no-startup-id $HOME/bin/open_work_apps.sh
 bindsym Ctrl+Shift+Escape exec --no-startup-id $HOME/.config/rofi/applets/menu/powermenu.sh
 
 ### Startup programs
-exec --no-startup-id $HOME/bin/cron_change_wallpapers.sh
 exec --no-startup-id dunst
+exec --no-startup-id yakuake
+exec --no-startup-id $HOME/bin/cron_change_wallpapers.sh
+exec_always --no-startup-id picom
 
 # Second monitor put to the left by default
 exec --no-startup-id xrandr --output HDMI-1 --auto --left-of eDP-1

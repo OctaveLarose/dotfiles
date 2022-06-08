@@ -180,6 +180,7 @@ exec --no-startup-id ~/.config/polybar/launch.sh --forest
 
 ### Window assignments
 assign [class="^Microsoft Teams - Preview$"] → $ws5
+assign [class="^superProductivity$"] → $ws6
 assign [class="^discord$"] → $ws8
 for_window [class="^Spotify"] move --no-auto-back-and-forth to workspace $ws9
 

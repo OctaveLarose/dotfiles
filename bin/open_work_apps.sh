@@ -4,4 +4,4 @@ firefox &
 teams &
 superproductivity &
 texstudio &
-gnome-pomodoro &
+$HOME/Programs/Zotero_linux-x86_64/zotero &

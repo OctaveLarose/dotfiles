@@ -106,11 +106,11 @@ bindsym $mod+a focus parent
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1:Main"
-set $ws2 "2"
-set $ws3 "3"
+set $ws2 "2:TeXStudio"
+set $ws3 "3:Zotero"
 set $ws4 "4"
 set $ws5 "5:Teams/Slack"
-set $ws6 "6"
+set $ws6 "6:SuperProductivity"
 set $ws7 "7"
 set $ws8 "8:Discord"
 set $ws9 "9:Music"
@@ -183,6 +183,8 @@ bindsym $mod+r mode "resize"
 exec --no-startup-id ~/.config/polybar/launch.sh --forest
 
 ### Window assignments
+assign [class="^TeXstudio$"] → $ws2
+assign [class="^Zotero$"] → $ws3
 assign [class="^Microsoft Teams - Preview$"] → $ws5
 assign [class="^superProductivity$"] → $ws6
 assign [class="^discord$"] → $ws8

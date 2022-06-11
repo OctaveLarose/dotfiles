@@ -34,10 +34,6 @@ BLESSED_CHANCE=42
 # TODO : check if works correctly
 #WEATHER_CHANGES=("rain") # or none
 
-# cron can't access dbus otherwise.
-export $(dbus-launch)
-DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
-
 # If an hour is provided, then the script changes the wallpaper to what it would look like at said hour.
 if [ ! $# -eq 0 ]
 then
@@ -53,7 +49,11 @@ write_to_log() {
 
 # KDE 4/5
 change_wallpaper_kde() {
-    qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "string: 
+    # cron can't access dbus otherwise.
+    export $(dbus-launch)
+    DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+
+    qdbus org.kde.plasmashell /PlasmaShell org.kde.PlasmaShell.evaluateScript "string:
     var Desktops = desktops(); for (i=0 ; i < Desktops.length ; i++) {
     d = Desktops[i]; d.wallpaperPlugin = \"org.kde.image\"; d.currentConfigGroup = Array(\"Wallpaper\", \"org.kde.image\", \"General\");
     d.writeConfig(\"Image\", \"file://$1\");}" > /dev/null
@@ -66,7 +66,7 @@ change_wallpaper_i3() {
 
 get_image() {
     local POSSIBLE_IMAGES=($(ls $DIR/$FILENAME*))
-    local IMAGE_INDEX=$(expr $RANDOM % ${#POSSIBLE_IMAGES[*]}) 
+    local IMAGE_INDEX=$(expr $RANDOM % ${#POSSIBLE_IMAGES[*]})
 
     echo "${POSSIBLE_IMAGES[$IMAGE_INDEX]}"
 }
@@ -98,7 +98,7 @@ change_wallpaper() {
     else
         write_to_log "Desktop environment not supported : exiting."
     fi
-        
+
     until $change_wallpaper_func $IMG || [ "$CUR_DELAY" -ge "$TIMEOUT_AT" ]
         do
             echo "Couldn't change the wallpaper, retrying..."
@@ -110,7 +110,7 @@ change_wallpaper() {
     if [ "$CUR_DELAY" -ge "$TIMEOUT_AT" ]
     then
         echo "Timed out."
-        write_to_log "Time out" 
+        write_to_log "Time out"
     else
         echo "Changing to image : $IMG"
         echo $IMG > $CURR_IMG_FILE
@@ -151,4 +151,3 @@ elif [[ "$HOUR" -ge $MORNING_START ]]; then
 else
     change_wallpaper "night"
 fi
-

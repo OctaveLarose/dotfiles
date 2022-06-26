@@ -89,12 +89,12 @@ change_wallpaper() {
         exit 1
     fi
 
-    if pgrep -l kded > /dev/null;
-    then
-        change_wallpaper_func=change_wallpaper_kde
-    elif pgrep -l i3 > /dev/null
+    if pgrep -l i3 > /dev/null;
     then
         change_wallpaper_func=change_wallpaper_i3
+    elif pgrep -l kded > /dev/null
+    then
+        change_wallpaper_func=change_wallpaper_kde
     else
         write_to_log "Desktop environment not supported : exiting."
     fi

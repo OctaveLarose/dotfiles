@@ -129,16 +129,16 @@ bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws10
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace number $ws1
-bindsym $mod+Shift+2 move container to workspace number $ws2
-bindsym $mod+Shift+3 move container to workspace number $ws3
-bindsym $mod+Shift+4 move container to workspace number $ws4
-bindsym $mod+Shift+5 move container to workspace number $ws5
-bindsym $mod+Shift+6 move container to workspace number $ws6
-bindsym $mod+Shift+7 move container to workspace number $ws7
-bindsym $mod+Shift+8 move container to workspace number $ws8
-bindsym $mod+Shift+9 move container to workspace number $ws9
-bindsym $mod+Shift+0 move container to workspace number $ws10
+bindsym $mod+Shift+1 move container to workspace number $ws1, workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2, workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3, workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4, workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5, workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6, workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7, workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8, workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9, workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10, workspace number $ws10
 
 # move focused workspace between monitors
 bindsym $mod+Shift+greater move workspace to output right
@@ -199,11 +199,13 @@ bindsym Control+Shift+space exec --no-startup-id dbus-send --print-reply --dest=
 
 # Misc.:
 # Brightness
-set $brightness_adjust 5
+set $brightness_adjust 7
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set $brightness_adjust%+
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set $brightness_adjust%-
 # Error searching macro
-bindsym Control+Shift+Mod1+a exec --no-startup-id $HOME/bin/search_error.sh
+bindsym Ctrl+Shift+Mod1+a exec --no-startup-id $HOME/bin/search_error.sh
+# Clipboard manager
+bindsym $mod+dead_grave exec --no-startup-id copyq toggle
 # Lock screen
 bindsym $mod+Shift+t exec --no-startup-id $lock_command
 # Work apps
@@ -214,6 +216,8 @@ bindsym Ctrl+Shift+Escape exec --no-startup-id $HOME/.config/rofi/applets/menu/p
 ### Startup programs
 exec --no-startup-id dunst
 exec --no-startup-id yakuake
+exec --no-startup-id copyq
+exec --no-startup-id caffeine
 exec --no-startup-id $HOME/bin/cron_change_wallpapers.sh
 exec_always --no-startup-id picom
 

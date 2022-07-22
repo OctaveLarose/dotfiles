@@ -108,7 +108,7 @@ bindsym $mod+a focus parent
 set $ws1 "1:Main"
 set $ws2 "2:TeXStudio"
 set $ws3 "3:Zotero"
-set $ws4 "4"
+set $ws4 "4:IDE"
 set $ws5 "5:Teams/Slack"
 set $ws6 "6:SuperProductivity"
 set $ws7 "7"
@@ -186,6 +186,7 @@ exec --no-startup-id ~/.config/polybar/launch.sh --forest
 assign [class="^TeXstudio$"] → $ws2
 assign [class="^Zotero$"] → $ws3
 assign [class="^Microsoft Teams - Preview$"] → $ws5
+assign [class="^Slack$"] → $ws5
 assign [class="^superProductivity$"] → $ws6
 assign [class="^discord$"] → $ws8
 for_window [class="^Spotify"] move --no-auto-back-and-forth to workspace $ws9
@@ -201,7 +202,7 @@ bindsym Control+Shift+space exec --no-startup-id dbus-send --print-reply --dest=
 # Brightness
 set $brightness_adjust 7
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set $brightness_adjust%+
-bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set $brightness_adjust%-
+bindsym XF86MonBrightnessDown exec --no-startup-id ((`brightnessctl g` - `brightnessctl m` * $brightness_adjust * 0.01 <= 0)) || brightnessctl set $brightness_adjust%-
 # Error searching macro
 bindsym Ctrl+Shift+Mod1+a exec --no-startup-id $HOME/bin/search_error.sh
 # Clipboard manager

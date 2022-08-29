@@ -14,7 +14,7 @@ cp -rv ~/bin .
 echo -e "${MSG_COLOR}\n### Backing up wallpapers...${NO_COLOR}"
 cp ~/Pictures/time_wallpapers/* ./wallpapers/ && echo "Done."
 
-CONFIG_LIST=("neofetch" "rofi" "dunst" "i3" "polybar")
+CONFIG_LIST=("neofetch" "rofi" "dunst" "i3" "polybar" "galendae")
 
 echo -e "${MSG_COLOR}\n### Backing up config settings...${NO_COLOR}"
 for cfg in "${CONFIG_LIST[@]}"

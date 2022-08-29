@@ -38,6 +38,10 @@ HIST_STAMPS="dd/mm/yyyy"
 # export SUDO_ASKPASS="$HOME/bin/askpass-rofi"
 # alias sudo="sudo -A"
 
+# less(1) syntax highlighting 
+export LESSOPEN="| /usr/share/source-highlight/src-hilite-lesspipe.sh %s" 
+export LESS=' -R '
+
 ### PLUGINS
 
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
@@ -48,9 +52,11 @@ source $ZSH/oh-my-zsh.sh
 
 
 ### ALIASES
-rdf() {
-    cat $@ | less
-}
+
+## Turns out "less FILENAME" handles it just fine. Oops
+#rdf() {
+#    cat $@ | less
+#}
 
 cs() {
     cd $1 && ls

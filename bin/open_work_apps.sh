@@ -3,6 +3,6 @@
 firefox &
 teams &
 superproductivity &
-texstudio &
+notion-app &
 $HOME/Programs/Zotero_linux-x86_64/zotero &
 spotify &

@@ -178,11 +178,14 @@ assign [class="^firefox$"] → $ws1
 assign [class="^TeXstudio$"] → $ws2
 assign [class="^notion-app$"] → $ws2
 assign [class="^Zotero$"] → $ws3
+assign [class="^jetbrains-idea$"] → $ws4
+assign [class="^jetbrains-pycharm$"] → $ws4
 assign [class="^superProductivity$"] → $ws6
 assign [class="^Microsoft Teams - Preview$"] → $ws7
 assign [class="^Slack$"] → $ws7
 assign [class="^discord$"] → $ws8
 for_window [class="^Spotify"] move --no-auto-back-and-forth to workspace $ws9
+assign [class="^YouTube Music$"] → $ws9
 
 ### Custom shortcuts
 # Play/pause/skip shortcuts for browser+Spotify:

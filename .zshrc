@@ -94,3 +94,5 @@ alias duca="du -sh * .* | sort -h"
 eval $(thefuck --alias)
 
 eval "$(pyenv init -)"
+
+[ -f "/home/octavel/.ghcup/env" ] && source "/home/octavel/.ghcup/env" # ghcup-env

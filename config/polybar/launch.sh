@@ -16,7 +16,7 @@ else
 fi
 popd > /dev/null
 
-if type "xrandr"; then
+if type "xrandr" > /dev/null; then
   for m in $(xrandr --query | grep " connected" | cut -d" " -f1); do
     MONITOR=$m polybar -q main -c "$theme_dir/config.ini" &
   done

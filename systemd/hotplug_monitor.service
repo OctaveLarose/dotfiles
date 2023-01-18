@@ -1,0 +1,13 @@
+[Unit]
+Description=Monitor hotplug
+
+[Service]
+Type=simple
+RemainAfterExit=no
+User=octavel
+Environment="DISPLAY=:1"
+Environment="XAUTHORITY=/run/user/1000/gdm/Xauthority"
+ExecStart=autorandr --change
+
+[Install]
+WantedBy=multi-user.target

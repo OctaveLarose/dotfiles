@@ -173,6 +173,14 @@ bindsym $mod+r mode "resize"
 
 exec --no-startup-id ~/.config/polybar/launch.sh
 
+### TODO: those rules never really worked for me, I believe.
+for_window [window_role="pop-up"]                       floating enable
+for_window [window_role="bubble"]                       floating enable 
+for_window [window_role="task_dialog"]                  floating enable
+for_window [window_role="Preferences"]                  floating enable
+for_window [window_type="dialog"]                       floating enable 
+for_window [window_type="menu"]                         floating enable
+
 ### Window assignments
 assign [class="^firefox$"] → $ws1
 assign [class="^TeXstudio$"] → $ws2

@@ -7,7 +7,9 @@ RemainAfterExit=no
 User=octavel
 Environment="DISPLAY=:1"
 Environment="XAUTHORITY=/run/user/1000/gdm/Xauthority"
-ExecStart=autorandr --change
+ExecStart=/usr/local/bin/autorandr --change --default default
+#ExecStart=/usr/local/bin/autorandr --batch --change --default default
+ExecStartPost=/home/octavel/.config/polybar/launch.sh
 
 [Install]
 WantedBy=multi-user.target

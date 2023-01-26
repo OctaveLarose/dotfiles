@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-theme_dir="$HOME/.config/polybar/forest"
+theme_dir="/home/octavel/.config/polybar/forest"
 
 killall -q polybar
 

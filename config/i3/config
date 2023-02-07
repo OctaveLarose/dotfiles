@@ -209,9 +209,11 @@ workspace $ws9 output eDP-1
 ### Custom shortcuts
 # Play/pause/skip shortcuts for browser+Spotify:
 bindsym Control+Mod1+space exec --no-startup-id playerctl play-pause --ignore-player=spotify
-bindsym Control+Shift+period exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
-bindsym Control+Shift+comma exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
+bindsym Control+Mod1+comma exec --no-startup-id playerctl previous --ignore-player=spotify
+bindsym Control+Mod1+period exec --no-startup-id playerctl next --ignore-player=spotify
 bindsym Control+Shift+space exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
+bindsym Control+Shift+comma exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
+bindsym Control+Shift+period exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
 
 # Misc.:
 # Brightness

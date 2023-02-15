@@ -184,7 +184,7 @@ for_window [window_type="menu"]                         floating enable
 ### Window assignments
 assign [class="^firefox$"] → $ws1
 assign [class="^TeXstudio$"] → $ws2
-assign [class="^notion-app$"] → $ws2
+assign [class="^notion-app$"] → $ws3
 assign [class="^Zotero$"] → $ws3
 assign [class="^jetbrains-idea$"] → $ws4
 assign [class="^jetbrains-pycharm$"] → $ws4

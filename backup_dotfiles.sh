@@ -20,6 +20,7 @@ echo -e "${MSG_COLOR}\n### Backing up config settings...${NO_COLOR}"
 for cfg in "${CONFIG_LIST[@]}"
 do
     echo -n "$cfg: ..."
+    rm -rf config/$cfg
     cp -rv ~/.config/$cfg ./config > /dev/null
     echo "Done."
 done

@@ -1,2 +1,2 @@
 #!/bin/bash
-youtube-dl -f mp4 -o $2.mp4 $1
+yt-dlp -f mp4 -o $2.mp4 $1

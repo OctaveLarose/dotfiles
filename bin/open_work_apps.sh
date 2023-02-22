@@ -1,7 +1,7 @@
 #!/bin/bash
 
 pidof firefox || firefox &
-teams &
+teams-for-linux &
 superproductivity &
 notion-app &
 texstudio &

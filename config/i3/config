@@ -103,7 +103,7 @@ set $ws4 "4:IDE"
 set $ws5 "5"
 set $ws6 "6:SuperProductivity"
 set $ws7 "7:Teams/Slack"
-set $ws8 "8:Discord"
+set $ws8 "8"
 set $ws9 "9:Music"
 set $ws10 "10"
 
@@ -171,7 +171,7 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-exec --no-startup-id ~/.config/polybar/launch.sh
+exec --no-startup-id systemctl start --user polybar
 
 ### TODO: those rules never really worked for me, I believe.
 for_window [window_role="pop-up"]                       floating enable
@@ -200,7 +200,7 @@ assign [class="^YouTube Music$"] → $ws9
 workspace $ws1 output eDP-1
 workspace $ws2 output eDP-1
 workspace $ws3 output eDP-1
-workspace $ws4 output eDP-1
+workspace $ws4 output HDMI-1 eDP-1
 workspace $ws5 output eDP-1
 workspace $ws6 output HDMI-1 eDP-1
 workspace $ws7 output HDMI-1 eDP-1

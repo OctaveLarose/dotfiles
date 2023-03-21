@@ -53,11 +53,6 @@ source $ZSH/oh-my-zsh.sh
 
 ### ALIASES
 
-## Turns out "less FILENAME" handles it just fine. Oops
-#rdf() {
-#    cat $@ | less
-#}
-
 cs() {
     cd $1 && ls
 }
@@ -77,17 +72,16 @@ reb () {
     $@ $args
 }
 
-alias ne="emacs -nw"
+commit() {
+    git commit -m "$*"
+}
+
 alias hibernate="sudo systemctl hibernate"
-alias q="exit"
 alias rm="gio trash"
 alias rmf="/bin/rm"
 alias weather-report="curl wttr.in/$CITY" # v2.wttr.in/${CITY} for v2
 alias please="sudo" # Politeness
 alias psview="pscircle --output=/tmp/proc.png ; gwenview -f /tmp/proc.png"
-alias dnf="sudo dnf"
-alias pacman="sudo pacman"
-alias re="cd .."
 alias duc="du -sh * | sort -h"
 alias duca="du -sh * .* | sort -h"
 

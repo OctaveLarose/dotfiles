@@ -29,10 +29,9 @@ CURR_IMG=$(cat $CURR_IMG_FILE 2>/dev/null)
 
 ### SPECIAL PARAMETERS
 I_FEEL_BLESSED=true
-BLESSED_CHANCE=42
+BLESSED_CHANCE=100
 
-# TODO : check if works correctly
-#WEATHER_CHANGES=("rain") # or none
+#WEATHER_CHANGES=("rain")
 
 # If an hour is provided, then the script changes the wallpaper to what it would look like at said hour.
 if [ ! $# -eq 0 ]

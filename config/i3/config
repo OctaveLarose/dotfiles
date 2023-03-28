@@ -209,9 +209,11 @@ workspace $ws9 output eDP-1
 
 ### Custom shortcuts
 # Play/pause/skip shortcuts for browser+Spotify:
-bindsym Control+Mod1+space exec --no-startup-id playerctl -p $(tail -1 /tmp/player-last) play-pause --ignore-player=spotify || playerctl play-pause --ignore-player=spotify
-bindsym Control+Mod1+comma exec --no-startup-id playerctl -p $(tail -1 /tmp/player-last) previous --ignore-player=spotify || playerctl previous --ignore-player=spotify
-bindsym Control+Mod1+period exec --no-startup-id playerctl -p $(tail -1 /tmp/player-last) next --ignore-player=spotify || playerctl next --ignore-player=spotify
+set $playerctl_cmd playerctl --ignore-player=spotify
+set $file_player_last /tmp/last-player-used
+bindsym Control+Mod1+space exec --no-startup-id $playerctl_cmd -p $(tail -1 $file_player_last) play-pause || $playerctl_cmd play-pause
+bindsym Control+Mod1+comma exec --no-startup-id $playerctl_cmd -p $(tail -1 $file_player_last) previous || $playerctl_cmd previous
+bindsym Control+Mod1+period exec --no-startup-id $playerctl_cmd -p $(tail -1 $file_player_last) next || $playerctl_cmd next
 bindsym Control+Shift+space exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
 bindsym Control+Shift+comma exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
 bindsym Control+Shift+period exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
@@ -242,4 +244,4 @@ exec_always --no-startup-id picom
 exec --no-startup-id autorandr --change
 
 # for playerctl commands to apply on the last used player
-exec --no-startup-id playerctl status --ignore-player=spotify --format '{{ playerName }}' --follow > /tmp/player-last
+exec --no-startup-id $playerctl_cmd status --format '{{ playerName }}' --follow > $file_player_last

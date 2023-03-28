@@ -242,4 +242,4 @@ exec_always --no-startup-id picom
 exec --no-startup-id autorandr --change
 
 # for playerctl commands to apply on the last used player
-exec --no-startup-id playerctl status --format '{{ playerName }}' --follow > /tmp/player-last
+exec --no-startup-id playerctl status --ignore-player=spotify --format '{{ playerName }}' --follow > /tmp/player-last

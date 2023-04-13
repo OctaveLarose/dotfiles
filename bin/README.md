@@ -15,3 +15,5 @@
 **i3_lock_screen.sh**: simple i3 lock screen script to show a blurred version of the desktop when locking it.
 
 **video_dl**: small yt-dlp wrapper I use to download videos and rename them.
+
+**auto_autorandr.sh**: updates my monitors/polybar with autorandr when I plug in/out an HDMI cable. A udev/systemd solution for that issue never quite worked, so I'm instead relying on a dumb bash script in userspace

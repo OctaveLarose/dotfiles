@@ -84,6 +84,7 @@ alias please="sudo" # Politeness
 alias psview="pscircle --output=/tmp/proc.png ; gwenview -f /tmp/proc.png"
 alias duc="du -sh * | sort -h"
 alias duca="du -sh * .* | sort -h"
+alias push="git push"
 
 eval $(thefuck --alias)
 

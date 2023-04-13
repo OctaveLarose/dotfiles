@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 theme_dir="/home/octavel/.config/polybar/forest"
+XAUTHORITY=/run/user/1000/gdm/Xauthority
+DISPLAY=:1
 
 killall -q polybar
 

@@ -241,7 +241,7 @@ exec --no-startup-id copyq
 exec --no-startup-id caffeine
 exec --no-startup-id $HOME/bin/cron_change_wallpapers.sh
 exec_always --no-startup-id picom
-exec --no-startup-id autorandr --change
+exec --no-startup-id $HOME/bin/auto_autorandr.sh
 
 # for playerctl commands to apply on the last used player
 exec --no-startup-id $playerctl_cmd status --format '{{ playerName }}' --follow > $file_player_last

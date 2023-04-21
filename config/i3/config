@@ -9,23 +9,14 @@ font pango:monospace 8
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 #font pango:DejaVu Sans Mono 8
 
-# The combination of xss-lock, nm-applet and pactl is a popular choice, so
-# they are included here as an example. Modify as you see fit.
-
-# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
-# screen before suspend. Use loginctl lock-session to lock your screen.
-set $lock_command i3lock-fancy -f $HOME/.local/share/fonts/minecraft_font.ttf -t "Enter password:"
+#set $lock_command i3lock-fancy -f $HOME/.local/share/fonts/minecraft_font.ttf -t "Enter password:"
+set $lock_command $HOME/bin/i3_lock_screen.sh
 exec --no-startup-id xss-lock --transfer-sleep-lock -- $lock_command --nofork
-
-# NetworkManager is the most popular way to manage wireless networks on Linux,
-# and nm-applet is a desktop environment-independent system tray GUI for it.
-exec --no-startup-id nm-applet
 
 # Screenshotting
 bindsym Print exec --no-startup-id flameshot gui
 
 set $refresh_i3status killall -SIGUSR1 i3status
-#bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 bindsym XF86AudioLowerVolume    exec --no-startup-id amixer -q -D pulse sset Master 5%- unmute
 bindsym XF86AudioRaiseVolume    exec --no-startup-id amixer -q -D pulse sset Master 5%+ unmute
 bindsym XF86AudioMute           exec --no-startup-id amixer -q -D pulse sset Master toggle
@@ -188,11 +179,11 @@ assign [class="^notion-app$"] → $ws3
 assign [class="^Zotero$"] → $ws3
 assign [class="^jetbrains-idea$"] → $ws4
 assign [class="^jetbrains-pycharm$"] → $ws4
+assign [class="^code$"] → $ws4
 assign [class="^superProductivity$"] → $ws6
 assign [class="^Microsoft Teams - Preview$"] → $ws7
 assign [class="^teams-for-linux$"] → $ws7
 assign [class="^Slack$"] → $ws7
-assign [class="^discord$"] → $ws8
 for_window [class="^Spotify"] move --no-auto-back-and-forth to workspace $ws9
 assign [class="^YouTube Music$"] → $ws9
 
@@ -235,6 +226,7 @@ bindsym Mod1+Shift+asciitilde exec --no-startup-id $HOME/bin/open_work_apps.sh
 bindsym Ctrl+Shift+Escape exec --no-startup-id $HOME/.config/rofi/applets/menu/powermenu.sh
 
 ### Startup programs
+exec --no-startup-id nm-applet
 exec --no-startup-id dunst
 exec --no-startup-id yakuake
 exec --no-startup-id copyq

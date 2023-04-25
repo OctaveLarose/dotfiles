@@ -91,3 +91,5 @@ eval $(thefuck --alias)
 eval "$(pyenv init -)"
 
 [ -f "/home/octavel/.ghcup/env" ] && source "/home/octavel/.ghcup/env" # ghcup-env
+
+eval "$(atuin init --disable-up-arrow zsh)"

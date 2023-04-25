@@ -1,3 +1,5 @@
+#!/bin/bash
+
 MSG_COLOR='\033[0;32m'
 NO_COLOR='\033[0m'
 

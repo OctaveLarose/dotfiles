@@ -1,3 +1,6 @@
 # Temporary vim files
 *.swp
 *.swo
+
+# nushell stores its history in its config/ dir. I could change the nushell config to store history in the home dir instead of using this rule, but eh.
+config/nushell/history.txt

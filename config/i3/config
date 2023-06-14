@@ -164,6 +164,10 @@ bindsym $mod+r mode "resize"
 
 exec --no-startup-id systemctl start --user polybar
 
+# Gaps are neat, but I prefer without with my current setup.
+#gaps inner 3px
+#gaps outer 3px
+
 ### TODO: those rules never really worked for me, I believe.
 for_window [window_role="pop-up"]                       floating enable
 for_window [window_role="bubble"]                       floating enable 
@@ -175,17 +179,21 @@ for_window [window_type="menu"]                         floating enable
 ### Window assignments
 assign [class="^firefox$"] → $ws1
 assign [class="^TeXstudio$"] → $ws2
-assign [class="^notion-app$"] → $ws3
+assign [class="^notion-app$"] → $ws2
 assign [class="^Zotero$"] → $ws3
+assign [class="^jetbrains-clion$"] → $ws4
 assign [class="^jetbrains-idea$"] → $ws4
 assign [class="^jetbrains-pycharm$"] → $ws4
-assign [class="^code$"] → $ws4
+assign [class="^Code$"] → $ws4
 assign [class="^superProductivity$"] → $ws6
 assign [class="^Microsoft Teams - Preview$"] → $ws7
 assign [class="^teams-for-linux$"] → $ws7
 assign [class="^Slack$"] → $ws7
 for_window [class="^Spotify"] move --no-auto-back-and-forth to workspace $ws9
 assign [class="^YouTube Music$"] → $ws9
+
+# Grant focus to new windows, e.g. opening a link from ws3 will focus Firefox in ws1.
+focus_on_window_activation focus
 
 ### Workspace monitor assignments
 workspace $ws1 output eDP-1
@@ -213,7 +221,8 @@ bindsym Control+Shift+period exec --no-startup-id dbus-send --print-reply --dest
 # Brightness
 set $brightness_adjust 7
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set $brightness_adjust%+
-bindsym XF86MonBrightnessDown exec --no-startup-id ((`brightnessctl g` - `brightnessctl m` * $brightness_adjust * 0.01 <= 0)) || brightnessctl set $brightness_adjust%-
+# TODO: next bit prevents it from going to 0. This works great in CLI, but i3 is not a fan and allows it to be 0. Why?
+bindsym XF86MonBrightnessDown exec --no-startup-id (((`brightnessctl g` - `brightnessctl m` * $brightness_adjust * 0.01 <= 0)) && brightnessctl set 1) || brightnessctl set $brightness_adjust%-
 # Error searching macro
 bindsym Ctrl+Shift+Mod1+a exec --no-startup-id $HOME/bin/search_error.sh
 # Clipboard manager

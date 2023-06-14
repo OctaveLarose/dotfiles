@@ -1,2 +1,2 @@
 #!/bin/bash
-yt-dlp -f mp4 -o $2.mp4 $1
+([ -f $2.mp4 ] && echo "File already exists.") || yt-dlp -f mp4 -o $2.mp4 $1

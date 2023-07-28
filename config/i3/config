@@ -218,11 +218,10 @@ bindsym Control+Shift+comma exec --no-startup-id dbus-send --print-reply --dest=
 bindsym Control+Shift+period exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
 
 # Misc.:
-# Brightness
+# Brightness (relies on a wrapper script that prevents it from going below 0)
 set $brightness_adjust 7
-bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set $brightness_adjust%+
-# TODO: next bit prevents it from going to 0. This works great in CLI, but i3 is not a fan and allows it to be 0. Why?
-bindsym XF86MonBrightnessDown exec --no-startup-id (((`brightnessctl g` - `brightnessctl m` * $brightness_adjust * 0.01 <= 0)) && brightnessctl set 1) || brightnessctl set $brightness_adjust%-
+bindsym XF86MonBrightnessUp exec --no-startup-id $HOME/bin/brightness_adjust.sh $brightness_adjust +
+bindsym XF86MonBrightnessDown exec --no-startup-id $HOME/bin/brightness_adjust.sh $brightness_adjust -
 # Error searching macro
 bindsym Ctrl+Shift+Mod1+a exec --no-startup-id $HOME/bin/search_error.sh
 # Clipboard manager
@@ -240,8 +239,8 @@ exec --no-startup-id dunst
 exec --no-startup-id yakuake
 exec --no-startup-id copyq
 exec --no-startup-id caffeine
-exec --no-startup-id $HOME/bin/cron_change_wallpapers.sh
 exec_always --no-startup-id picom
+exec --no-startup-id $HOME/bin/cron_change_wallpapers.sh
 exec --no-startup-id $HOME/bin/auto_autorandr.sh
 
 # to disable middle mouse being paste (see my .xbindkeysrc file)
@@ -249,3 +248,8 @@ exec --no-startup-id xbindkeys
 
 # for playerctl commands to apply on the last used player
 exec --no-startup-id $playerctl_cmd status --format '{{ playerName }}' --follow > $file_player_last
+
+# ugly hack because pulseaudio fails to redirect audio output to my headphones if they're plugged in at startup??? (and I should switch to pipewire, probably)
+# actual reason modifying the pulseaudio conf file doesn't work is likely that pulseaudio doesn't detect my headphones at boot time? i suspect ubuntu meddling somehow.
+# so this checks if headphones are plugged in, and if so, make them the output
+exec --no-startup-id (grep -A4 -ri 'Headphone Playback Switch' /proc/asound/card*/* | grep "Amp-Out vals.*0x00 0x00" -q) && pacmd set-sink-port 1 analog-output-headphones

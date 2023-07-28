@@ -16,7 +16,7 @@ cp -rv ~/bin .
 echo -e "${MSG_COLOR}\n### Backing up wallpapers...${NO_COLOR}"
 rm -rf ./wallpapers && mkdir ./wallpapers && cp -rf ~/Pictures/time_wallpapers/* ./wallpapers/ && echo "Done."
 
-CONFIG_LIST=("neofetch" "rofi" "dunst" "i3" "polybar" "galendae" "autorandr" "nushell")
+CONFIG_LIST=("neofetch" "rofi" "dunst" "i3" "polybar" "galendae" "autorandr" "nushell" "libinput-gestures.conf")
 
 echo -e "${MSG_COLOR}\n### Backing up config settings...${NO_COLOR}"
 for cfg in "${CONFIG_LIST[@]}"

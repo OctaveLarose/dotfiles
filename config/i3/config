@@ -240,6 +240,7 @@ exec --no-startup-id yakuake
 exec --no-startup-id copyq
 exec --no-startup-id caffeine
 exec_always --no-startup-id picom
+exec --no-startup-id libinput-gestures-setup autostart start
 exec --no-startup-id $HOME/bin/cron_change_wallpapers.sh
 exec --no-startup-id $HOME/bin/auto_autorandr.sh
 

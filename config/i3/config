@@ -9,8 +9,9 @@ font pango:monospace 8
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
 #font pango:DejaVu Sans Mono 8
 
-#set $lock_command i3lock-fancy -f $HOME/.local/share/fonts/minecraft_font.ttf -t "Enter password:"
+# Delay before lock set in seconds with xset.
 set $lock_command $HOME/bin/i3_lock_screen.sh
+exec_always --no-startup-id xset dpms 0 0 600 &
 exec --no-startup-id xss-lock --transfer-sleep-lock -- $lock_command --nofork
 
 # Screenshotting
@@ -180,6 +181,9 @@ for_window [window_type="menu"]                         floating enable
 assign [class="^firefox$"] → $ws1
 assign [class="^TeXstudio$"] → $ws2
 assign [class="^notion-app$"] → $ws2
+assign [class="^notion-app-enhanced$"] → $ws2
+assign [class="^Notion$"] → $ws2
+assign [class="^obsidian$"] → $ws2
 assign [class="^Zotero$"] → $ws3
 assign [class="^jetbrains-clion$"] → $ws4
 assign [class="^jetbrains-idea$"] → $ws4
@@ -193,7 +197,8 @@ for_window [class="^Spotify"] move --no-auto-back-and-forth to workspace $ws9
 assign [class="^YouTube Music$"] → $ws9
 
 # Grant focus to new windows, e.g. opening a link from ws3 will focus Firefox in ws1.
-focus_on_window_activation focus
+# I was never sure how much I liked that setting. It's both convenient and inconvenient.
+# focus_on_window_activation focus
 
 ### Workspace monitor assignments
 workspace $ws1 output eDP-1

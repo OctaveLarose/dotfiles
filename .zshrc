@@ -20,6 +20,30 @@ DISABLE_AUTO_UPDATE="false"
 export UPDATE_ZSH_DAYS=15
 
 
+### Dot extension code I stole from SO. Idea is to support TAB suggestions when using the mutli-dot "..." = "../.." type aliases 
+function expand-dots() {
+    local MATCH
+    if [[ $LBUFFER =~ '\.\.\.+' ]]; then
+        LBUFFER=$LBUFFER:fs%\.\.\.%../..%
+    fi
+}
+
+function expand-dots-then-expand-or-complete() {
+    zle expand-dots
+    zle expand-or-complete
+}
+
+#function expand-dots-then-accept-line() {
+#    zle expand-dots
+#    zle accept-line
+#}
+
+zle -N expand-dots
+zle -N expand-dots-then-expand-or-complete
+#zle -N expand-dots-then-accept-line
+bindkey '^I' expand-dots-then-expand-or-complete
+#bindkey '^M' expand-dots-then-accept-line
+
 ### UTILITIES
 
 # Auto-setting terminal title

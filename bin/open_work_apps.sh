@@ -3,7 +3,8 @@
 pidof firefox || firefox &
 teams-for-linux &
 superproductivity &
-notion-app &
-$HOME/Programs/Zotero_linux-x86_64/zotero &
+notion-app-enhanced &
+obsidian &
+$HOME/Programs/PhD/git_repos/Zotero_linux-x86_64/zotero &
 spotify &
 youtube-music &

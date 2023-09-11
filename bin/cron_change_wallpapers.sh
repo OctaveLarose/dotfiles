@@ -33,6 +33,15 @@ BLESSED_CHANCE=100
 
 #WEATHER_CHANGES=("rain")
 
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]
+then
+    echo "Usage: ./change_wallpapers.sh [-f] [hour]"
+    echo "  -f      Forces the wallpaper to change, even if it's the same as the current one."
+    echo "If an hour is specified, the script changes the wallpaper to what it would look like at said hour."
+    echo "If none is specified, the current time of day is used."
+    exit
+fi
+
 # If an hour is provided, then the script changes the wallpaper to what it would look like at said hour.
 if [ ! $# -eq 0 ] && [ "$1" != "-f" ]
 then

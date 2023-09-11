@@ -124,8 +124,13 @@ bindsym $mod+Shift+9 move container to workspace number $ws9, workspace number $
 bindsym $mod+Shift+0 move container to workspace number $ws10, workspace number $ws10
 
 # move focused workspace between monitors
-bindsym $mod+Shift+greater move workspace to output right
-bindsym $mod+Shift+less move workspace to output left
+bindsym $mod+Shift+greater move workspace to output next
+bindsym $mod+Shift+less move workspace to output previous
+#bindsym $mod+Shift+greater move workspace to output right
+#bindsym $mod+Shift+less move workspace to output left
+# The impractical inputs are because these two are meant to be activated via gestures.
+#bindsym $mod+Shift+greater+Up move workspace to output up
+#bindsym $mod+Shift+less+Down move workspace to output down
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -203,13 +208,13 @@ assign [class="^YouTube Music$"] → $ws9
 ### Workspace monitor assignments
 workspace $ws1 output eDP-1
 workspace $ws2 output eDP-1
-workspace $ws3 output eDP-1
+workspace $ws3 output DP-2 eDP-1
 workspace $ws4 output HDMI-1 eDP-1
 workspace $ws5 output eDP-1
 workspace $ws6 output HDMI-1 eDP-1
-workspace $ws7 output HDMI-1 eDP-1
-workspace $ws8 output eDP-1
-workspace $ws9 output eDP-1
+workspace $ws7 output DP-2 HDMI-1 eDP-1
+workspace $ws8 output DP-2 eDP-1
+workspace $ws9 output DP-2 eDP-1
 
 ### Custom shortcuts
 # Play/pause/skip shortcuts for browser+Spotify:
@@ -246,8 +251,10 @@ exec --no-startup-id copyq
 exec --no-startup-id caffeine
 exec_always --no-startup-id picom
 exec --no-startup-id libinput-gestures-setup autostart start
-exec --no-startup-id $HOME/bin/cron_change_wallpapers.sh
-exec --no-startup-id $HOME/bin/auto_autorandr.sh
+exec --no-startup-id $HOME/bin/change_wallpapers.sh
+#exec --no-startup-id $HOME/bin/auto_autorandr.sh
+exec --no-startup-id fswatch /sys/class/drm/card0 | xargs -n1 -I{} autorandr --change
+
 
 # to disable middle mouse being paste (see my .xbindkeysrc file)
 exec --no-startup-id xbindkeys

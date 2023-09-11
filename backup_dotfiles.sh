@@ -11,6 +11,7 @@ crontab -l > crontab
 echo "Done."
 
 echo -e "${MSG_COLOR}\n### Backing up personal scripts...${NO_COLOR}"
+find ./bin ! -name 'README.md' -type f -exec rm -f {} +
 cp -rv ~/bin .
 
 echo -e "${MSG_COLOR}\n### Backing up wallpapers...${NO_COLOR}"

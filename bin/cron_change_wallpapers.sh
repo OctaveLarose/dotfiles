@@ -34,7 +34,7 @@ BLESSED_CHANCE=100
 #WEATHER_CHANGES=("rain")
 
 # If an hour is provided, then the script changes the wallpaper to what it would look like at said hour.
-if [ ! $# -eq 0 ]
+if [ ! $# -eq 0 ] && [ "$1" != "-f" ]
 then
     HOUR=$1
     unset WEATHER_CHANGES
@@ -74,12 +74,6 @@ get_image() {
 change_wallpaper() {
     local CUR_DELAY=0
     FILENAME=$1
-
-    if [ -n "$CURR_IMG" ] && [[ $(basename $CURR_IMG) =~ "$FILENAME" ]]
-    then
-        write_to_log "The wallpaper doesn't need to change."
-        exit 0
-    fi
 
     IMG=$(get_image)
     if [ -z "$IMG" ]
@@ -140,13 +134,21 @@ if [ -n "${WEATHER_CHANGES+set}" ]; then
 fi
 
 if [[ "$HOUR" -ge $NIGHT_START ]]; then
-    change_wallpaper "night"
+    current_time_period="night"
 elif [[ "$HOUR" -ge $EVENING_START ]]; then
-    change_wallpaper "evening"
+    current_time_period="evening"
 elif [[ "$HOUR" -ge $AFTERNOON_START ]]; then
-    change_wallpaper "afternoon"
+    current_time_period="afternoon"
 elif [[ "$HOUR" -ge $MORNING_START ]]; then
-    change_wallpaper "morning"
+    current_time_period="morning"
 else
-    change_wallpaper "night"
+    current_time_period="night"
 fi
+
+if [ "$1" != "-f" ] && [ -n "$CURR_IMG" ] && [[ $(basename $CURR_IMG) =~ "$current_time_period" ]]
+then
+    write_to_log "The wallpaper doesn't need to change."
+    exit 0
+fi
+
+change_wallpaper $current_time_period

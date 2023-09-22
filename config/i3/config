@@ -124,8 +124,8 @@ bindsym $mod+Shift+9 move container to workspace number $ws9, workspace number $
 bindsym $mod+Shift+0 move container to workspace number $ws10, workspace number $ws10
 
 # move focused workspace between monitors
-bindsym $mod+Shift+greater move workspace to output next
-bindsym $mod+Shift+less move workspace to output previous
+bindsym $mod+Shift+slash move workspace to output next
+#bindsym $mod+Shift+less move workspace to output previous
 #bindsym $mod+Shift+greater move workspace to output right
 #bindsym $mod+Shift+less move workspace to output left
 # The impractical inputs are because these two are meant to be activated via gestures.
@@ -200,17 +200,18 @@ assign [class="^teams-for-linux$"] → $ws7
 assign [class="^Slack$"] → $ws7
 for_window [class="^Spotify"] move --no-auto-back-and-forth to workspace $ws9
 assign [class="^YouTube Music$"] → $ws9
+assign [class="^gnome-pomodoro$"] → $ws10
 
 # Grant focus to new windows, e.g. opening a link from ws3 will focus Firefox in ws1.
 # I was never sure how much I liked that setting. It's both convenient and inconvenient.
 # focus_on_window_activation focus
 
 ### Workspace monitor assignments
-workspace $ws1 output eDP-1
+workspace $ws1 output HDMI-1 eDP-1
 workspace $ws2 output eDP-1
 workspace $ws3 output DP-2 eDP-1
 workspace $ws4 output HDMI-1 eDP-1
-workspace $ws5 output eDP-1
+workspace $ws5 output DP-2 eDP-1
 workspace $ws6 output HDMI-1 eDP-1
 workspace $ws7 output DP-2 HDMI-1 eDP-1
 workspace $ws8 output DP-2 eDP-1
@@ -242,6 +243,9 @@ bindsym $mod+Shift+t exec --no-startup-id $lock_command
 bindsym Mod1+Shift+asciitilde exec --no-startup-id $HOME/bin/open_work_apps.sh
 # Shutdown menu
 bindsym Ctrl+Shift+Escape exec --no-startup-id $HOME/.config/rofi/applets/menu/powermenu.sh
+# Focus on the workspace that has the window with the given name
+bindsym $mod+Shift+f exec --no-startup-id $HOME/bin/i3_window_finder.py $(dmenu -p "Window name:" < /dev/null)
+
 
 ### Startup programs
 exec --no-startup-id nm-applet

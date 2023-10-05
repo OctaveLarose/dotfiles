@@ -253,7 +253,7 @@ exec --no-startup-id dunst
 exec --no-startup-id yakuake
 exec --no-startup-id copyq
 exec --no-startup-id caffeine
-exec_always --no-startup-id picom
+exec_always --no-startup-id picom --backend glx
 exec --no-startup-id libinput-gestures-setup autostart start
 exec --no-startup-id $HOME/bin/change_wallpapers.sh
 #exec --no-startup-id $HOME/bin/auto_autorandr.sh

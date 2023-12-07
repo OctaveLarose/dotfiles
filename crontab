@@ -1,2 +1,2 @@
-30 */2 * * * $HOME/OneDrive/PhD/notorious_big/backup.sh
+30 */4 * * * $HOME/PhD/latex/papers/dee_ell_ess/backup.sh
 0 * * * * DISPLAY=:1 $HOME/bin/change_wallpapers.sh

@@ -190,9 +190,7 @@ assign [class="^notion-app-enhanced$"] → $ws2
 assign [class="^Notion$"] → $ws2
 assign [class="^obsidian$"] → $ws2
 assign [class="^Zotero$"] → $ws3
-assign [class="^jetbrains-clion$"] → $ws4
-assign [class="^jetbrains-idea$"] → $ws4
-assign [class="^jetbrains-pycharm$"] → $ws4
+assign [class="^jetbrains-*"] → $ws4
 assign [class="^Code$"] → $ws4
 assign [class="^superProductivity$"] → $ws6
 assign [class="^Microsoft Teams - Preview$"] → $ws7
@@ -207,13 +205,13 @@ assign [class="^gnome-pomodoro$"] → $ws10
 # focus_on_window_activation focus
 
 ### Workspace monitor assignments
-workspace $ws1 output HDMI-1 eDP-1
+workspace $ws1 output DP-2 HDMI-1 eDP-1
 workspace $ws2 output eDP-1
 workspace $ws3 output DP-2 eDP-1
 workspace $ws4 output HDMI-1 eDP-1
-workspace $ws5 output DP-2 eDP-1
+workspace $ws5 output eDP-1 DP-2 HDMI-1
 workspace $ws6 output HDMI-1 eDP-1
-workspace $ws7 output DP-2 HDMI-1 eDP-1
+workspace $ws7 output HDMI-1 DP-2 eDP-1
 workspace $ws8 output DP-2 eDP-1
 workspace $ws9 output DP-2 eDP-1
 
@@ -246,6 +244,7 @@ bindsym Ctrl+Shift+Escape exec --no-startup-id $HOME/.config/rofi/applets/menu/p
 # Focus on the workspace that has the window with the given name
 bindsym $mod+Shift+f exec --no-startup-id $HOME/bin/i3_window_finder.py $(dmenu -p "Window name:" < /dev/null)
 
+bindsym alt+F5 exec --no-startup-id yakuake
 
 ### Startup programs
 exec --no-startup-id nm-applet

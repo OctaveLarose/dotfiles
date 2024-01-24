@@ -1,13 +1,7 @@
 # Win key
 set $mod Mod4
 
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
-font pango:monospace 8
-
-# This font is widely installed, provides lots of unicode glyphs, right-to-left
-# text rendering and scalability on retina/hidpi displays (thanks to pango).
-#font pango:DejaVu Sans Mono 8
+font pango:Monocraft 8
 
 # Delay before lock set in seconds with xset.
 set $lock_command $HOME/bin/i3_lock_screen.sh
@@ -143,18 +137,6 @@ bindsym $mod+Shift+r restart
 set $resize_px 1
 set $resize_ppt 1
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
-
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym j resize shrink width $resize_px px or $resize_ppt ppt
-        bindsym k resize grow height $resize_px px or $resize_ppt ppt
-        bindsym l resize shrink height $resize_px px or $resize_ppt ppt
-        bindsym semicolon resize grow width $resize_px px or $resize_ppt ppt
-
-        # same bindings, but for the arrow keys
         bindsym Left resize shrink width $resize_px px or $resize_ppt ppt
         bindsym Down resize grow height $resize_px px or $resize_ppt ppt
         bindsym Up resize shrink height $resize_px px or $resize_ppt ppt
@@ -208,12 +190,12 @@ assign [class="^gnome-pomodoro$"] → $ws10
 workspace $ws1 output DP-2 HDMI-1 eDP-1
 workspace $ws2 output eDP-1
 workspace $ws3 output DP-2 eDP-1
-workspace $ws4 output HDMI-1 eDP-1
+workspace $ws4 output eDP-1 HDMI-1
 workspace $ws5 output eDP-1 DP-2 HDMI-1
-workspace $ws6 output HDMI-1 eDP-1
+workspace $ws6 output DP-2 eDP-1
 workspace $ws7 output HDMI-1 DP-2 eDP-1
 workspace $ws8 output DP-2 eDP-1
-workspace $ws9 output DP-2 eDP-1
+workspace $ws9 output HDMI-1 DP-2 eDP-1
 
 ### Custom shortcuts
 # Play/pause/skip shortcuts for browser+Spotify:
@@ -252,7 +234,7 @@ exec --no-startup-id dunst
 exec --no-startup-id yakuake
 exec --no-startup-id copyq
 exec --no-startup-id caffeine
-exec_always --no-startup-id picom --backend glx
+#exec_always --no-startup-id picom --backend glx
 exec --no-startup-id libinput-gestures-setup autostart start
 exec --no-startup-id $HOME/bin/change_wallpapers.sh
 #exec --no-startup-id $HOME/bin/auto_autorandr.sh

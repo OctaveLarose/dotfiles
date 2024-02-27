@@ -2,7 +2,7 @@
 
 theme_dir="/home/octavel/.config/polybar/forest"
 XAUTHORITY=/run/user/1000/gdm/Xauthority
-DISPLAY=:1
+DISPLAY=:0
 
 killall -q polybar
 

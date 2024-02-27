@@ -8,6 +8,7 @@ commands=(
     # "texstudio"
     "obsidian"
     "$HOME/Programs/PhD/git_repos/Zotero_linux-x86_64/zotero"
+    "$HOME/Programs/IDEs/RustRover-233.10527.212/bin/rustrover.sh"
     "spotify"
     "youtube-music"
 )

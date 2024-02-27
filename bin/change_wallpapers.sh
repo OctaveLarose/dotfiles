@@ -72,6 +72,11 @@ change_wallpaper_i3() {
     feh --bg-fill $1
 }
 
+# sway
+change_wallpaper_sway() {
+    swaymsg output "*" bg $1 fill
+}    
+
 get_image() {
     local POSSIBLE_IMAGES=($(ls $DIR/$FILENAME*))
     local IMAGE_INDEX=$(expr $RANDOM % ${#POSSIBLE_IMAGES[*]})
@@ -94,6 +99,9 @@ change_wallpaper() {
     if pgrep -l i3 > /dev/null;
     then
         change_wallpaper_func=change_wallpaper_i3
+    elif pgrep -l sway > /dev/null
+    then
+        change_wallpaper_func=change_wallpaper_sway
     elif pgrep -l kded > /dev/null
     then
         change_wallpaper_func=change_wallpaper_kde

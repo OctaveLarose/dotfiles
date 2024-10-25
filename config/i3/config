@@ -157,12 +157,12 @@ exec --no-startup-id systemctl start --user polybar
 #gaps outer 3px
 
 ### TODO: those rules never really worked for me, I believe.
-for_window [window_role="pop-up"]                       floating enable
-for_window [window_role="bubble"]                       floating enable 
-for_window [window_role="task_dialog"]                  floating enable
-for_window [window_role="Preferences"]                  floating enable
+#for_window [window_role="pop-up"]                       floating enable
+#for_window [window_role="bubble"]                       floating enable 
+#for_window [window_role="task_dialog"]                  floating enable
+#for_window [window_role="Preferences"]                  floating enable
 for_window [window_type="dialog"]                       floating enable 
-for_window [window_type="menu"]                         floating enable
+#for_window [window_type="menu"]                         floating enable
 
 ### Window assignments
 assign [class="^firefox$"] → $ws1
@@ -192,7 +192,7 @@ workspace $ws2 output eDP-1
 workspace $ws3 output DP-2 eDP-1
 workspace $ws4 output DP-2 eDP-1 HDMI-1
 workspace $ws5 output eDP-1 DP-2 HDMI-1
-workspace $ws6 output DP-2 eDP-1
+workspace $ws6 output HDMI-1 DP-2 eDP-1
 workspace $ws7 output HDMI-1 DP-2 eDP-1
 workspace $ws8 output DP-2 eDP-1
 workspace $ws9 output HDMI-1 DP-2 eDP-1
@@ -202,6 +202,7 @@ workspace $ws9 output HDMI-1 DP-2 eDP-1
 set $playerctl_cmd playerctl --ignore-player=spotify
 set $file_player_last /tmp/last-player-used
 bindsym Control+Mod1+space exec --no-startup-id $playerctl_cmd -p $(tail -1 $file_player_last) play-pause || $playerctl_cmd play-pause
+bindsym 201 exec --no-startup-id $playerctl_cmd -p $(tail -1 $file_player_last) play-pause || $playerctl_cmd play-pause
 bindsym Control+Mod1+comma exec --no-startup-id $playerctl_cmd -p $(tail -1 $file_player_last) previous || $playerctl_cmd previous
 bindsym Control+Mod1+period exec --no-startup-id $playerctl_cmd -p $(tail -1 $file_player_last) next || $playerctl_cmd next
 bindsym Control+Shift+space exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
@@ -239,7 +240,7 @@ exec --no-startup-id libinput-gestures-setup autostart start
 exec --no-startup-id $HOME/bin/change_wallpapers.sh
 #exec --no-startup-id $HOME/bin/auto_autorandr.sh
 exec --no-startup-id fswatch /sys/class/drm/card0 | xargs -n1 -I{} autorandr --change
-
+# exec --no-startup-id redshift-gtk
 
 # to disable middle mouse being paste (see my .xbindkeysrc file)
 exec --no-startup-id xbindkeys

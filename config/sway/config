@@ -254,8 +254,7 @@ exec --no-startup-id caffeine
 #exec_always --no-startup-id picom --backend glx
 exec --no-startup-id libinput-gestures-setup autostart start
 exec --no-startup-id $HOME/bin/change_wallpapers.sh
-#exec --no-startup-id $HOME/bin/auto_autorandr.sh
-exec --no-startup-id fswatch /sys/class/drm/card0 | xargs -n1 -I{} autorandr --change
+exec --no-startup-id fswatch /sys/class/drm/card0 | xargs -n1 -I{} kanshi
 
 
 # to disable middle mouse being paste (see my .xbindkeysrc file)

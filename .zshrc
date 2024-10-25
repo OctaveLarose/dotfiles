@@ -100,6 +100,20 @@ commit() {
     git commit -m "$*"
 }
 
+function gb() {
+  current=$(git rev-parse --abbrev-ref HEAD)
+  branches=$(git for-each-ref --format='%(refname)' refs/heads/ | sed 's|refs/heads/||')
+  for branch in $branches; do
+    desc=$(git config branch.$branch.description)
+    if [ $branch == $current ]; then
+      branch="* \033[0;32m$branch\033[0m"
+     else
+       branch="  $branch"
+     fi
+     echo -e "$branch \033[0;36m$desc\033[0m"
+  done
+}
+
 alias hibernate="sudo systemctl hibernate"
 alias rm="gio trash"
 alias rmf="/bin/rm"
@@ -117,3 +131,4 @@ eval "$(pyenv init -)"
 [ -f "/home/octavel/.ghcup/env" ] && source "/home/octavel/.ghcup/env" # ghcup-env
 
 eval "$(atuin init --disable-up-arrow zsh)"
+eval "$(zoxide init zsh)"

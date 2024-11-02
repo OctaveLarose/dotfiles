@@ -11,10 +11,11 @@ commands=(
     "rustrover"
 #    "code"
     "spotify"
-    "youtube-music"
+    "youtube-music --no-sandbox"
 )
 
 for cmd in "${commands[@]}"; do
-    pidof "$cmd" || "$cmd" &
+    pidof "${cmd%% *}" || $cmd &
+    #pidof "$cmd" || "$cmd" &
 done
 

@@ -4,7 +4,11 @@ MSG_COLOR='\033[0;32m'
 NO_COLOR='\033[0m'
 
 echo -e "${MSG_COLOR}### Backing up rc files...${NO_COLOR}"
-cp -v ~/.*rc .
+for file in ~/.*rc; do
+  if [ "$file" != "$HOME/.dmrc" ]; then
+    cp -v "$file" .
+  fi
+done
 
 echo -e "${MSG_COLOR}\n### Backing up crontab...${NO_COLOR}"
 crontab -l > crontab

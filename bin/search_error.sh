@@ -1,7 +1,8 @@
 #!/bin/bash
 
 BROWSER='firefox'
-SEARCHENGINE='google'
+#SEARCHENGINE='google'
+SEARCHENGINE='duckduckgo'
 
 if ! command -v xclip &> /dev/null; then
     echo "Missing xclip, script can't work."
@@ -25,4 +26,4 @@ hexify_for_google() {
 clipboard_content=$(xclip -o | tr ' ' '+')
 hexified_content=$(hexify_for_google "$clipboard_content")
 
-$BROWSER "http://www.$SEARCHENGINE.com/search?q=$hexified_content"
+$BROWSER "http://www.$SEARCHENGINE.com/?q=$hexified_content"

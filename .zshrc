@@ -124,7 +124,7 @@ alias duc="du -sh * | sort -h"
 alias duca="du -sh * .* | sort -h"
 alias push="git push"
 
-eval $(thefuck --alias)
+#eval $(thefuck --alias)
 
 eval "$(pyenv init -)"
 

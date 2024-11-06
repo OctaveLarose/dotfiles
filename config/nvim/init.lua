@@ -39,21 +39,7 @@ vim.schedule(function()
   require "mappings"
 end)
 
--- vim.api.nvim_create_autocmd({ "BufWritePre" }, {
---     pattern = {"*"},
---     callback = function(_)
---         -- save_cursor = vim.fn.getpos(".")
---         -- vim.cmd([[%s/\s\+$//e]])
---         -- vim.fn.setpos(".", save_cursor)
---
---         -- autoformat
---         local mode = vim.api.nvim_get_mode().mode
---         if vim.bo.modified == true and mode == 'n' then
---             vim.cmd('lua vim.lsp.buf.format()')
---         else
---     end
---   end,
--- })
+vim.lsp.inlay_hint.enable()
 
 -- autoformat
 vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]

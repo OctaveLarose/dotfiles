@@ -6,7 +6,7 @@ map("n", ";", ":", { desc = "CMD enter command mode" })
 map("i", "jk", "<ESC>:w<CR>")
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
 
--- Toggleterm
+-- Toggleterm for lazygit
 local Terminal = require('toggleterm.terminal').Terminal
 local lazygit  = Terminal:new(
   {
@@ -17,11 +17,12 @@ local lazygit  = Terminal:new(
   }
 )
 
-function _lazygit_toggle()
-  lazygit:toggle()
-end
-
-map("n", "<leader>gi", "<cmd>lua _lazygit_toggle()<CR>", { noremap = true, silent = true })
+map("n", "<leader>gi",
+  function()
+    lazygit:toggle()
+  end,
+  { noremap = true, silent = true }
+)
 
 -- rustaceanvim
 map("n", "<Leader>dt", "<cmd>lua vim.cmd('RustLsp testables')<CR>", { desc = "Debugger testables" })

@@ -21,7 +21,7 @@ bindsym XF86AudioMute           exec --no-startup-id amixer -q -D pulse sset Mas
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec konsole
+bindsym $mod+Return exec x-terminal-emulator
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -235,12 +235,12 @@ exec --no-startup-id dunst
 exec --no-startup-id yakuake
 exec --no-startup-id copyq
 exec --no-startup-id caffeine
-#exec_always --no-startup-id picom --backend glx
+exec_always --no-startup-id picom --backend glx
 exec --no-startup-id libinput-gestures-setup autostart start
 exec --no-startup-id $HOME/bin/change_wallpapers.sh
 #exec --no-startup-id $HOME/bin/auto_autorandr.sh
 exec --no-startup-id fswatch /sys/class/drm/card0 | xargs -n1 -I{} autorandr --change
-# exec --no-startup-id redshift-gtk
+#exec --no-startup-id redshift-gtk
 
 # to disable middle mouse being paste (see my .xbindkeysrc file)
 exec --no-startup-id xbindkeys

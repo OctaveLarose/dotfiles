@@ -3,8 +3,7 @@ require("nvchad.configs.lspconfig").defaults()
 
 local lspconfig = require "lspconfig"
 
--- EXAMPLE
-local servers = { "html", "cssls" }
+local servers = {} -- none at the moment, we just need rust which we handle through rustaceanvim
 local nvlsp = require "nvchad.configs.lspconfig"
 
 -- lsps with default config

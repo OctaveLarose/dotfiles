@@ -103,6 +103,8 @@ function benchmark_args_fn(benchmark_name)
 
   table.insert(classpath, { "--", "core-lib/Examples/Benchmarks/BenchmarkHarness.som", benchmark_name, "1", "7" })
 
+  classpath = vim.tbl_flatten(classpath)
+
   vim.g.last_benchmark_ran = benchmark_name
 
   return vim.tbl_flatten(classpath)

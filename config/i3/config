@@ -161,7 +161,7 @@ exec --no-startup-id systemctl start --user polybar
 #for_window [window_role="bubble"]                       floating enable 
 #for_window [window_role="task_dialog"]                  floating enable
 #for_window [window_role="Preferences"]                  floating enable
-for_window [window_type="dialog"]                       floating enable 
+#for_window [window_type="dialog"]                       floating enable 
 #for_window [window_type="menu"]                         floating enable
 
 ### Window assignments

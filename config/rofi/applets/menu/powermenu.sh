@@ -14,31 +14,15 @@ uptime=$(uptime -p | sed -e 's/up //g')
 cpu=$($HOME/.config/rofi/bin/usedcpu)
 memory=$($HOME/.config/rofi/bin/usedram)
 
-# Options
 shutdown=""
 reboot=""
 lock=""
 suspend=""
 logout=""
 
-# Confirmation
-confirm_exit() {
-	rofi -dmenu\
-		-i\
-		-no-fixed-num-lines\
-		-p "Are You Sure? : "\
-		-theme $HOME/.config/rofi/applets/styles/confirm.rasi
-}
-
-# Message
-msg() {
-	rofi -theme "$HOME/.config/rofi/applets/styles/message.rasi" -e "Available Options  -  yes / y / no / n"
-}
-
-# Variable passed to rofi
 options="$shutdown\n$reboot\n$lock\n$suspend\n$logout"
 
-chosen="$(echo -e "$options" | $rofi_command -p "祥  $uptime  |     $cpu  |  ﬙  $memory " -dmenu -selected-row 0)"
+chosen="$(echo -e "$options" | $rofi_command -p "󰥔  $uptime  |    $cpu  | ﬙  $memory " -dmenu -selected-row 0)"
 case $chosen in
     $shutdown)
 		systemctl poweroff

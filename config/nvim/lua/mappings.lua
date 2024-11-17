@@ -24,6 +24,8 @@ map("n", "<leader>gi",
   { noremap = true, silent = true }
 )
 
+map("n", "<leader>rr", ":make b <cr>", { silent = true, desc = "Make build" })
+
 -- LSP config. Ideally we'd want it defined just when we load the LSP
 -- and if so these keys need to be shared between A) normal LSP and B) rustaceanvim invoking its own LSP
 local function opts(desc)

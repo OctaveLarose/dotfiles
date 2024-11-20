@@ -6,24 +6,6 @@ map("n", ";", ":", { desc = "CMD enter command mode" })
 -- map("i", "jk", "<ESC>:w<CR>")
 map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>", { desc = "Ctrl+S save" })
 
--- Toggleterm for lazygit
-local Terminal = require('toggleterm.terminal').Terminal
-local lazygit  = Terminal:new(
-  {
-    cmd = "lazygit",
-    hidden = true,
-    direction = "float",
-    float_opts = { border = "double" }
-  }
-)
-
-map("n", "<leader>gi",
-  function()
-    lazygit:toggle()
-  end,
-  { noremap = true, silent = true }
-)
-
 map("n", "<leader>rr", ":make b <cr>", { silent = true, desc = "Make build" })
 
 -- LSP config. Ideally we'd want it defined just when we load the LSP

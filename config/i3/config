@@ -5,7 +5,7 @@ font pango:Monocraft 8
 
 # Delay before lock set in seconds with xset.
 set $lock_command $HOME/bin/i3_lock_screen.sh
-exec_always --no-startup-id xset dpms 0 0 600 &
+exec_always --no-startup-id xset dpms 0 0 1200 &
 exec --no-startup-id xss-lock --transfer-sleep-lock -- $lock_command --nofork
 
 # Screenshotting
@@ -235,7 +235,7 @@ exec --no-startup-id dunst
 exec --no-startup-id yakuake
 exec --no-startup-id copyq
 exec --no-startup-id caffeine
-exec_always --no-startup-id picom --backend glx
+exec_always --no-startup-id picom
 exec --no-startup-id libinput-gestures-setup autostart start
 exec --no-startup-id $HOME/bin/change_wallpapers.sh
 exec --no-startup-id $HOME/bin/auto_autorandr.sh

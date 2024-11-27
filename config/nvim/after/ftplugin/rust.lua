@@ -76,6 +76,7 @@ dap.configurations.rust = {
     type = "rust",
     request = "launch",
     program = function()
+      -- vim.fn.system("cargo build -p som-interpreter-bc");
       return vim.fn.getcwd() .. "/target/debug/som-interpreter-bc"
     end,
     args = function()

@@ -44,7 +44,9 @@ vim.lsp.inlay_hint.enable()
 -- autoformat
 vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
 
--- to not capture nvimtree when saving sessions
+-- to not capture when saving sessions:
+-- NvimTree
+-- dapui
 vim.api.nvim_create_autocmd("User", {
   pattern = "PersistedSavePre",
   callback = function()
@@ -53,5 +55,6 @@ vim.api.nvim_create_autocmd("User", {
         vim.api.nvim_buf_delete(buf, { force = true })
       end
     end
+    require("dapui").close()
   end,
 })

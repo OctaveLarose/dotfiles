@@ -12,6 +12,7 @@ return {
       vim.keymap.set("n", "<F5>", dap.continue)
       vim.keymap.set("n", "<F6>", dap.up)
       vim.keymap.set("n", "<F7>", dap.down)
+      vim.keymap.set("n", "<F10>", dapui.close)
       vim.keymap.set("n", "<F13>", dap.restart)
 
       vim.keymap.set("n", "<Leader>de", dap.terminate, { desc = "Debugger reset" })
@@ -37,12 +38,13 @@ return {
       dap.listeners.before.launch.dapui_config = function()
         dapui.open()
       end
-      dap.listeners.before.event_terminated.dapui_config = function()
-        dapui.close()
-      end
-      dap.listeners.before.event_exited.dapui_config = function()
-        dapui.close()
-      end
+
+      -- dap.listeners.before.event_terminated.dapui_config = function()
+      --   dapui.close()
+      -- end
+      -- dap.listeners.before.event_exited.dapui_config = function()
+      --   dapui.close()
+      -- end
     end,
   },
 

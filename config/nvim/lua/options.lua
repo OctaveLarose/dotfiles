@@ -1,6 +1,8 @@
 require "nvchad.options"
 
--- add yours here!
+local o = vim.o
+o.cursorlineopt = 'both'
 
--- local o = vim.o
--- o.cursorlineopt ='both' -- to enable cursorline!
+-- changing the dap default icons
+vim.fn.sign_define('DapBreakpoint', { text = '🟥', texthl = '', linehl = '', numhl = '' })
+vim.fn.sign_define('DapStopped', { text = '▶️', texthl = '', linehl = '', numhl = '' })

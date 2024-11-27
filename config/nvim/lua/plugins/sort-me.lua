@@ -80,5 +80,9 @@ return {
     keys = {
       { "<leader>gi", function() Snacks.lazygit() end, desc = "Lazygit" },
     }
+  },
+
+  {
+    "nvim-pack/nvim-spectre"
   }
 }

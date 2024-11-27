@@ -16,6 +16,27 @@ return {
         dap = {
           adapter = cfg.get_codelldb_adapter(codelldb_path, liblldb_path),
         },
+        server = {
+          default_settings = {
+            ['rust-analyzer'] = {
+              diagnostics = {
+                disabled = { "inactive-code" }
+              }
+            },
+          },
+        }
+        ------- what follows is now part of the default config, I think?
+        -- tools = {
+        --   on_initialized = function()
+        --   vim.cmd([[
+        --         augroup RustLSP
+        --           autocmd CursorHold                      *.rs silent! lua vim.lsp.buf.document_highlight()
+        --           autocmd CursorMoved,InsertEnter         *.rs silent! lua vim.lsp.buf.clear_references()
+        --           autocmd BufEnter,CursorHold,InsertLeave *.rs silent! lua vim.lsp.codelens.refresh()
+        --         augroup END
+        --       ]])
+        -- end
+        -- }
       }
     end
   },
@@ -30,18 +51,9 @@ return {
 
   {
     'saecki/crates.nvim',
-    ft = { "toml" },
+    tag = 'stable',
     config = function()
-      require("crates").setup {
-        completion = {
-          cmp = {
-            enabled = true
-          },
-        },
-      }
-      require('cmp').setup.buffer({
-        sources = { { name = "crates" } }
-      })
+      require('crates').setup()
     end
   },
 

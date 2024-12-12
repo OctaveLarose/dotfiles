@@ -38,13 +38,22 @@ dap.configurations.rust = {
       return vim.fn.getcwd() .. "/target/debug/som-interpreter-ast"
     end,
     args = function()
-      local args = nil
+      --- this code likely sucks but I'm bad at lua
+      -- local main_co = coroutine.running()
+      -- local result
+      --
+      -- vim.ui.input({ prompt = "Benchmark: " }, function(input)
+      --   result = benchmark_args_fn(input)
+      --   coroutine.resume(main_co)
+      -- end)
+      --
+      -- coroutine.yield() -- Pause execution until resumed
+      -- return result
+      local main_co = coroutine.running()
       vim.ui.input({ prompt = "Benchmark: " }, function(input)
-        if input then
-          args = benchmark_args_fn(input)
-        end
+        coroutine.resume(main_co, benchmark_args_fn(input))
       end)
-      return args
+      return coroutine.yield()
     end,
     cwd = "${workspaceFolder}",
     stopOnEntry = false,
@@ -57,13 +66,11 @@ dap.configurations.rust = {
       return vim.fn.getcwd() .. "/target/debug/som-interpreter-bc"
     end,
     args = function()
-      local args = nil
+      local main_co = coroutine.running()
       vim.ui.input({ prompt = "Benchmark: " }, function(input)
-        if input then
-          args = benchmark_args_fn(input)
-        end
+        coroutine.resume(main_co, benchmark_args_fn(input))
       end)
-      return args
+      return coroutine.yield()
     end,
     cwd = "${workspaceFolder}",
     stopOnEntry = false,
@@ -103,13 +110,11 @@ dap.configurations.rust = {
       return vim.fn.getcwd() .. "/target/debug/som-interpreter-ast"
     end,
     args = function()
-      local args = nil
+      local main_co = coroutine.running()
       vim.ui.input({ prompt = "Benchmark name and number of iterations: " }, function(input)
-        if input then
-          args = benchmark_args_fn_with_args(input)
-        end
+        coroutine.resume(main_co, benchmark_args_fn_with_args(input))
       end)
-      return args
+      return coroutine.yield()
     end,
     cwd = "${workspaceFolder}",
     stopOnEntry = false,

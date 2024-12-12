@@ -4,6 +4,7 @@ require("nvchad.configs.lspconfig").defaults()
 local lspconfig = require "lspconfig"
 
 local servers = {} -- none at the moment, we just need rust which we handle through rustaceanvim
+-- local servers = { 'rust_analyzer' }
 local nvlsp = require "nvchad.configs.lspconfig"
 
 -- lsps with default config

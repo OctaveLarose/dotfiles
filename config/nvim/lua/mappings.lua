@@ -8,6 +8,8 @@ map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>", { desc = "Ctrl+S save" })
 
 map("n", "<leader>rr", ":make b <cr>", { silent = true, desc = "Make build" })
 
+map("n", "yc", "yygccp", { desc = "Copy line and comment it" })
+
 -- LSP config. Ideally we'd want it defined just when we load the LSP
 -- and if so these keys need to be shared between A) normal LSP and B) rustaceanvim invoking its own LSP
 local function opts(desc)
@@ -17,6 +19,7 @@ end
 map("n", "gD", vim.lsp.buf.declaration, opts "Go to declaration")
 map("n", "gd", vim.lsp.buf.definition, opts "Go to definition")
 map("n", "gi", vim.lsp.buf.implementation, opts "Go to implementation")
+map("n", "ga", vim.lsp.buf.references, opts "Show references")
 map("n", "<leader>sh", vim.lsp.buf.signature_help, opts "Show signature help")
 map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, opts "Add workspace folder")
 map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, opts "Remove workspace folder")
@@ -35,16 +38,16 @@ map("n", "<space>h", vim.lsp.buf.hover,
   { noremap = true, silent = true, buffer = bufnr, desc = "Hover action" }
 )
 
--- spectre
-vim.keymap.set('n', '<leader>S', '<cmd>lua require("spectre").toggle()<CR>', {
-  desc = "Toggle Spectre"
+-- grug-far
+vim.keymap.set('n', 'F', '<cmd>lua require("grug-far").open()<CR>', {
+  desc = "Use grug-far (project wide)"
 })
-vim.keymap.set('n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
-  desc = "Search current word"
-})
-vim.keymap.set('v', '<leader>sw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
-  desc = "Search current word"
-})
-vim.keymap.set('n', '<leader>sp', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
-  desc = "Search on current file"
-})
+vim.keymap.set('v', 'ff',
+  '<cmd>lua require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>") } })<CR>', {
+    desc = "Use grug-far (on current-word, project-wide)"
+  })
+vim.keymap.set('v', 'f',
+  '<cmd>lua require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>"), paths = vim.fn.expand("%") } })<CR>',
+  {
+    desc = "Use grug-far (on current word, in current file)"
+  })

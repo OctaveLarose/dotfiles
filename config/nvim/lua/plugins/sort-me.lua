@@ -19,15 +19,6 @@ return {
   -- { 'akinsho/toggleterm.nvim', version = "*", config = true },
 
   {
-    'lambdalisue/vim-suda',
-    config = function()
-      vim.g.suda_smart_edit = 1
-      -- Expand 'ss' into 'SudaWrite' in the command line
-      vim.cmd([[cab ss SudaWrite]])
-    end,
-  },
-
-  {
     "nvim-treesitter/nvim-treesitter",
     opts = {
       ensure_installed = {
@@ -45,44 +36,79 @@ return {
     },
   },
 
+  { 'akinsho/git-conflict.nvim', version = "*", config = true },
+
   {
-    "folke/snacks.nvim",
-    priority = 1000,
-    lazy = false,
-    ---@type snacks.Config
+    'MagicDuck/grug-far.nvim',
+    config = function()
+      require('grug-far').setup({
+        -- options, see Configuration section below
+        -- there are no required options atm
+        -- engine = 'ripgrep' is default, but 'astgrep' can be specified
+      });
+    end
+  },
+
+  {
+    "tris203/precognition.nvim",
+    init = function()
+      require('precognition').toggle()
+    end,
     opts = {
-      bigfile = { enabled = true },
-      dashboard = {
-        enabled = true,
-        sections = {
-          { section = "header" },
-          {
-            pane = 2,
-            section = "terminal",
-            cmd = "/opt/shell-color-scripts/colorscript.sh -e square",
-            height = 5,
-            padding = 1,
-          },
-          { section = "keys", gap = 1, padding = 1 },
-          { pane = 2, icon = " ", title = "Recent Files", section = "recent_files", indent = 2, padding = 1 },
-          { pane = 2, icon = " ", title = "Projects", section = "projects", indent = 2, padding = 1 },
-          { section = "startup" },
-        },
-      },
-      notifier = {
-        enabled = true,
-        timeout = 3000,
-      },
-      quickfile = { enabled = true },
-      statuscolumn = { enabled = true },
-      words = { enabled = true },
-    },
-    keys = {
-      { "<leader>gi", function() Snacks.lazygit() end, desc = "Lazygit" },
+      startVisible = true,
     }
   },
 
   {
-    "nvim-pack/nvim-spectre"
-  }
+    "folke/trouble.nvim",
+    opts = {}, -- for default options, refer to the configuration section for custom setup.
+    cmd = "Trouble",
+    keys = {
+      {
+        "<leader>xx",
+        "<cmd>Trouble diagnostics toggle<cr>",
+        desc = "Diagnostics (Trouble)",
+      },
+      {
+        "<leader>xX",
+        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+        desc = "Buffer Diagnostics (Trouble)",
+      },
+      -- {
+      --   "<leader>cs",
+      --   "<cmd>Trouble symbols toggle focus=false<cr>",
+      --   desc = "Symbols (Trouble)",
+      -- },
+      -- {
+      --   "<leader>cl",
+      --   "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+      --   desc = "LSP Definitions / references / ... (Trouble)",
+      -- },
+      -- {
+      --   "<leader>xL",
+      --   "<cmd>Trouble loclist toggle<cr>",
+      --   desc = "Location List (Trouble)",
+      -- },
+      -- {
+      --   "<leader>xQ",
+      --   "<cmd>Trouble qflist toggle<cr>",
+      --   desc = "Quickfix List (Trouble)",
+      -- },
+    },
+  },
+
+  {
+    "petertriho/nvim-scrollbar",
+    init = function()
+      require("scrollbar").setup()
+    end
+  },
+
+  -- TODO customise - sounds fantastic.
+  {
+    "FabianWirth/search.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim" }
+  },
+
+  { "ThePrimeagen/vim-be-good" }
 }

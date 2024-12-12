@@ -1,5 +1,6 @@
 vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
 vim.g.mapleader = " "
+vim.g.maplocalleader = ','
 
 -- bootstrap lazy and all plugins
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
@@ -58,3 +59,34 @@ vim.api.nvim_create_autocmd("User", {
     require("dapui").close()
   end,
 })
+
+-- workaround for bug with rust-analyzer notification
+for _, method in ipairs({ 'textDocument/diagnostic', 'workspace/diagnostic' }) do
+  local default_diagnostic_handler = vim.lsp.handlers[method]
+  vim.lsp.handlers[method] = function(err, result, context, config)
+    if err ~= nil and err.code == -32802 then
+      return
+    end
+    return default_diagnostic_handler(err, result, context, config)
+  end
+end
+
+local timer = nil
+
+
+-- show precognition hints after a sec of inactivity
+-- vim.api.nvim_create_autocmd({ "CursorMoved" }, { -- "CursorMovedI"
+--   callback = function()
+--     local function on_cursor_idle()
+--       require('precognition').peek()
+--     end
+--
+--     if timer then
+--       timer:stop()
+--       timer:close()
+--     end
+--
+--     timer = vim.loop.new_timer()
+--     timer:start(5000, 0, vim.schedule_wrap(on_cursor_idle))
+--   end
+-- })

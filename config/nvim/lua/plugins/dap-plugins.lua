@@ -1,6 +1,9 @@
 return {
   {
     'mfussenegger/nvim-dap',
+    dependencies = {
+      "jay-babu/mason-nvim-dap.nvim",
+    },
     config = function()
       local dap, dapui = require("dap"), require("dapui")
 
@@ -32,6 +35,58 @@ return {
         { desc = "Debugger evaluate expression" }
       )
 
+      ------ nvim dap rr stuff
+      -- local cpptools_extension_path = vim.fn.stdpath("data") .. "/mason" .. "/packages" .. "/cpptools" .. "/extension"
+      -- local cpptools_path = cpptools_extension_path .. "/debugAdapters/bin/OpenDebugAD7"
+      local cpptools_path =
+      "/home/octavel/.local/share/nvim/mason/packages/cpptools/extension/debugAdapters/bin/OpenDebugAD7"
+
+      dap.adapters.cppdbg = {
+        id = "cppdbg",
+        type = "executable",
+        command = cpptools_path,
+      }
+
+      local rr_dap = require("nvim-dap-rr")
+      rr_dap.setup({
+        mappings = {
+          step_over = "<F1>",
+          step_into = "<F2>",
+          step_out = "<F4>",
+          continue = "<F5>",
+
+          reverse_continue = "<F6>",
+          -- reverse_continue = "<F19>",    -- <S-F7>
+          reverse_step_over = "<F20>",   -- <S-F8>
+          reverse_step_out = "<F21>",    -- <S-F9>
+          reverse_step_into = "<F22>",   -- <S-F10>
+          -- instruction level stepping
+          step_over_i = "<F32>",         -- <C-F8>
+          step_out_i = "<F33>",          -- <C-F8>
+          step_into_i = "<F34>",         -- <C-F8>
+          reverse_step_over_i = "<F44>", -- <SC-F8>
+          reverse_step_out_i = "<F45>",  -- <SC-F9>
+          reverse_step_into_i = "<F46>", -- <SC-F10>
+        }
+      })
+      require('mason-nvim-dap').setup {
+        -- Makes a best effort to setup the various debuggers with
+        -- reasonable debug configurations
+        automatic_installation = true,
+
+        -- You can provide additional configuration to the handlers,
+        -- see mason-nvim-dap README for more information
+        handlers = {},
+
+        -- You'll need to check that you have the required things installed
+        -- online, please don't ask me how to install them :)
+        ensure_installed = {
+          -- Update this to ensure that you have the debuggers for the langs you want
+          'delve',
+        },
+      }
+      ------------------------
+
       dap.listeners.before.attach.dapui_config = function()
         dapui.open()
       end
@@ -45,6 +100,8 @@ return {
       -- dap.listeners.before.event_exited.dapui_config = function()
       --   dapui.close()
       -- end
+      dap.configurations.cpp = { rr_dap.get_config() }
+      dap.configurations.rust = { rr_dap.get_rust_config() }
     end,
   },
 
@@ -56,6 +113,8 @@ return {
       require("nvim-dap-virtual-text").setup()
     end,
   },
+
+  { "jonboh/nvim-dap-rr", dependencies = { "nvim-dap", "telescope.nvim" } },
 
   -- to have persistent breakpoints (in theory)
   -- {

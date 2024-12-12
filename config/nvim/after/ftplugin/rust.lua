@@ -38,8 +38,13 @@ dap.configurations.rust = {
       return vim.fn.getcwd() .. "/target/debug/som-interpreter-ast"
     end,
     args = function()
-      local benchmark_name = vim.fn.input('Benchmark: ')
-      return benchmark_args_fn(benchmark_name)
+      local args = nil
+      vim.ui.input({ prompt = "Benchmark: " }, function(input)
+        if input then
+          args = benchmark_args_fn(input)
+        end
+      end)
+      return args
     end,
     cwd = "${workspaceFolder}",
     stopOnEntry = false,
@@ -52,8 +57,13 @@ dap.configurations.rust = {
       return vim.fn.getcwd() .. "/target/debug/som-interpreter-bc"
     end,
     args = function()
-      local benchmark_name = vim.fn.input('Benchmark: ')
-      return benchmark_args_fn(benchmark_name)
+      local args = nil
+      vim.ui.input({ prompt = "Benchmark: " }, function(input)
+        if input then
+          args = benchmark_args_fn(input)
+        end
+      end)
+      return args
     end,
     cwd = "${workspaceFolder}",
     stopOnEntry = false,
@@ -85,6 +95,25 @@ dap.configurations.rust = {
     cwd = "${workspaceFolder}",
     stopOnEntry = false,
   },
+  {
+    name = "ast-with-args",
+    type = "rust",
+    request = "launch",
+    program = function()
+      return vim.fn.getcwd() .. "/target/debug/som-interpreter-ast"
+    end,
+    args = function()
+      local args = nil
+      vim.ui.input({ prompt = "Benchmark name and number of iterations: " }, function(input)
+        if input then
+          args = benchmark_args_fn_with_args(input)
+        end
+      end)
+      return args
+    end,
+    cwd = "${workspaceFolder}",
+    stopOnEntry = false,
+  },
 }
 
 function benchmark_args_fn(benchmark_name)
@@ -110,3 +139,45 @@ function benchmark_args_fn(benchmark_name)
 
   return vim.tbl_flatten(classpath)
 end
+
+function benchmark_args_fn_with_args(benchmark_name_and_iters)
+  local classpath_items = {
+    "Smalltalk",
+    "Examples/Benchmarks",
+    "Examples/Benchmarks/LanguageFeatures",
+    "Examples/Benchmarks/Json",
+    "Examples/Benchmarks/Richards",
+    "Examples/Benchmarks/DeltaBlue"
+  }
+
+  local classpath = {}
+  for _, item in ipairs(classpath_items) do
+    table.insert(classpath, { "-c", "core-lib/" .. item })
+  end
+
+  table.insert(classpath,
+    { "--", "core-lib/Examples/Benchmarks/BenchmarkHarness.som", vim.split(benchmark_name_and_iters, " ") })
+
+  classpath = vim.tbl_flatten(classpath)
+
+  vim.g.last_benchmark_ran = benchmark_name
+
+  return vim.tbl_flatten(classpath)
+end
+
+local rr_dap = require("nvim-dap-rr")
+table.insert(dap.configurations.rust, rr_dap.get_rust_config(
+  {
+    name = "rr",
+    type = "cppdbg",
+    program = function()
+      return vim.fn.getcwd() .. "/target/debug/som-interpreter-bc"
+    end,
+    args = function()
+      -- local benchmark_name = vim.fn.input("Benchmark: ")
+      -- return benchmark_args_fn(benchmark_name)
+      return benchmark_args_fn("Richards")
+    end,
+    stopOnEntry = true
+  }
+))

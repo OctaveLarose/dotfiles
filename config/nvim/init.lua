@@ -71,9 +71,9 @@ for _, method in ipairs({ 'textDocument/diagnostic', 'workspace/diagnostic' }) d
   end
 end
 
-local timer = nil
+vim.api.nvim_set_hl(0, "FlashLabel", { fg = "black", bg = "#cd78dd" })
 
-
+-- local timer = nil
 -- show precognition hints after a sec of inactivity
 -- vim.api.nvim_create_autocmd({ "CursorMoved" }, { -- "CursorMovedI"
 --   callback = function()

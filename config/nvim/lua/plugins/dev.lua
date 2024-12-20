@@ -1,44 +1,5 @@
 return {
   {
-    "stevearc/conform.nvim",
-    event = 'BufWritePre',
-    opts = require "configs.conform",
-    formatters_by_ft = {
-      lua = { "stylua" },
-      rust = { "rustfmt", lsp_format = "fallback" },
-    },
-  },
-
-  {
-    "olimorris/persisted.nvim",
-    lazy = false, -- make sure the plugin is always loaded at startup
-    config = true,
-    autosave = true,
-  },
-
-  -- { 'akinsho/toggleterm.nvim', version = "*", config = true },
-
-  {
-    "nvim-treesitter/nvim-treesitter",
-    opts = {
-      ensure_installed = {
-        "vim", "lua", "vimdoc"
-      },
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = "<C-space>",
-          node_incremental = "<C-space>",
-          scope_incremental = false,
-          node_decremental = "<bs>",
-        },
-      },
-    },
-  },
-
-  { 'akinsho/git-conflict.nvim', version = "*", config = true },
-
-  {
     'MagicDuck/grug-far.nvim',
     config = function()
       require('grug-far').setup({
@@ -49,14 +10,10 @@ return {
     end
   },
 
+  -- TODO customise - sounds fantastic.
   {
-    "tris203/precognition.nvim",
-    init = function()
-      require('precognition').toggle()
-    end,
-    opts = {
-      startVisible = true,
-    }
+    "FabianWirth/search.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim" }
   },
 
   {
@@ -97,18 +54,14 @@ return {
     },
   },
 
-  {
-    "petertriho/nvim-scrollbar",
-    init = function()
-      require("scrollbar").setup()
-    end
-  },
+  { 'akinsho/git-conflict.nvim', version = "*", config = true },
 
-  -- TODO customise - sounds fantastic.
+  -- not sure i need that one. use actively, or remove from config
   {
-    "FabianWirth/search.nvim",
-    dependencies = { "nvim-telescope/telescope.nvim" }
-  },
-
-  { "ThePrimeagen/vim-be-good" }
+    'stevearc/overseer.nvim',
+    config = function()
+      require('overseer').setup()
+    end,
+    opts = {},
+  }
 }

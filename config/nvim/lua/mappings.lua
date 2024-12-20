@@ -16,6 +16,9 @@ local function opts(desc)
   return { buffer = bufnr, desc = "LSP " .. desc }
 end
 
+map("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
+map("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to prev diagnostic" })
+
 map("n", "gD", vim.lsp.buf.declaration, opts "Go to declaration")
 map("n", "gd", vim.lsp.buf.definition, opts "Go to definition")
 map("n", "gi", vim.lsp.buf.implementation, opts "Go to implementation")
@@ -39,15 +42,19 @@ map("n", "<space>h", vim.lsp.buf.hover,
 )
 
 -- grug-far
-vim.keymap.set('n', 'F', '<cmd>lua require("grug-far").open()<CR>', {
-  desc = "Use grug-far (project wide)"
-})
-vim.keymap.set('v', 'ff',
-  '<cmd>lua require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>") } })<CR>', {
-    desc = "Use grug-far (on current-word, project-wide)"
-  })
-vim.keymap.set('v', 'f',
-  '<cmd>lua require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>"), paths = vim.fn.expand("%") } })<CR>',
-  {
-    desc = "Use grug-far (on current word, in current file)"
-  })
+local grug_far = require("grug-far")
+map('n', 'F', function() grug_far.open() end, { desc = "Use grug-far (project wide)" })
+
+map('v', 'f',
+  function()
+    local prefill = vim.fn.expand("<cword>")
+    local current_file = vim.fn.expand("%")
+    grug_far.open({ prefills = { search = prefill, replacement = prefill, paths = current_file } })
+    -- grug_far.open({ prefills = { search = prefill, paths = current_file } })
+  end,
+  { desc = "Use grug-far (on current word, in current file)" }
+)
+
+map('v', 'ff',
+  function() grug_far.open({ prefills = { search = vim.fn.expand("<cword>") } }) end,
+  { desc = "Use grug-far (on current-word, project-wide)" })

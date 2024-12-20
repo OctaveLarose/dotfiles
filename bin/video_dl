@@ -1,2 +1,2 @@
 #!/bin/bash
-([ -f $2.mp4 ] && echo "File already exists.") || yt-dlp --cookies-from-browser firefox -f mp4 -o $2.mp4 $1
+([ -f $2.mp4 ] && echo "File already exists.") || yt-dlp -f mp4 -o $2.mp4 $1

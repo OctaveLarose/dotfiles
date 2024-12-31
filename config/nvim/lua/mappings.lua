@@ -2,7 +2,7 @@ require "nvchad.mappings"
 
 local map = vim.keymap.set
 
-map("n", ";", ":", { desc = "CMD enter command mode" })
+-- map("n", ";", ":", { desc = "CMD enter command mode" })
 -- map("i", "jk", "<ESC>:w<CR>")
 map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>", { desc = "Ctrl+S save" })
 
@@ -43,9 +43,9 @@ map("n", "<space>h", vim.lsp.buf.hover,
 
 -- grug-far
 local grug_far = require("grug-far")
-map('n', 'F', function() grug_far.open() end, { desc = "Use grug-far (project wide)" })
+map('n', '<leader>F', function() grug_far.open() end, { desc = "Use grug-far (project wide)" })
 
-map('v', 'f',
+map('v', 'ff',
   function()
     local prefill = vim.fn.expand("<cword>")
     local current_file = vim.fn.expand("%")
@@ -55,6 +55,6 @@ map('v', 'f',
   { desc = "Use grug-far (on current word, in current file)" }
 )
 
-map('v', 'ff',
+map('v', 'fff',
   function() grug_far.open({ prefills = { search = vim.fn.expand("<cword>") } }) end,
   { desc = "Use grug-far (on current-word, project-wide)" })

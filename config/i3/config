@@ -235,7 +235,8 @@ exec --no-startup-id dunst
 exec --no-startup-id yakuake
 exec --no-startup-id copyq
 exec --no-startup-id caffeine
-exec_always --no-startup-id picom
+# picom uses a lot of battery for some reason, so it's only enabled when plugged in at boot
+exec_always --no-startup-id [ "$(cat /sys/class/power_supply/BAT0/status)" = "Charging" ] && picom 
 exec --no-startup-id libinput-gestures-setup autostart start
 exec --no-startup-id $HOME/bin/change_wallpapers.sh
 exec --no-startup-id $HOME/bin/auto_autorandr.sh

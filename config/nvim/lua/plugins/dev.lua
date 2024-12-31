@@ -28,9 +28,14 @@ return {
       },
       {
         "<leader>xX",
-        "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+        "<cmd>Trouble diagnostics toggle filter.severity=vim.diagnostic.severity.ERROR<cr>",
         desc = "Buffer Diagnostics (Trouble)",
       },
+      -- {
+      --   "<leader>xX",
+      --   "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+      --   desc = "Buffer Diagnostics (Trouble)",
+      -- },
       -- {
       --   "<leader>cs",
       --   "<cmd>Trouble symbols toggle focus=false<cr>",
@@ -63,5 +68,12 @@ return {
       require('overseer').setup()
     end,
     opts = {},
+  },
+
+  {
+    "folke/todo-comments.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    init = function() require("todo-comments") end,
+    opts = {}
   }
 }

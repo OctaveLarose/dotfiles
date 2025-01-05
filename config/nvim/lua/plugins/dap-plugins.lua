@@ -3,6 +3,7 @@ return {
     'mfussenegger/nvim-dap',
     dependencies = {
       "jay-babu/mason-nvim-dap.nvim",
+      "mrcjkb/rustaceanvim"
     },
     config = function()
       local dap, dapui = require("dap"), require("dapui")
@@ -79,8 +80,7 @@ return {
         -- see mason-nvim-dap README for more information
         handlers = {},
 
-        -- ensure_installed = {
-        --   -- Update this to ensure that you have the debuggers for the langs you want
+        ensure_installed = {}
         --   'delve',
         -- },
       }

@@ -2,6 +2,11 @@ vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+-- for nvimtree
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+-- vim.opt.termguicolors = true
+
 -- bootstrap lazy and all plugins
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 
@@ -12,29 +17,38 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
-local lazy_config = require "configs.lazy"
+-- hmm, maybe restore? TODO
+-- local lazy_config = require "configs.lazy"
 
--- load plugins
-require("lazy").setup({
-  {
-    "NvChad/NvChad",
-    lazy = false,
-    branch = "v2.5",
-    import = "nvchad.plugins",
+require('lazy').setup {
+  { 'romgrk/barbar.nvim',
+    dependencies = {
+      'lewis6991/gitsigns.nvim',
+      'nvim-tree/nvim-web-devicons',
+    },
+    init = function() vim.g.barbar_auto_setup = false end,
+    opts = {},
+    version = '^1.0.0', -- optional: only update when a new 1.x version is released
   },
 
   { import = "plugins" },
-}, lazy_config)
+  {
+    "ibhagwan/fzf-lua",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    opts = {}
+  }
+}
 
--- to use the normal clipboard, in theory
-vim.api.nvim_set_option_value("clipboard", "unnamed,unnamedplus", {})
+vim.cmd [[colorscheme onedark]]
 
--- load theme
-dofile(vim.g.base46_cache .. "defaults")
-dofile(vim.g.base46_cache .. "statusline")
+require("mason").setup()
+
+-- load nvchad theme
+-- dofile(vim.g.base46_cache .. "defaults")
+-- dofile(vim.g.base46_cache .. "statusline")
 
 require "options"
-require "nvchad.autocmds"
+-- require "nvchad.autocmds"
 
 vim.schedule(function()
   require "mappings"

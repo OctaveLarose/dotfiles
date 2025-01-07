@@ -22,4 +22,20 @@ return {
     end
   },
 
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    priority = 1000
+  },
+
+  { "rebelot/kanagawa.nvim" },
+
+  { "tanvirtin/monokai.nvim" },
+
+  {
+    "rose-pine/neovim",
+    name = "rose-pine",
+  },
+
+  { "Shatur/neovim-ayu" }
 }

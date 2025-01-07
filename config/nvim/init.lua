@@ -21,6 +21,7 @@ vim.opt.rtp:prepend(lazypath)
 -- local lazy_config = require "configs.lazy"
 
 require('lazy').setup {
+  -- install = { colorscheme = { "ayu-mirage" } },
   { 'romgrk/barbar.nvim',
     dependencies = {
       'lewis6991/gitsigns.nvim',
@@ -39,13 +40,9 @@ require('lazy').setup {
   }
 }
 
-vim.cmd [[colorscheme onedark]]
+vim.cmd [[colorscheme ayu-mirage]]
 
 require("mason").setup()
-
--- load nvchad theme
--- dofile(vim.g.base46_cache .. "defaults")
--- dofile(vim.g.base46_cache .. "statusline")
 
 require "options"
 -- require "nvchad.autocmds"
@@ -74,16 +71,17 @@ vim.api.nvim_create_autocmd("User", {
   end,
 })
 
--- workaround for bug with rust-analyzer notification
-for _, method in ipairs({ 'textDocument/diagnostic', 'workspace/diagnostic' }) do
-  local default_diagnostic_handler = vim.lsp.handlers[method]
-  vim.lsp.handlers[method] = function(err, result, context, config)
-    if err ~= nil and err.code == -32802 then
-      return
-    end
-    return default_diagnostic_handler(err, result, context, config)
-  end
-end
+-- no longer needed i think, got patched out?
+-- -- workaround for bug with rust-analyzer notification
+-- for _, method in ipairs({ 'textDocument/diagnostic', 'workspace/diagnostic' }) do
+--   local default_diagnostic_handler = vim.lsp.handlers[method]
+--   vim.lsp.handlers[method] = function(err, result, context, config)
+--     if err ~= nil and err.code == -32802 then
+--       return
+--     end
+--     return default_diagnostic_handler(err, result, context, config)
+--   end
+-- end
 
 vim.api.nvim_set_hl(0, "FlashLabel", { fg = "black", bg = "#cd78dd" })
 

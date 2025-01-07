@@ -75,5 +75,8 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     init = function() require("todo-comments") end,
     opts = {}
-  }
+  },
+
+  -- preview LSP renames
+  { "saecki/live-rename.nvim" }
 }

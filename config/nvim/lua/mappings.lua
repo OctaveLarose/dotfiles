@@ -42,7 +42,7 @@ map("n", "<leader>wl", function()
 end, lsp_opts "List workspace folders")
 
 map("n", "<leader>D", vim.lsp.buf.type_definition, lsp_opts "Go to type definition")
--- map("n", "<leader>ra", require "nvchad.lsp.renamer", lsp_opts "NvRenamer")
+map("n", "<leader>ra", function() require("live-rename").rename({ insert = true }) end, lsp_opts "live-rename")
 
 map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, lsp_opts "Code action")
 map("n", "gr", vim.lsp.buf.references, lsp_opts "Show references")
@@ -67,7 +67,7 @@ map("n", "<leader>fw", "<cmd>FzfLua live_grep<cr>", { desc = "fzf-lua live grep"
 
 -- map("n", ";", ":", { desc = "CMD enter command mode" })
 -- map("i", "jk", "<ESC>:w<CR>")
-map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>", { desc = "Ctrl+S save" })
+map({ "n", "i", "v" }, "<C-s>", "<cmd>w<cr><ESC>", { desc = "Ctrl+S save" })
 
 map("n", "<leader>rr", ":make b <cr>", { silent = true, desc = "Make build" })
 

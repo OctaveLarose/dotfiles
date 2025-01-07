@@ -51,7 +51,9 @@ return {
     config = function()
       require('lualine').setup({
         options = {
-          disabled_filetypes = { 'snacks_dashboard' }
+          disabled_filetypes = { "snacks_dashboard" },
+          -- disabled_filetypes = { "snacks_dashboard", "NvimTree" },
+          -- extensions = { "nvim-tree" }
         }
       })
     end

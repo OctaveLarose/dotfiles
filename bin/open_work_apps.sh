@@ -6,7 +6,7 @@ commands=(
     "superproductivity"
     "notion-app-enhanced"
 #    "texstudio"
-#    "obsidian"
+    "obsidian"
 #    "$HOME/Programs/PhD/git_repos/Zotero_linux-x86_64/zotero"
     "rustrover"
 #    "code"

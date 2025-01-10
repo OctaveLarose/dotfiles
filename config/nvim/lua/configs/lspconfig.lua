@@ -30,6 +30,8 @@ lspconfig.lua_ls.setup {
   },
 }
 
+lspconfig.markdown_oxide.setup {}
+lspconfig.jsonls.setup {}
 --
 -- local servers = {} -- none at the moment, we just need rust which we handle through rustaceanvim
 -- local nvlsp = require "nvchad.configs.lspconfig"

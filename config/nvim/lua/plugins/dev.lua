@@ -10,12 +10,6 @@ return {
     end
   },
 
-  -- TODO customise - sounds fantastic.
-  {
-    "FabianWirth/search.nvim",
-    dependencies = { "nvim-telescope/telescope.nvim" }
-  },
-
   {
     "folke/trouble.nvim",
     opts = {}, -- for default options, refer to the configuration section for custom setup.

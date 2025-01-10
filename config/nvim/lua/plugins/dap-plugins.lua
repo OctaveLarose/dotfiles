@@ -115,7 +115,8 @@ return {
     end,
   },
 
-  { "jonboh/nvim-dap-rr", dependencies = { "nvim-dap", "telescope.nvim" } },
+  -- { "jonboh/nvim-dap-rr", dependencies = { "nvim-dap", "telescope.nvim" } },
+  { "jonboh/nvim-dap-rr", dependencies = { "nvim-dap" } },
 
   -- to have persistent breakpoints (in theory)
   -- {

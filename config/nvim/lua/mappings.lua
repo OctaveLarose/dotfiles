@@ -1,5 +1,9 @@
 local map = vim.keymap.set
 
+
+map({ "n", "i" }, "<C-q>", "<cmd>:q<CR>", { desc = "quit" })
+map({ "i" }, "jk", "<ESC>", { desc = "exit insert mode" })
+
 -- a lot of these are from nvchad originally:
 ------------------------------
 
@@ -16,9 +20,11 @@ map("n", "<leader>/", "gcc", { desc = "toggle comment", remap = true })
 map("v", "<leader>/", "gc", { desc = "toggle comment", remap = true })
 map("n", "yc", "yygccp", { desc = "Copy line and comment it", remap = true })
 
--- nvimtree
-map("n", "<C-n>", "<cmd>NvimTreeToggle<CR>", { desc = "nvimtree toggle window" })
-map("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree focus window" })
+-- tree
+-- map("n", "<C-n>", "<cmd>NvimTreeToggle<CR>", { desc = "nvimtree toggle window" })
+-- map("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree focus window" })
+map("n", "<C-n>", "<cmd>Neotree toggle<CR>", { desc = "neotree toggle window" })
+map("n", "<leader>e", "<cmd>Neotree reveal<CR>", { desc = "neotree focus window" })
 
 -- LSP stuff
 local function lsp_opts(desc)
@@ -37,13 +43,8 @@ map("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
 map("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to prev diagnostic" })
 
 -- map("n", "<leader>sh", vim.lsp.buf.signature_help, lsp_opts "Show signature help")
--- map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, lsp_opts "Add workspace folder")
--- map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, lsp_opts "Remove workspace folder")
-
--- map("n", "<leader>wl", function()
---   print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
--- end, lsp_opts "List workspace folders")
-
+map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, lsp_opts "Add workspace folder")
+map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, lsp_opts "Remove workspace folder")
 
 map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, lsp_opts "Code action")
 map("n", "<space>h", vim.lsp.buf.hover,
@@ -90,6 +91,7 @@ map('v', 'fff',
   function() grug_far.open({ prefills = { search = vim.fn.expand("<cword>") } }) end,
   { desc = "Use grug-far (on current-word, project-wide)" })
 
+-- treesitter expansion selection mappings
 require('nvim-treesitter.configs').setup {
   incremental_selection = {
     enable = true,
@@ -101,3 +103,5 @@ require('nvim-treesitter.configs').setup {
     },
   },
 }
+
+map("n", "<C-L><C-L>", "<cmd>:set invrelativenumber<CR>", { desc = "Toggle relative line numbers" })

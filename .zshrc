@@ -124,6 +124,7 @@ alias duc="du -sh * | sort -h"
 alias duca="du -sh * .* | sort -h"
 alias push="git push"
 alias lg='lazygit'
+alias vim='nvim'
 
 #eval $(thefuck --alias)
 
@@ -133,3 +134,5 @@ eval "$(pyenv init -)"
 
 eval "$(atuin init --disable-up-arrow zsh)"
 eval "$(zoxide init zsh)"
+
+. "$HOME/.atuin/bin/env"

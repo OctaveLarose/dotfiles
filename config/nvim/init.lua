@@ -1,11 +1,12 @@
-vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46/"
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
--- for nvimtree
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
--- vim.opt.termguicolors = true
+-- relative line numbers (there's a mapping to toggle it on/off also)
+vim.wo.relativenumber = true
+
+-- vim.g.
+--     set
+-- rnu
 
 -- bootstrap lazy and all plugins
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
@@ -16,9 +17,6 @@ if not vim.uv.fs_stat(lazypath) then
 end
 
 vim.opt.rtp:prepend(lazypath)
-
--- hmm, maybe restore? TODO
--- local lazy_config = require "configs.lazy"
 
 require('lazy').setup {
   -- install = { colorscheme = { "ayu-mirage" } },
@@ -45,7 +43,6 @@ vim.cmd [[colorscheme ayu-mirage]]
 require("mason").setup()
 
 require "options"
--- require "nvchad.autocmds"
 
 vim.schedule(function()
   require "mappings"
@@ -54,16 +51,27 @@ end)
 vim.lsp.inlay_hint.enable()
 
 -- autoformat
-vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
+-- vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
+vim.api.nvim_create_autocmd("BufWritePre", {
+  callback = function()
+    local mode = vim.api.nvim_get_mode().mode
+    local filetype = vim.bo.filetype
+    if vim.bo.modified == true and mode == 'n' and filetype ~= "markdown" then
+      vim.cmd('lua vim.lsp.buf.format()')
+    else
+    end
+  end
+})
+
 
 -- to not capture when saving sessions:
--- NvimTree
+-- NvimTree or neotree
 -- dapui
 vim.api.nvim_create_autocmd("User", {
   pattern = "PersistedSavePre",
   callback = function()
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-      if vim.bo[buf].filetype == "NvimTree" then
+      if vim.bo[buf].filetype == "NvimTree" or vim.bo[buf].filetype == "neo-tree" then
         vim.api.nvim_buf_delete(buf, { force = true })
       end
     end
@@ -84,6 +92,9 @@ vim.api.nvim_create_autocmd("User", {
 -- end
 
 vim.api.nvim_set_hl(0, "FlashLabel", { fg = "black", bg = "#cd78dd" })
+-- changing the dap default icons
+vim.fn.sign_define('DapBreakpoint', { text = '🟥', texthl = '', linehl = '', numhl = '' })
+vim.fn.sign_define('DapStopped', { text = '▶️', texthl = '', linehl = '', numhl = '' })
 
 -- local timer = nil
 -- show precognition hints after a sec of inactivity

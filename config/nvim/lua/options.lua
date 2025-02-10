@@ -6,7 +6,7 @@ local g = vim.g
 o.laststatus = 3
 o.showmode = false
 
-o.clipboard = "unnamed,unnamedplus"
+o.clipboard = "unnamedplus"
 o.cursorline = true
 o.cursorlineopt = "number"
 
@@ -58,7 +58,3 @@ vim.env.PATH = table.concat({ vim.fn.stdpath "data", "mason", "bin" }, sep) .. d
 
 local o = vim.o
 o.cursorlineopt = 'both'
-
--- changing the dap default icons
-vim.fn.sign_define('DapBreakpoint', { text = '🟥', texthl = '', linehl = '', numhl = '' })
-vim.fn.sign_define('DapStopped', { text = '▶️', texthl = '', linehl = '', numhl = '' })

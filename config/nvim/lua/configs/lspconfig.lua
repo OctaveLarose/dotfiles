@@ -1,6 +1,3 @@
--- -- -- load defaults i.e lua_lsp
--- -- require("nvchad.configs.lspconfig").defaults()
--- --
 local lspconfig = require "lspconfig"
 
 lspconfig.lua_ls.setup {
@@ -32,6 +29,8 @@ lspconfig.lua_ls.setup {
 
 lspconfig.markdown_oxide.setup {}
 lspconfig.jsonls.setup {}
+lspconfig.pyright.setup {}
+
 --
 -- local servers = {} -- none at the moment, we just need rust which we handle through rustaceanvim
 -- local nvlsp = require "nvchad.configs.lspconfig"

@@ -17,7 +17,7 @@ return {
       vim.keymap.set("n", "<F6>", dap.up)
       vim.keymap.set("n", "<F7>", dap.down)
       vim.keymap.set("n", "<F10>", dapui.close)
-      vim.keymap.set("n", "<F13>", dap.restart)
+      vim.keymap.set("n", "<F12>", dap.restart)
 
       vim.keymap.set("n", "<Leader>de", dap.terminate, { desc = "Debugger reset" })
       vim.keymap.set("n", "<Leader>dr", dap.run_last, { desc = "Debugger run last" })
@@ -36,40 +36,41 @@ return {
         { desc = "Debugger evaluate expression" }
       )
 
-      ------ nvim dap rr stuff
-      -- local cpptools_extension_path = vim.fn.stdpath("data") .. "/mason" .. "/packages" .. "/cpptools" .. "/extension"
-      -- local cpptools_path = cpptools_extension_path .. "/debugAdapters/bin/OpenDebugAD7"
-      local cpptools_path =
-      "/home/octavel/.local/share/nvim/mason/packages/cpptools/extension/debugAdapters/bin/OpenDebugAD7"
-
-      dap.adapters.cppdbg = {
-        id = "cppdbg",
-        type = "executable",
-        command = cpptools_path,
-      }
-
-      local rr_dap = require("nvim-dap-rr")
-      rr_dap.setup({
-        mappings = {
-          step_over = "<F1>",
-          step_into = "<F2>",
-          step_out = "<F4>",
-          continue = "<F5>",
-
-          reverse_continue = "<F6>",
-          -- reverse_continue = "<F19>",    -- <S-F7>
-          reverse_step_over = "<F20>",   -- <S-F8>
-          reverse_step_out = "<F21>",    -- <S-F9>
-          reverse_step_into = "<F22>",   -- <S-F10>
-          -- instruction level stepping
-          step_over_i = "<F32>",         -- <C-F8>
-          step_out_i = "<F33>",          -- <C-F8>
-          step_into_i = "<F34>",         -- <C-F8>
-          reverse_step_over_i = "<F44>", -- <SC-F8>
-          reverse_step_out_i = "<F45>",  -- <SC-F9>
-          reverse_step_into_i = "<F46>", -- <SC-F10>
-        }
-      })
+      --
+      -- ------ nvim dap rr stuff
+      -- -- local cpptools_extension_path = vim.fn.stdpath("data") .. "/mason" .. "/packages" .. "/cpptools" .. "/extension"
+      -- -- local cpptools_path = cpptools_extension_path .. "/debugAdapters/bin/OpenDebugAD7"
+      -- local cpptools_path =
+      -- "/home/octavel/.local/share/nvim/mason/packages/cpptools/extension/debugAdapters/bin/OpenDebugAD7"
+      --
+      -- dap.adapters.cppdbg = {
+      --   id = "cppdbg",
+      --   type = "executable",
+      --   command = cpptools_path,
+      -- }
+      --
+      -- local rr_dap = require("nvim-dap-rr")
+      -- rr_dap.setup({
+      --   mappings = {
+      --     step_over = "<F1>",
+      --     step_into = "<F2>",
+      --     step_out = "<F4>",
+      --     continue = "<F5>",
+      --
+      --     reverse_continue = "<F6>",
+      --     -- reverse_continue = "<F19>",    -- <S-F7>
+      --     reverse_step_over = "<F20>",   -- <S-F8>
+      --     reverse_step_out = "<F21>",    -- <S-F9>
+      --     reverse_step_into = "<F22>",   -- <S-F10>
+      --     -- instruction level stepping
+      --     step_over_i = "<F32>",         -- <C-F8>
+      --     step_out_i = "<F33>",          -- <C-F8>
+      --     step_into_i = "<F34>",         -- <C-F8>
+      --     reverse_step_over_i = "<F44>", -- <SC-F8>
+      --     reverse_step_out_i = "<F45>",  -- <SC-F9>
+      --     reverse_step_into_i = "<F46>", -- <SC-F10>
+      --   }
+      -- })
 
       require('mason-nvim-dap').setup {
         -- Makes a best effort to setup the various debuggers with
@@ -81,8 +82,6 @@ return {
         handlers = {},
 
         ensure_installed = {}
-        --   'delve',
-        -- },
       }
       ------------------------
 
@@ -92,17 +91,28 @@ return {
       dap.listeners.before.launch.dapui_config = function()
         dapui.open()
       end
-
       -- dap.listeners.before.event_terminated.dapui_config = function()
       --   dapui.close()
       -- end
       -- dap.listeners.before.event_exited.dapui_config = function()
       --   dapui.close()
       -- end
-      dap.configurations.cpp = { rr_dap.get_config() }
-      dap.configurations.rust = { rr_dap.get_rust_config() }
 
-      dap.adapters.rust = vim.g.rustaceanvim.dap.adapter -- we might need to make DAP depend on rustaceanvim
+      -- dap.configurations.cpp = { rr_dap.get_config() }
+      -- dap.configurations.rust = { rr_dap.get_rust_config() }
+
+      -- is uncaught needed? does this even work? not sure....
+      dap.listeners.after.event_initialized["dap_exception_breakpoint"] = function()
+        dap.set_exception_breakpoints({ "cpp_throw", "cpp_catch", "uncaught" })
+      end
+
+      -- dap.listeners.after.event_initialized["dapui_config"] = function()
+      --   dapui.open()
+      --   dap.set_exception_breakpoints("default")
+      -- end
+
+      dap.adapters.rust = vim.g.rustaceanvim.dap.adapter
+      -- dap.defaults.rust.exception_breakpoints = { 'cpp_throw, cpp_catch' }
     end,
   },
 

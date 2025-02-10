@@ -28,5 +28,17 @@ return {
       }
     },
     config = function(_, opts) require 'lsp_signature'.setup(opts) end
-  }
+  },
+
+  -- to maybe ease LSP file moving/renaming. testing it out right now, it's on a trial run
+  {
+    "antosha417/nvim-lsp-file-operations",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-tree.lua",
+    },
+    config = function()
+      require("lsp-file-operations").setup()
+    end,
+  },
 }

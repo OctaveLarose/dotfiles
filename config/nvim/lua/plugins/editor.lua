@@ -1,4 +1,5 @@
 return {
+  -- autoformatting
   {
     "stevearc/conform.nvim",
     event = 'BufWritePre',
@@ -9,6 +10,7 @@ return {
     },
   },
 
+  -- autosave files
   {
     "okuuva/auto-save.nvim",
     version = '^1.0.0',        -- see https://devhints.io/semver, alternatively use '*' to use the latest tagged release
@@ -38,13 +40,14 @@ return {
     "karb94/neoscroll.nvim",
     init = function()
       require("neoscroll").setup({
-        duration_multiplier = 0.8 -- a bit faster than the default
+        duration_multiplier = 0.5 -- faster than the default
       })
     end,
     opts = {},
   },
 
   -- status bar
+  -- maybe https://github.com/bwpge/lualine-pretty-path is nice
   {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -66,12 +69,30 @@ return {
     autosave = true,
   },
 
+  -- {
+  --   "nvim-tree/nvim-tree.lua",
+  --   init = function()
+  --     require("nvim-tree").setup()
+  --   end
+  --   -- cmd = { "NvimTreeToggle", "NvimTreeFocus" },
+  -- },
+
   {
-    "nvim-tree/nvim-tree.lua",
-    init = function()
-      require("nvim-tree").setup()
-    end
-    -- cmd = { "NvimTreeToggle", "NvimTreeFocus" },
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons",
+      "MunifTanjim/nui.nvim",
+      -- {"3rd/image.nvim", opts = {}}, -- Optional image support in preview window: See `# Preview Mode` for more information
+    },
+    config = {
+      buffers = {
+        follow_current_file = {
+          enabled = true, -- This will find and focus the file in the active buffer every time -- -- the current file is changed while the tree is open.
+        }
+      }
+    }
   },
 
   {
@@ -123,4 +144,12 @@ return {
     end,
   },
 
+  -- makes delete not yank + defines a "cut" explicitly
+  -- {
+  --   "gbprod/cutlass.nvim",
+  --   opts = {
+  --     cut_key = "m",
+  --     override_del = true
+  --   }
+  -- }
 }

@@ -36,6 +36,7 @@ map("n", "gd", vim.lsp.buf.definition, lsp_opts "Go to definition")
 map("n", "gi", vim.lsp.buf.implementation, lsp_opts "Go to implementation")
 map("n", "<leader>D", vim.lsp.buf.type_definition, lsp_opts "Go to type definition")
 map("n", "gr", "<cmd>FzfLua lsp_references<CR>", lsp_opts "Show references")
+map("n", "gt", "<cmd>FzfLua lsp_workspace_symbols<CR>", lsp_opts "Show references")
 
 map("n", "<leader>ra", function() require("live-rename").rename({ insert = true }) end, lsp_opts "live-rename")
 

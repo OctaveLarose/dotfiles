@@ -124,6 +124,7 @@ alias duc="du -sh * | sort -h"
 alias duca="du -sh * .* | sort -h"
 alias push="git push"
 alias lg='lazygit'
+alias gs='git status'
 alias vim='nvim'
 
 #eval $(thefuck --alias)

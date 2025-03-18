@@ -1,23 +1,5 @@
 return {
   {
-    "nvim-treesitter/nvim-treesitter",
-    opts = {
-      ensure_installed = {
-        "vim", "lua", "vimdoc"
-      },
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = "<C-w>",
-          node_incremental = "<C-w>",
-          scope_incremental = false,
-          node_decremental = "<bs>",
-        },
-      },
-    },
-  },
-
-  {
     "folke/flash.nvim",
     event = "VeryLazy",
     ---@type Flash.Config
@@ -39,11 +21,13 @@ return {
   },
 
   -- todo: learn to use
-  { 'echasnovski/mini.ai', version = '*',
-  config = function ()
-    require("mini.ai").setup()
-  end
-},
+  {
+    'echasnovski/mini.ai',
+    version = '*',
+    config = function()
+      require("mini.ai").setup()
+    end
+  },
 
   {
     "kylechui/nvim-surround",

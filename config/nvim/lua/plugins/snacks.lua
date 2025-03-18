@@ -39,7 +39,7 @@ return {
         timeout = 5000,
       },
       quickfile = { enabled = true },
-      -- for now i prefer neoscroll for how it handles horizontal cursor adjustment
+      -- for now i prefer cinnamon because it can center after scrolling
       -- scroll = { enabled = true },
       statuscolumn = { enabled = true },
       words = { enabled = true },

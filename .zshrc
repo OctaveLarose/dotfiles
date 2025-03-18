@@ -137,3 +137,5 @@ eval "$(atuin init --disable-up-arrow zsh)"
 eval "$(zoxide init zsh)"
 
 . "$HOME/.atuin/bin/env"
+
+export PATH=$PATH:/home/octavel/.spicetify

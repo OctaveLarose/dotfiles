@@ -3,6 +3,7 @@ local map = vim.keymap.set
 
 map({ "n", "i" }, "<C-q>", "<cmd>:q<CR>", { desc = "quit" })
 map({ "i" }, "jk", "<ESC>", { desc = "exit insert mode" })
+map({ "n", "i", "v" }, "<C-s>", "<cmd>w<cr><ESC>", { desc = "Ctrl+S save" })
 
 -- a lot of these are from nvchad originally:
 ------------------------------
@@ -70,8 +71,6 @@ vim.keymap.set("n", "<A-0>", "<cmd>BufferLast<CR>", { desc = "buffer goto last" 
 map("n", "<leader>ff", "<cmd>FzfLua files<cr>", { desc = "fzf-lua find files" })
 map("n", "<leader>fw", "<cmd>FzfLua live_grep<cr>", { desc = "fzf-lua live grep" })
 
-map({ "n", "i", "v" }, "<C-s>", "<cmd>w<cr><ESC>", { desc = "Ctrl+S save" })
-
 map("n", "<leader>rr", ":make b <cr>", { silent = true, desc = "Make build" })
 
 -- grug-far
@@ -106,3 +105,7 @@ require('nvim-treesitter.configs').setup {
 }
 
 map("n", "<C-L><C-L>", "<cmd>:set invrelativenumber<CR>", { desc = "Toggle relative line numbers" })
+
+-- centered scrolling with C-u/C-d
+map("n", "<C-u>", function() require("cinnamon").scroll("<C-U>zz") end)
+map("n", "<C-d>", function() require("cinnamon").scroll("<C-d>zz") end)

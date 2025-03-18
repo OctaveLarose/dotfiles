@@ -165,20 +165,23 @@ exec --no-startup-id systemctl start --user polybar
 
 ### Window assignments
 assign [class="^firefox$"] → $ws1
+assign [class="^firefox_firefox$"] → $ws1
 assign [class="^TeXstudio$"] → $ws2
 assign [class="^notion-app$"] → $ws2
 assign [class="^notion-app-enhanced$"] → $ws2
 assign [class="^Notion$"] → $ws2
 assign [class="^obsidian$"] → $ws2
+assign [instance="overleaf.com"] → $ws2
 assign [class="^Zotero$"] → $ws3
 assign [class="^jetbrains-*"] → $ws4
 assign [class="^Code$"] → $ws4
 assign [class="^superProductivity$"] → $ws6
-assign [class="^Microsoft Teams - Preview$"] → $ws7
 assign [class="^teams-for-linux$"] → $ws7
+assign [instance="^teams.microsoft.com__v2$"] → $ws7
 assign [class="^Slack$"] → $ws7
 for_window [class="^Spotify"] move --no-auto-back-and-forth to workspace $ws9
 assign [class="^YouTube Music$"] → $ws9
+assign [class="youtube_music"] → $ws9
 assign [class="^gnome-pomodoro$"] → $ws10
 
 # Grant focus to new windows, e.g. opening a link from ws3 will focus Firefox in ws1.

@@ -6,6 +6,7 @@ return {
     formatters_by_ft = {
       lua = { "stylua" },
       rust = { "rustfmt", lsp_format = "fallback" },
+      tex = { "latexindent" },
       -- json = { lsp_format = "prefer" }
     },
   },

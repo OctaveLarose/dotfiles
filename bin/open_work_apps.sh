@@ -5,6 +5,7 @@ commands=(
     "teams-for-linux"
     "superproductivity"
     "notion-app-enhanced"
+    "chromium-browser --app="https://www.overleaf.com/project/67acab16bf3521e3e802bc1a" --class=WebApp-overleaf7413 --name=WebApp-overleaf7413 --user-data-dir=/home/octavel/.local/share/ice/profiles/overleaf7413"
 #    "texstudio"
     "obsidian"
 #    "$HOME/Programs/PhD/git_repos/Zotero_linux-x86_64/zotero"

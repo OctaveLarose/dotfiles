@@ -61,6 +61,7 @@
   "trouble.nvim": { "branch": "main", "commit": "85bedb7eb7fa331a2ccbecb9202d8abba64d37b3" },
   "typr": { "branch": "main", "commit": "5ee7b67dc610e8ec2c0c8a6912a8d1fba90160c2" },
   "vim-be-good": { "branch": "master", "commit": "0ae3de14eb8efc6effe7704b5e46495e91931cc5" },
+  "vimtex": { "branch": "master", "commit": "528c0671d4d579e1ce126e8958b388a67586d282" },
   "volt": { "branch": "main", "commit": "21a2351697abfed26d4469b88d3ab124d55a1b3f" },
   "which-key.nvim": { "branch": "main", "commit": "370ec46f710e058c9c1646273e6b225acf47cbed" }
 }

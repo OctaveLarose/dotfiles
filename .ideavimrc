@@ -1,2 +1,3 @@
 set number relativenumber
 map <A-Enter> <Action>(ShowIntentionActions)
+set clipboard+=unnamed

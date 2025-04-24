@@ -19,10 +19,11 @@ return {
 
   -- { "nvim-treesitter/nvim-treesitter-context" },
 
+  -- TODO REENABLE
   -- incompatible with treesitter-context afaik
-  {
-    "boltlessengineer/sense.nvim",
-  },
+--  {
+  --  "boltlessengineer/sense.nvim",
+  --},
 
   {
     'MagicDuck/grug-far.nvim',

@@ -1,4 +1,0 @@
-#!/bin/bash
-
-/home/octavel/.config/polybar/launch.sh 
-/home/octavel/bin/change_wallpapers.sh -f 

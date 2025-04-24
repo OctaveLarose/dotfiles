@@ -128,14 +128,16 @@ alias gs='git status'
 alias vim='nvim'
 
 #eval $(thefuck --alias)
-
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
 [ -f "/home/octavel/.ghcup/env" ] && source "/home/octavel/.ghcup/env" # ghcup-env
 
+. "$HOME/.atuin/bin/env"
+
 eval "$(atuin init --disable-up-arrow zsh)"
 eval "$(zoxide init zsh)"
 
-. "$HOME/.atuin/bin/env"
 
 export PATH=$PATH:/home/octavel/.spicetify

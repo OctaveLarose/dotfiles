@@ -4,10 +4,10 @@ BROWSER='firefox'
 #SEARCHENGINE='google'
 SEARCHENGINE='duckduckgo'
 
-if ! command -v xclip &> /dev/null; then
-    echo "Missing xclip, script can't work."
-    exit 1
-fi
+# if ! command -v xclip &> /dev/null; then
+#     echo "Missing xclip, script can't work."
+#     exit 1
+# fi
 
 hexify_for_google() {
     local hex_string=""
@@ -23,7 +23,8 @@ hexify_for_google() {
 #    echo "$hex_string"
 }
 
-clipboard_content=$(xclip -o | tr ' ' '+')
+# clipboard_content=$(xclip -o | tr ' ' '+')
+clipboard_content=$(wl-copy -o | tr ' ' '+')
 hexified_content=$(hexify_for_google "$clipboard_content")
 
 $BROWSER "http://www.$SEARCHENGINE.com/?q=$hexified_content"

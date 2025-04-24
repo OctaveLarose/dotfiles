@@ -3,46 +3,55 @@ set $mod Mod4
 
 font pango:Monocraft 8
 
-input "type:keyboard" {
-    xkb_layout gb(extd)
-    xkb_variant ,nodeadkeys
-#    xkb_options grp:alt_shift_toggle
-}
+input * {
+  xkb_layout "gb"
+  xkb_variant "extd"
+  xkb_options caps:escape
+}  
 
-# Delay before lock set in seconds with xset.
-set $lock_command $HOME/bin/i3_lock_screen.sh
-exec_always --no-startup-id xset dpms 0 0 600 &
-exec --no-startup-id xss-lock --transfer-sleep-lock -- $lock_command --nofork
+set $lock_command $HOME/bin/sway_lock_screen.sh 
+
+### Idle configuration
+exec swayidle -w \
+          timeout 1200 $lock_command \
+          timeout 1500 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+          before-sleep $lock_command
+#
+# This will lock your screen after 1200 seconds of inactivity, then turn off
+# your displays after another 300 seconds, and turn your screens back on when
+# resumed. It will also lock your screen before your computer goes to sleep.
+
 
 # Screenshotting
 bindsym Print exec --no-startup-id flameshot gui
 
 set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioLowerVolume    exec --no-startup-id amixer -q -D pulse sset Master 5%- unmute
-bindsym XF86AudioRaiseVolume    exec --no-startup-id amixer -q -D pulse sset Master 5%+ unmute
-bindsym XF86AudioMute           exec --no-startup-id amixer -q -D pulse sset Master toggle
-
+# bindsym XF86AudioLowerVolume    exec --no-startup-id amixer -q -D pulse sset Master 5%- unmute
+# bindsym XF86AudioRaiseVolume    exec --no-startup-id amixer -q -D pulse sset Master 5%+ unmute
+# bindsym XF86AudioMute           exec --no-startup-id amixer -q -D pulse sset Master toggle
+bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume \@DEFAULT_SINK@ -5%
+bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume \@DEFAULT_SINK@ +5%
+bindsym --locked XF86AudioMute exec pactl set-sink-mute \@DEFAULT_SINK@ toggle
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec konsole
+bindsym $mod+Return exec kitty
 
 # kill focused window
 bindsym $mod+Shift+q kill
 
-bindsym $mod+Shift+d exec dmenu_run -b
-# dmenu with only .desktop files. 
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -b"
+bindsym $mod+Shift+d exec tofi-run | xargs swaymsg exec --
+# only .desktop files
+bindsym $mod+d exec --no-startup-id tofi-drun | xargs swaymsg exec --
 
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
-# alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
@@ -61,7 +70,7 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod+semicolon split h
 
 # split in vertical orientation
 bindsym $mod+v split v
@@ -134,7 +143,7 @@ bindsym $mod+Shift+slash move workspace to output next
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+# restart sway inplace (preserves your layout/session, can be used to upgrade sway)
 bindsym $mod+Shift+r restart
 
 # resize window (you can also use the mouse for that)
@@ -154,49 +163,39 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-#bar swaybar_command waybar
-bar {
-    position top
-
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    status_command while date +'%d/%m - %H:%m'; do sleep 1; done
-
-    colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
-    }
-}
+exec --no-startup-id waybar
 
 # Gaps are neat, but I prefer without with my current setup.
-#gaps inner 3px
-#gaps outer 3px
+# gaps inner 3px
+# gaps outer 3px
 
 ### TODO: those rules never really worked for me, I believe.
-for_window [window_role="pop-up"]                       floating enable
-for_window [window_role="bubble"]                       floating enable 
-for_window [window_role="task_dialog"]                  floating enable
-for_window [window_role="Preferences"]                  floating enable
-for_window [window_type="dialog"]                       floating enable 
-for_window [window_type="menu"]                         floating enable
+#for_window [window_role="pop-up"]                       floating enable
+#for_window [window_role="bubble"]                       floating enable 
+#for_window [window_role="task_dialog"]                  floating enable
+#for_window [window_role="Preferences"]                  floating enable
+#for_window [window_type="dialog"]                       floating enable 
+#for_window [window_type="menu"]                         floating enable
 
 ### Window assignments
 assign [class="^firefox$"] → $ws1
+assign [class="^firefox_firefox$"] → $ws1
 assign [class="^TeXstudio$"] → $ws2
 assign [class="^notion-app$"] → $ws2
 assign [class="^notion-app-enhanced$"] → $ws2
 assign [class="^Notion$"] → $ws2
 assign [class="^obsidian$"] → $ws2
+assign [instance="overleaf.com"] → $ws2
 assign [class="^Zotero$"] → $ws3
 assign [class="^jetbrains-*"] → $ws4
 assign [class="^Code$"] → $ws4
 assign [class="^superProductivity$"] → $ws6
-assign [class="^Microsoft Teams - Preview$"] → $ws7
 assign [class="^teams-for-linux$"] → $ws7
+assign [instance="^teams.microsoft.com__v2$"] → $ws7
 assign [class="^Slack$"] → $ws7
 for_window [class="^Spotify"] move --no-auto-back-and-forth to workspace $ws9
 assign [class="^YouTube Music$"] → $ws9
+assign [class="youtube_music"] → $ws9
 assign [class="^gnome-pomodoro$"] → $ws10
 
 # Grant focus to new windows, e.g. opening a link from ws3 will focus Firefox in ws1.
@@ -204,21 +203,22 @@ assign [class="^gnome-pomodoro$"] → $ws10
 # focus_on_window_activation focus
 
 ### Workspace monitor assignments
-workspace $ws1 output DP-2 HDMI-1 eDP-1
+workspace $ws1 output DP-2 HDMI-A-1 eDP-1
 workspace $ws2 output eDP-1
 workspace $ws3 output DP-2 eDP-1
-workspace $ws4 output DP-2 eDP-1 HDMI-1
-workspace $ws5 output eDP-1 DP-2 HDMI-1
-workspace $ws6 output DP-2 eDP-1
-workspace $ws7 output HDMI-1 DP-2 eDP-1
+workspace $ws4 output DP-2 eDP-1 HDMI-A-1
+workspace $ws5 output eDP-1 DP-2 HDMI-A-1
+workspace $ws6 output HDMI-A-1 DP-2 eDP-1
+workspace $ws7 output HDMI-A-1 DP-2 eDP-1
 workspace $ws8 output DP-2 eDP-1
-workspace $ws9 output HDMI-1 DP-2 eDP-1
+workspace $ws9 output HDMI-A-1 DP-2 eDP-1
 
 ### Custom shortcuts
 # Play/pause/skip shortcuts for browser+Spotify:
 set $playerctl_cmd playerctl --ignore-player=spotify
 set $file_player_last /tmp/last-player-used
 bindsym Control+Mod1+space exec --no-startup-id $playerctl_cmd -p $(tail -1 $file_player_last) play-pause || $playerctl_cmd play-pause
+# bindsym 201 exec --no-startup-id $playerctl_cmd -p $(tail -1 $file_player_last) play-pause || $playerctl_cmd play-pause
 bindsym Control+Mod1+comma exec --no-startup-id $playerctl_cmd -p $(tail -1 $file_player_last) previous || $playerctl_cmd previous
 bindsym Control+Mod1+period exec --no-startup-id $playerctl_cmd -p $(tail -1 $file_player_last) next || $playerctl_cmd next
 bindsym Control+Shift+space exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
@@ -237,33 +237,42 @@ bindsym $mod+dead_grave exec --no-startup-id copyq toggle
 # Lock screen
 bindsym $mod+Shift+t exec --no-startup-id $lock_command
 # Work apps
-bindsym Mod1+Shift+asciitilde exec --no-startup-id $HOME/bin/open_work_apps.sh
+bindsym Mod1+Shift+asciitilde exec $HOME/bin/open_work_apps.sh
 # Shutdown menu
 bindsym Ctrl+Shift+Escape exec --no-startup-id $HOME/.config/rofi/applets/menu/powermenu.sh
 # Focus on the workspace that has the window with the given name
-bindsym $mod+Shift+f exec --no-startup-id $HOME/bin/i3_window_finder.py $(dmenu -p "Window name:" < /dev/null)
+# bindsym $mod+Shift+f exec --no-startup-id $HOME/bin/i3_window_finder.py $(dmenu -p "Window name:" < /dev/null)
 
 bindsym alt+F5 exec --no-startup-id yakuake
 
 ### Startup programs
-exec --no-startup-id nm-applet
-exec --no-startup-id dunst
-exec --no-startup-id yakuake
-exec --no-startup-id copyq
-exec --no-startup-id caffeine
-#exec_always --no-startup-id picom --backend glx
-exec --no-startup-id libinput-gestures-setup autostart start
-exec --no-startup-id $HOME/bin/change_wallpapers.sh
-exec --no-startup-id fswatch /sys/class/drm/card0 | xargs -n1 -I{} kanshi
-
+exec nm-applet
+exec dunst
+exec yakuake
+exec copyq
+# exec --no-startup-id caffeine
+exec libinput-gestures-setup autostart start
+exec kanshi
+exec $HOME/bin/change_wallpapers.sh
+exec ydotoold
+#exec --no-startup-id redshift-gtk
 
 # to disable middle mouse being paste (see my .xbindkeysrc file)
-exec --no-startup-id xbindkeys
+# TODO fix for wayland exec --no-startup-id xbindkeys
 
 # for playerctl commands to apply on the last used player
 exec --no-startup-id $playerctl_cmd status --format '{{ playerName }}' --follow > $file_player_last
 
-# ugly hack because pulseaudio fails to redirect audio output to my headphones if they're plugged in at startup??? (and I should switch to pipewire, probably)
-# actual reason modifying the pulseaudio conf file doesn't work is likely that pulseaudio doesn't detect my headphones at boot time? i suspect ubuntu meddling somehow.
-# so this checks if headphones are plugged in, and if so, make them the output
-exec --no-startup-id (grep -A4 -ri 'Headphone Playback Switch' /proc/asound/card*/* | grep "Amp-Out vals.*0x00 0x00" -q) && pacmd set-sink-port 1 analog-output-headphones
+# bar {
+#     position top
+#
+#     # When the status_command prints a new line to stdout, swaybar updates.
+#     # The default just shows the current date and time.
+#     status_command while date +'%Y-%m-%d %X'; do sleep 1; done
+#
+#     colors {
+#         statusline #ffffff
+#         background #323232
+#         inactive_workspace #32323200 #32323200 #5c5c5c
+#     }
+# }

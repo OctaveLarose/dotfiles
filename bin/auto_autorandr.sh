@@ -8,7 +8,7 @@ while true; do
 
   if [[ "$current_status" != "$prev_status" ]]; then
     prev_status=$current_status
-    autorandr --change
+    WAYLAND_DISPLAY= autorandr --change
   fi
 
   sleep 1

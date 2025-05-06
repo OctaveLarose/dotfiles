@@ -13,9 +13,6 @@ map("n", "<C-l>", "<C-w>l", { desc = "switch window right" })
 map("n", "<C-j>", "<C-w>j", { desc = "switch window down" })
 map("n", "<C-k>", "<C-w>k", { desc = "switch window up" })
 
--- whichkey
-map("n", "<leader>wK", "<cmd>WhichKey <CR>", { desc = "whichkey all keymaps" })
-
 -- Comment
 map("n", "<leader>/", "gcc", { desc = "toggle comment", remap = true })
 map("v", "<leader>/", "gc", { desc = "toggle comment", remap = true })
@@ -107,5 +104,5 @@ require('nvim-treesitter.configs').setup {
 map("n", "<C-L><C-L>", "<cmd>:set invrelativenumber<CR>", { desc = "Toggle relative line numbers" })
 
 -- centered scrolling with C-u/C-d
-map("n", "<C-u>", function() require("cinnamon").scroll("<C-U>zz") end)
-map("n", "<C-d>", function() require("cinnamon").scroll("<C-d>zz") end)
+-- map("n", "<C-u>", function() require("cinnamon").scroll("<C-U>zz") end)
+-- map("n", "<C-d>", function() require("cinnamon").scroll("<C-d>zz") end)

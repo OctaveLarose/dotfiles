@@ -1,1 +1,1 @@
-0 * * * * DISPLAY=:1 $HOME/bin/change_wallpapers.sh
+0 * * * * $HOME/bin/change_wallpapers.sh

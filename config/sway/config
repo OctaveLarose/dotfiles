@@ -9,7 +9,9 @@ input * {
   xkb_options caps:escape
 }  
 
-set $lock_command $HOME/bin/sway_lock_screen.sh 
+set $lock_command swaylock --screenshots --effect-blur 7x5 \
+                  --clock --effect-vignette 0.5:0.5 --effect-pixelate 3 \
+                  --ring-color bb00cc --text-color e6a800 --key-hl-color e6a800 --fade-in 0.3
 
 ### Idle configuration
 exec swayidle -w \
@@ -21,6 +23,10 @@ exec swayidle -w \
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
 
+# https://github.com/flameshot-org/flameshot/blob/master/docs/Sway%20and%20wlroots%20support.md
+exec systemctl --user import-environment DISPLAY WAYLAND_DISPLAY SWAYSOCK
+exec hash dbus-update-activation-environment 2>/dev/null && \
+     dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
 
 # Screenshotting
 bindsym Print exec --no-startup-id flameshot gui
@@ -102,8 +108,8 @@ set $ws2 "2:TeXStudio"
 set $ws3 "3:Zotero"
 set $ws4 "4:IDE"
 set $ws5 "5"
-set $ws6 "6:SuperProductivity"
-set $ws7 "7:Teams/Slack"
+set $ws6 "6:SP"
+set $ws7 "7:Teams"
 set $ws8 "8"
 set $ws9 "9:Music"
 set $ws10 "10"
@@ -133,13 +139,9 @@ bindsym $mod+Shift+9 move container to workspace number $ws9, workspace number $
 bindsym $mod+Shift+0 move container to workspace number $ws10, workspace number $ws10
 
 # move focused workspace between monitors
-bindsym $mod+Shift+slash move workspace to output next
+# bindsym $mod+Shift+slash move workspace to output next
+bindsym $mod+Shift+slash exec swaymsg move workspace to "$(swaymsg -t get_outputs | jq '[.[] | select(.active == true)] | .[(map(.focused) | index(true) + 1) % length].name')"
 #bindsym $mod+Shift+less move workspace to output previous
-#bindsym $mod+Shift+greater move workspace to output right
-#bindsym $mod+Shift+less move workspace to output left
-# The impractical inputs are because these two are meant to be activated via gestures.
-#bindsym $mod+Shift+greater+Up move workspace to output up
-#bindsym $mod+Shift+less+Down move workspace to output down
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -177,9 +179,12 @@ exec --no-startup-id waybar
 #for_window [window_type="dialog"]                       floating enable 
 #for_window [window_type="menu"]                         floating enable
 
+for_window [app_id="flameshot"] border pixel 0, floating enable, fullscreen disable, move absolute position 0 0
+
 ### Window assignments
 assign [class="^firefox$"] → $ws1
 assign [class="^firefox_firefox$"] → $ws1
+assign [class="^org.mozilla.firefox"] → $ws1
 assign [class="^TeXstudio$"] → $ws2
 assign [class="^notion-app$"] → $ws2
 assign [class="^notion-app-enhanced$"] → $ws2
@@ -231,13 +236,14 @@ set $brightness_adjust 7
 bindsym XF86MonBrightnessUp exec --no-startup-id $HOME/bin/brightness_adjust.sh $brightness_adjust +
 bindsym XF86MonBrightnessDown exec --no-startup-id $HOME/bin/brightness_adjust.sh $brightness_adjust -
 # Error searching macro
-bindsym Ctrl+Shift+Mod1+a exec --no-startup-id $HOME/bin/search_error.sh
+bindsym Ctrl+Shift+Mod1+a exec --no-startup-id $HOME/bin/search_error_wayland.sh
 # Clipboard manager
 bindsym $mod+dead_grave exec --no-startup-id copyq toggle
 # Lock screen
 bindsym $mod+Shift+t exec --no-startup-id $lock_command
 # Work apps
-bindsym Mod1+Shift+asciitilde exec $HOME/bin/open_work_apps.sh
+# bindsym Mod1+Shift+asciitilde exec $HOME/bin/open_work_apps.sh
+bindsym Mod1+Shift+numbersign exec $HOME/bin/open_work_apps.sh
 # Shutdown menu
 bindsym Ctrl+Shift+Escape exec --no-startup-id $HOME/.config/rofi/applets/menu/powermenu.sh
 # Focus on the workspace that has the window with the given name
@@ -253,7 +259,7 @@ exec copyq
 # exec --no-startup-id caffeine
 exec libinput-gestures-setup autostart start
 exec kanshi
-exec $HOME/bin/change_wallpapers.sh
+exec $HOME/bin/change_wallpapers.sh -f
 exec ydotoold
 #exec --no-startup-id redshift-gtk
 

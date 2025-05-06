@@ -10,6 +10,10 @@ for file in ~/.*rc; do
   fi
 done
 
+echo -e "${MSG_COLOR}\n### Backing up gitconfig...${NO_COLOR}"
+cp -v ~/.gitconfig .
+echo "Done."
+
 echo -e "${MSG_COLOR}\n### Backing up crontab...${NO_COLOR}"
 crontab -l > crontab
 echo "Done."

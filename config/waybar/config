@@ -58,7 +58,7 @@
 
 	"sway/workspaces": {
 		"disable-scroll": true,
-		"format": "{name}"
+		"format": "{value}"
 	},
 
 	"clock#1": {
@@ -71,12 +71,13 @@
 	},
 	"clock#3": {
 		"format": "{:%d/%m}",
-		"tooltip": false
+		"tooltip": false,
+    "on-click": "~/Programs/LINUX_STUFF/galendae/galendae -c ~/.config/galendae/custom-dark.conf",
 	},
 
 	"pulseaudio": {
 		"format": "{icon} {volume:2}%",
-		"format-bluetooth": "{icon}  {volume}%",
+		"format-bluetooth": "{icon}  {volume}% ",
 		"format-muted": "MUTE",
 		"format-icons": {
 			"headphones": "",
@@ -91,7 +92,7 @@
 	},
 	"memory": {
 		"interval": 5,
-		"format": "Mem {}%"
+		"format": "RAM {}%"
 	},
 	"cpu": {
 		"interval": 5,

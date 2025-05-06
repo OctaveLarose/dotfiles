@@ -38,12 +38,22 @@ return {
   },
 
   {
-    "declancm/cinnamon.nvim",
-    version = "*",
+    "karb94/neoscroll.nvim",
     init = function()
-      require("cinnamon").setup()
-    end
+      require("neoscroll").setup({
+        duration_multiplier = 0.5 -- faster than the default
+      })
+    end,
+    opts = {},
   },
+
+  -- {
+  --   "declancm/cinnamon.nvim",
+  --   version = "*",
+  --   init = function()
+  --     require("cinnamon").setup()
+  --   end
+  -- },
 
   -- status bar
   -- maybe https://github.com/bwpge/lualine-pretty-path is nice

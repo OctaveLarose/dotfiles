@@ -24,6 +24,15 @@
 --   callback = tex_focus_vim,
 -- })
 
-vim.keymap.set("n", "<leader>lv", "<cmd>VimTexView<CR>" { desc = "VimTexView" })
+vim.g.vimtex_quickfix_open_on_warning = 0;
+vim.g.vimtex_quickfix_ignore_filters = {
+  "Overfull",
+  "Underfull",
+  -- 'LaTeX hooks Warning',
+  -- 'Package hyperref Warning: Token not allowed in a PDF string'
+}
 
 
+vim.keymap.set("n", "<leader>b", "<cmd>VimtexCompile<CR>", { desc = "(custom) vimtexcompile" })
+vim.keymap.set("n", "<leader>v", "<cmd>VimtexView<CR>", { desc = "(custom) vimtexview" })
+vim.keymap.set("n", "<leader>t", "<cmd>VimtexTocToggle<CR>", { desc = "(custom) vimtex-toc-toggle" })

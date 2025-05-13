@@ -9,9 +9,7 @@ input * {
   xkb_options caps:escape
 }  
 
-set $lock_command swaylock --screenshots --effect-blur 7x5 \
-                  --clock --effect-vignette 0.5:0.5 --effect-pixelate 3 \
-                  --ring-color bb00cc --text-color e6a800 --key-hl-color e6a800 --fade-in 0.3
+set $lock_command $HOME/bin/swaylock.sh
 
 ### Idle configuration
 exec swayidle -w \
@@ -29,7 +27,8 @@ exec hash dbus-update-activation-environment 2>/dev/null && \
      dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
 
 # Screenshotting
-bindsym Print exec --no-startup-id flameshot gui
+# bindsym Print exec --no-startup-id flameshot gui
+bindsym Print exec --no-startup-id grim -g "$(slurp)" - | wl-copy
 
 set $refresh_i3status killall -SIGUSR1 i3status
 # bindsym XF86AudioLowerVolume    exec --no-startup-id amixer -q -D pulse sset Master 5%- unmute
@@ -182,26 +181,19 @@ exec --no-startup-id waybar
 for_window [app_id="flameshot"] border pixel 0, floating enable, fullscreen disable, move absolute position 0 0
 
 ### Window assignments
-assign [class="^firefox$"] → $ws1
-assign [class="^firefox_firefox$"] → $ws1
-assign [class="^org.mozilla.firefox"] → $ws1
+assign [app_id="^org.mozilla.firefox"] → $ws1
 assign [class="^TeXstudio$"] → $ws2
-assign [class="^notion-app$"] → $ws2
-assign [class="^notion-app-enhanced$"] → $ws2
-assign [class="^Notion$"] → $ws2
 assign [class="^obsidian$"] → $ws2
 assign [instance="overleaf.com"] → $ws2
-assign [class="^Zotero$"] → $ws3
+assign [app_id="^Zotero$"] → $ws3
 assign [class="^jetbrains-*"] → $ws4
 assign [class="^Code$"] → $ws4
 assign [class="^superProductivity$"] → $ws6
 assign [class="^teams-for-linux$"] → $ws7
 assign [instance="^teams.microsoft.com__v2$"] → $ws7
-assign [class="^Slack$"] → $ws7
 for_window [class="^Spotify"] move --no-auto-back-and-forth to workspace $ws9
 assign [class="^YouTube Music$"] → $ws9
 assign [class="youtube_music"] → $ws9
-assign [class="^gnome-pomodoro$"] → $ws10
 
 # Grant focus to new windows, e.g. opening a link from ws3 will focus Firefox in ws1.
 # I was never sure how much I liked that setting. It's both convenient and inconvenient.
@@ -245,16 +237,16 @@ bindsym $mod+Shift+t exec --no-startup-id $lock_command
 # bindsym Mod1+Shift+asciitilde exec $HOME/bin/open_work_apps.sh
 bindsym Mod1+Shift+numbersign exec $HOME/bin/open_work_apps.sh
 # Shutdown menu
-bindsym Ctrl+Shift+Escape exec --no-startup-id $HOME/.config/rofi/applets/menu/powermenu.sh
+bindsym Ctrl+Shift+Escape exec --no-startup-id nwg-bar
 # Focus on the workspace that has the window with the given name
 # bindsym $mod+Shift+f exec --no-startup-id $HOME/bin/i3_window_finder.py $(dmenu -p "Window name:" < /dev/null)
 
-bindsym alt+F5 exec --no-startup-id yakuake
+bindsym alt+F5 exec --no-startup-id i3-quickterm shell
 
 ### Startup programs
 exec nm-applet
 exec dunst
-exec yakuake
+# exec yakuake
 exec copyq
 # exec --no-startup-id caffeine
 exec libinput-gestures-setup autostart start

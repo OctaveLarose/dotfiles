@@ -18,16 +18,23 @@ return {
     cmd = "ASToggle",          -- optional for lazy loading on command
     -- event = { "InsertLeave", "TextChanged" }, -- optional for lazy loading on trigger events
     event = { "InsertLeave" }, -- optional for lazy loading on trigger events
-    opts = {},
-    condition = function(buf)
-      local fn = vim.fn
-      local filepath = fn.expand('%:p')
+    opts = {
+      condition = function(buf)
+        local fn = vim.fn
+        local filepath = fn.expand('%:p')
+        local filetype = fn.getbufvar(buf, "&filetype")
 
-      if not filepath:match('^/home/octavel/.config/nvim') then
+        if vim.list_contains({ "tex" }, filetype) then
+          return false
+        end
+        if filepath:match('^/home/octavel/.config/nvim') then
+          return false
+        end
+
         return true
       end
-      return false
-    end
+
+    },
   },
 
   {
@@ -75,7 +82,7 @@ return {
     "olimorris/persisted.nvim",
     lazy = false, -- make sure the plugin is always loaded at startup
     config = true,
-    autosave = true,
+    -- autosave = true,
   },
 
   -- {

@@ -137,6 +137,8 @@ return {
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
+        "kdheepak/cmp-latex-symbols",
+        "micangl/cmp-vimtex"
       },
     },
     opts = function()

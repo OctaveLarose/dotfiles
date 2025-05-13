@@ -23,7 +23,7 @@ hexify_for_google() {
 #    echo "$hex_string"
 }
 
-clipboard_content=$(wl-paste | tr ' ' '+')
+clipboard_content=$(wl-paste --primary | tr ' ' '+')
 hexified_content=$(hexify_for_google "$clipboard_content")
 
 $BROWSER "http://www.$SEARCHENGINE.com/?q=$hexified_content"

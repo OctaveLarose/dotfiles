@@ -38,8 +38,9 @@ map("n", "gt", "<cmd>FzfLua lsp_workspace_symbols<CR>", lsp_opts "Show reference
 
 map("n", "<leader>ra", function() require("live-rename").rename({ insert = true }) end, lsp_opts "live-rename")
 
-map("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic" })
-map("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to prev diagnostic" })
+map("n", "]d", function() vim.diagnostic.jump({ count = 1, float = true }) end, { desc = "Go to next diagnostic" })
+map("n", "[d", function() vim.diagnostic.jump({ count = -1, float = true }) end, { desc = "Go to prev diagnostic" })
+map("n", "<leader>q", vim.diagnostic.setqflist, { desc = "Diagnostics in quickfix list" })
 
 -- map("n", "<leader>sh", vim.lsp.buf.signature_help, lsp_opts "Show signature help")
 map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, lsp_opts "Add workspace folder")

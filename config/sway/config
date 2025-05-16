@@ -103,7 +103,7 @@ bindsym $mod+a focus parent
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
 set $ws1 "1:Main"
-set $ws2 "2:TeXStudio"
+set $ws2 "2"
 set $ws3 "3:Zotero"
 set $ws4 "4:IDE"
 set $ws5 "5"
@@ -237,11 +237,11 @@ bindsym $mod+Shift+t exec --no-startup-id $lock_command
 # bindsym Mod1+Shift+asciitilde exec $HOME/bin/open_work_apps.sh
 bindsym Mod1+Shift+numbersign exec $HOME/bin/open_work_apps.sh
 # Shutdown menu
-bindsym Ctrl+Shift+Escape exec --no-startup-id nwg-bar
+bindsym Ctrl+Shift+Escape exec nwg-bar
 # Focus on the workspace that has the window with the given name
 # bindsym $mod+Shift+f exec --no-startup-id $HOME/bin/i3_window_finder.py $(dmenu -p "Window name:" < /dev/null)
 
-bindsym alt+F5 exec --no-startup-id i3-quickterm shell
+bindsym Mod1+F5 exec i3-quickterm shell
 
 ### Startup programs
 exec nm-applet

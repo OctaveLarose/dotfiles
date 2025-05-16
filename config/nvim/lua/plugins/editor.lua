@@ -111,6 +111,9 @@ return {
     }
   },
 
+  -- better quickfix list
+  { 'kevinhwang91/nvim-bqf' }
+
   -- makes delete not yank + defines a "cut" explicitly
   -- {
   --   "gbprod/cutlass.nvim",

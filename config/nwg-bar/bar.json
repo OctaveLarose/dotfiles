@@ -1,13 +1,8 @@
 [
   {
-    "label": "Lock",
-    "exec": "/home/octavel/bin/swaylock.sh",
-    "icon": "/usr/share/nwg-bar/images/system-lock-screen.svg"
-  },
-  {
-    "label": "Logout",
-    "exec": "swaymsg exit",
-    "icon": "/usr/share/nwg-bar/images/system-log-out.svg"
+    "label": "Shutdown",
+    "exec": "systemctl -i poweroff",
+    "icon": "/usr/share/nwg-bar/images/system-shutdown.svg"
   },
   {
     "label": "Reboot",
@@ -15,8 +10,13 @@
     "icon": "/usr/share/nwg-bar/images/system-reboot.svg"
   },
   {
-    "label": "Shutdown",
-    "exec": "systemctl -i poweroff",
-    "icon": "/usr/share/nwg-bar/images/system-shutdown.svg"
+    "label": "Logout",
+    "exec": "swaymsg exit",
+    "icon": "/usr/share/nwg-bar/images/system-log-out.svg"
+  },
+  {
+    "label": "Lock",
+    "exec": "/home/octavel/bin/swaylock.sh",
+    "icon": "/usr/share/nwg-bar/images/system-lock-screen.svg"
   }
 ]

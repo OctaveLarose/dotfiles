@@ -50,67 +50,6 @@ end)
 
 vim.lsp.inlay_hint.enable()
 
--- autoformat
--- vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
-vim.api.nvim_create_autocmd("BufWritePre", {
-  callback = function()
-    local mode = vim.api.nvim_get_mode().mode
-    local filetype = vim.bo.filetype
-    -- if vim.bo.modified == true and mode == 'n' and filetype ~= "markdown" then
-    if vim.bo.modified == true and mode == 'n' and not vim.list_contains({ "markdown", "tex", "bib" }, filetype) then
-      vim.cmd('lua vim.lsp.buf.format()')
-    else
-    end
-  end
-})
+require "visuals"
 
-
--- to not capture when saving sessions:
--- NvimTree or neotree
--- dapui
-vim.api.nvim_create_autocmd("User", {
-  pattern = "PersistedSavePre",
-  callback = function()
-    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-      if vim.bo[buf].filetype == "NvimTree" or vim.bo[buf].filetype == "neo-tree" then
-        vim.api.nvim_buf_delete(buf, { force = true })
-      end
-    end
-    require("dapui").close()
-  end,
-})
-
--- no longer needed i think, got patched out?
--- -- workaround for bug with rust-analyzer notification
--- for _, method in ipairs({ 'textDocument/diagnostic', 'workspace/diagnostic' }) do
---   local default_diagnostic_handler = vim.lsp.handlers[method]
---   vim.lsp.handlers[method] = function(err, result, context, config)
---     if err ~= nil and err.code == -32802 then
---       return
---     end
---     return default_diagnostic_handler(err, result, context, config)
---   end
--- end
-
-vim.api.nvim_set_hl(0, "FlashLabel", { fg = "black", bg = "#cd78dd" })
--- changing the dap default icons
-vim.fn.sign_define('DapBreakpoint', { text = '🟥', texthl = '', linehl = '', numhl = '' })
-vim.fn.sign_define('DapStopped', { text = '▶️', texthl = '', linehl = '', numhl = '' })
-
--- local timer = nil
--- show precognition hints after a sec of inactivity
--- vim.api.nvim_create_autocmd({ "CursorMoved" }, { -- "CursorMovedI"
---   callback = function()
---     local function on_cursor_idle()
---       require('precognition').peek()
---     end
---
---     if timer then
---       timer:stop()
---       timer:close()
---     end
---
---     timer = vim.loop.new_timer()
---     timer:start(5000, 0, vim.schedule_wrap(on_cursor_idle))
---   end
--- })
+require "autocmds"

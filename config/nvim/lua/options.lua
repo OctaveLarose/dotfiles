@@ -6,7 +6,7 @@ local g = vim.g
 o.laststatus = 3
 o.showmode = false
 
-o.clipboard = "unnamedplus"
+-- o.clipboard = "unnamedplus"
 o.cursorline = true
 o.cursorlineopt = "number"
 

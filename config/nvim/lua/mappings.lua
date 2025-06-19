@@ -5,6 +5,10 @@ map({ "n", "i" }, "<C-q>", "<cmd>:q<CR>", { desc = "quit" })
 map({ "i" }, "jk", "<ESC>", { desc = "exit insert mode" })
 map({ "n", "i", "v" }, "<C-s>", "<cmd>w<cr><ESC>", { desc = "Ctrl+S save" })
 
+map({ "n", "v" }, "<leader>y", '"+y', { desc = "yank to clipboard" })
+map({ "n", "v" }, "<leader>p", '"+p', { desc = "paste from clipboard" })
+map({ "n", "v" }, "<leader>c", '"+c', { desc = "cut to system clipboard" })
+
 -- a lot of these are from nvchad originally:
 ------------------------------
 
@@ -14,7 +18,7 @@ map("n", "<C-j>", "<C-w>j", { desc = "switch window down" })
 map("n", "<C-k>", "<C-w>k", { desc = "switch window up" })
 
 -- Comment
-map("n", "<leader>/", "gcc", { desc = "toggle comment", remap = true })
+map("n", "<leader>/", "gccj", { desc = "comment", remap = true })
 map("v", "<leader>/", "gc", { desc = "toggle comment", remap = true })
 map("n", "yc", "yygccp", { desc = "Copy line and comment it", remap = true })
 
@@ -67,6 +71,7 @@ vim.keymap.set("n", "<A-0>", "<cmd>BufferLast<CR>", { desc = "buffer goto last" 
 
 -- fzf-lua
 map("n", "<leader>ff", "<cmd>FzfLua files<cr>", { desc = "fzf-lua find files" })
+map("n", "<leader>fo", "<cmd>FzfLua oldfiles<cr>", { desc = "fzf-lua old files" })
 map("n", "<leader>fw", "<cmd>FzfLua live_grep<cr>", { desc = "fzf-lua live grep" })
 
 map("n", "<leader>rr", ":make b <cr>", { silent = true, desc = "Make build" })
@@ -94,10 +99,10 @@ require('nvim-treesitter.configs').setup {
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = "<C-w>",
-      node_incremental = "<C-w>",
-      scope_incremental = false,
-      node_decremental = "<bs>",
+      init_selection = "<CR>",
+      scope_incremental = "<CR>",
+      node_incremental = "<TAB>",
+      node_decremental = "<S-TAB>",
     },
   },
 }
@@ -107,3 +112,28 @@ map("n", "<C-L><C-L>", "<cmd>:set invrelativenumber<CR>", { desc = "Toggle relat
 -- centered scrolling with C-u/C-d
 -- map("n", "<C-u>", function() require("cinnamon").scroll("<C-U>zz") end)
 -- map("n", "<C-d>", function() require("cinnamon").scroll("<C-d>zz") end)
+
+
+-- snippets stuff
+local ls = require("luasnip")
+map({ "i", "s" }, "<C-k>", function()
+  if ls.expand_or_jumpable() then
+    ls.expand_or_jump()
+  end
+end, { silent = true })
+
+map({ "i", "s" }, "<C-j>", function()
+  if ls.jumpable(-1) then
+    ls.jump(-1)
+  end
+end, { silent = true })
+
+
+map({ "i", "s" }, "<C-l>", function()
+  if ls.choice_active() then
+    ls.change_choice(1)
+  end
+end, { silent = true })
+
+-- auto reloads snippets supposedly
+map("n", "<leader><leader>s", "<cmd>source ~/.config/nvim/after/plugin/luasnip.lua<CR>")

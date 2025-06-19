@@ -24,7 +24,7 @@ return {
         local filepath = fn.expand('%:p')
         local filetype = fn.getbufvar(buf, "&filetype")
 
-        if vim.list_contains({ "tex" }, filetype) then
+        if vim.list_contains({ "tex", "bib" }, filetype) then
           return false
         end
         if filepath:match('^/home/octavel/.config/nvim') then

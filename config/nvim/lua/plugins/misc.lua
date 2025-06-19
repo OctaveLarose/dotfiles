@@ -6,5 +6,9 @@ return {
     cmd = "TyprStats",
     dependencies = "nvzone/volt",
     opts = {},
+  },
+
+  {
+    "sphamba/smear-cursor.nvim",
   }
 }

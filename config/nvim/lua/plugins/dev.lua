@@ -3,25 +3,16 @@ return {
     "nvim-treesitter/nvim-treesitter",
     opts = {
       ensure_installed = {
-        "vim", "lua", "vimdoc"
-      },
-      incremental_selection = {
-        enable = true,
-        keymaps = {
-          init_selection = "<C-w>",
-          node_incremental = "<C-w>",
-          scope_incremental = false,
-          node_decremental = "<bs>",
-        },
+        "vim", "lua", "vimdoc", "rust", "latex"
       },
     },
   },
 
-  -- { "nvim-treesitter/nvim-treesitter-context" },
+  { "nvim-treesitter/nvim-treesitter-context" },
 
   -- TODO REENABLE
   -- incompatible with treesitter-context afaik
---  {
+  --  {
   --  "boltlessengineer/sense.nvim",
   --},
 
@@ -77,7 +68,7 @@ return {
     },
   },
 
-  { 'akinsho/git-conflict.nvim', version = "*", config = true },
+  { 'akinsho/git-conflict.nvim',              version = "*", config = true },
 
   -- not sure i need that one. use actively, or remove from config
   {
@@ -99,20 +90,27 @@ return {
   -- preview LSP renames
   { "saecki/live-rename.nvim" },
 
+  {
+    -- snippet plugin
+    "L3MON4D3/LuaSnip",
+    dependencies = "rafamadriz/friendly-snippets",
+    build = "make install_jsregexp",
+    opts = {
+      history = true,
+      updateevents = "TextChanged,TextChangedI",
+      enable_autosnippets = true,
+    },
+    config = function(_, opts)
+      require("luasnip").config.set_config(opts)
+    end,
+  },
+
   -- load luasnips + cmp related in insert mode only
   {
     "hrsh7th/nvim-cmp",
     event = "InsertEnter",
     dependencies = {
-      {
-        -- snippet plugin
-        "L3MON4D3/LuaSnip",
-        dependencies = "rafamadriz/friendly-snippets",
-        opts = { history = true, updateevents = "TextChanged,TextChangedI" },
-        config = function(_, opts)
-          require("luasnip").config.set_config(opts)
-        end,
-      },
+      { "L3MON4D3/LuaSnip" },
 
       -- autopairing of (){}[] etc
       {

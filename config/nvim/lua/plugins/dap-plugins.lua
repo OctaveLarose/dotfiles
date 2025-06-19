@@ -2,7 +2,7 @@ return {
   {
     'mfussenegger/nvim-dap',
     dependencies = {
-      "jay-babu/mason-nvim-dap.nvim",
+      -- "jay-babu/mason-nvim-dap.nvim",
       "mrcjkb/rustaceanvim"
     },
     config = function()
@@ -72,17 +72,17 @@ return {
       --   }
       -- })
 
-      require('mason-nvim-dap').setup {
-        -- Makes a best effort to setup the various debuggers with
-        -- reasonable debug configurations
-        automatic_installation = true,
-
-        -- You can provide additional configuration to the handlers,
-        -- see mason-nvim-dap README for more information
-        handlers = {},
-
-        ensure_installed = {}
-      }
+      -- require('mason-nvim-dap').setup {
+      --   -- Makes a best effort to setup the various debuggers with
+      --   -- reasonable debug configurations
+      --   automatic_installation = true,
+      --
+      --   -- You can provide additional configuration to the handlers,
+      --   -- see mason-nvim-dap README for more information
+      --   handlers = {},
+      --
+      --   ensure_installed = {}
+      -- }
       ------------------------
 
       dap.listeners.before.attach.dapui_config = function()
@@ -111,7 +111,8 @@ return {
       --   dap.set_exception_breakpoints("default")
       -- end
 
-      dap.adapters.rust = vim.g.rustaceanvim.dap.adapter
+      -- dap.adapters.rust = vim.g.rustaceanvim.dap.adapter
+
       -- dap.defaults.rust.exception_breakpoints = { 'cpp_throw, cpp_catch' }
     end,
   },

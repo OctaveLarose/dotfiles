@@ -49,7 +49,7 @@ local options = {
     -- { name = "buffer" },
     { name = "nvim_lua" },
     { name = "path" },
-    { name = "latex_symbols" },
+    -- { name = "latex_symbols" },
     { name = "vimtex" }
   },
 }

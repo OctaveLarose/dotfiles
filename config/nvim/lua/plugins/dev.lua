@@ -1,9 +1,21 @@
 return {
+  -- autoformatting
+  {
+    "stevearc/conform.nvim",
+    event = 'BufWritePre',
+    formatters_by_ft = {
+      lua = { "stylua" },
+      rust = { "rustfmt", lsp_format = "fallback" },
+      tex = { "latexindent" },
+      -- json = { lsp_format = "prefer" }
+    },
+  },
+
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
       ensure_installed = {
-        "vim", "lua", "vimdoc", "rust", "latex"
+        "vim", "lua", "vimdoc", "rust", "latex", "regex", "bash"
       },
     },
   },
@@ -90,8 +102,8 @@ return {
   -- preview LSP renames
   { "saecki/live-rename.nvim" },
 
+  -- snippet plugin
   {
-    -- snippet plugin
     "L3MON4D3/LuaSnip",
     dependencies = "rafamadriz/friendly-snippets",
     build = "make install_jsregexp",

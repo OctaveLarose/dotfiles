@@ -30,6 +30,11 @@ return {
     "m4xshen/hardtime.nvim",
     lazy = false,
     dependencies = { "MunifTanjim/nui.nvim" },
-    opts = {},
+    opts = {
+      disabled_keys = {
+        ["<Up>"] = false, -- I use them in nvim-cmp menus
+        ["<Down>"] = false
+      }
+    }
   },
 }

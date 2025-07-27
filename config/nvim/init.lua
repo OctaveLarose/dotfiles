@@ -1,13 +1,3 @@
-vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
-
--- relative line numbers (there's a mapping to toggle it on/off also)
-vim.wo.relativenumber = true
-
--- vim.g.
---     set
--- rnu
-
 -- bootstrap lazy and all plugins
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 

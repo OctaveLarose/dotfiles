@@ -1,8 +1,8 @@
 --- from https://www.reddit.com/r/neovim/comments/1hlnv7x/blinkcmp_i_finally_have_a_configuration_that/
 --- TODO try it out!
 
----@module 'blink.cmp'
----@type blink.cmp.Config
+-- ---@module 'blink.cmp'
+-- ---@type blink.cmp.Config
 local opts = {
 
   appearance = {

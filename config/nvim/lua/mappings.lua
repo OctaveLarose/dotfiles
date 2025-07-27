@@ -28,9 +28,9 @@ map("n", "yc", "yygccp", { desc = "Copy line and comment it", remap = true })
 map("n", "<C-n>", "<cmd>Neotree toggle<CR>", { desc = "neotree toggle window" })
 map("n", "<leader>e", "<cmd>Neotree reveal<CR>", { desc = "neotree focus window" })
 
--- LSP stuff
+-- LSP stuff. Previously relied on Client::on_attach to also set "buffer = bufnr", but I don't think I care much.
 local function lsp_opts(desc)
-  return { buffer = bufnr, desc = "LSP " .. desc }
+  return { desc = "LSP " .. desc }
 end
 
 map("n", "gD", vim.lsp.buf.declaration, lsp_opts "Go to declaration")
@@ -38,7 +38,7 @@ map("n", "gd", vim.lsp.buf.definition, lsp_opts "Go to definition")
 map("n", "gi", vim.lsp.buf.implementation, lsp_opts "Go to implementation")
 map("n", "<leader>D", vim.lsp.buf.type_definition, lsp_opts "Go to type definition")
 map("n", "gr", "<cmd>FzfLua lsp_references<CR>", lsp_opts "Show references")
-map("n", "gt", "<cmd>FzfLua lsp_workspace_symbols<CR>", lsp_opts "Show references")
+map("n", "gt", "<cmd>FzfLua lsp_live_workspace_symbols<CR>", lsp_opts "Show live workspace symbols")
 
 map("n", "<leader>ra", function() require("live-rename").rename({ insert = true }) end, lsp_opts "live-rename")
 
@@ -52,7 +52,7 @@ map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, lsp_opts "Remove wor
 
 map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, lsp_opts "Code action")
 map("n", "<space>h", vim.lsp.buf.hover,
-  { noremap = true, silent = true, buffer = bufnr, desc = "Hover action" }
+  { noremap = true, silent = true, desc = "Hover action" }
 )
 
 ------------------------------
@@ -61,6 +61,8 @@ map("n", "<space>h", vim.lsp.buf.hover,
 map("n", "<tab>", "<cmd>BufferNext<cr>", { desc = "buffer goto next" })
 map("n", "<S-tab>", "<cmd>BufferPrevious<cr>", { desc = "buffer goto prev" })
 map("n", "<A-c>", "<cmd>BufferClose<cr>", { desc = "buffer close" })
+map("n", "<A-q>", "<cmd>BufferCloseAllButCurrent<cr>", { desc = "buffer close all but current" })
+map("n", "<A-p>", "<cmd>BufferPin<cr>", { desc = "pin current buffer" })
 
 for i = 1, 9 do
   vim.keymap.set("n", "<A-" .. i .. ">", "<cmd>BufferGoto " .. i .. "<CR>", { desc = "buffer goto " .. i })
@@ -69,10 +71,12 @@ vim.keymap.set("n", "<A-0>", "<cmd>BufferLast<CR>", { desc = "buffer goto last" 
 
 ------------------------------
 
--- fzf-lua
+-- fzf-lua, general commands
 map("n", "<leader>ff", "<cmd>FzfLua files<cr>", { desc = "fzf-lua find files" })
-map("n", "<leader>fo", "<cmd>FzfLua oldfiles<cr>", { desc = "fzf-lua old files" })
 map("n", "<leader>fw", "<cmd>FzfLua live_grep<cr>", { desc = "fzf-lua live grep" })
+map("n", "<leader>fe", "<cmd>FzfLua oldfiles<cr>", { desc = "fzf-lua old files" })            -- previously fo
+map("n", "<leader>fr", "<cmd>FzfLua tags_live_grep<cr>", { desc = "fzf-lua tags live grep" }) -- previously ft
+map("n", "<leader>fm", "<cmd>FzfLua marks<cr>", { desc = "fzf-lua marks" })
 
 map("n", "<leader>rr", ":make b <cr>", { silent = true, desc = "Make build" })
 
@@ -94,15 +98,16 @@ map('v', 'fff',
   function() grug_far.open({ prefills = { search = vim.fn.expand("<cword>") } }) end,
   { desc = "Use grug-far (on current-word, project-wide)" })
 
--- treesitter expansion selection mappings
+-- treesitter expansion selection mappings. example from the doc, but gives a missing-fields warning still
+---@diagnostic disable: missing-fields
 require('nvim-treesitter.configs').setup {
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = "<CR>",
-      scope_incremental = "<CR>",
-      node_incremental = "<TAB>",
-      node_decremental = "<S-TAB>",
+      init_selection = "<C-w>",
+      scope_incremental = "<TAB>",
+      node_incremental = "<C-w>",
+      node_decremental = "<bs>",
     },
   },
 }

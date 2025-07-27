@@ -3,3 +3,5 @@
 	name = Octave Larose
 [alias]
 	st = status
+[core]
+	editor = vim

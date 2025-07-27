@@ -8,7 +8,7 @@
 sync_dir = "~/OneDrive"
 # skip_file = "~*|.~*|*.tmp"
 # monitor_interval = "300"
-skip_dir = ".git"
+skip_dir = ".git|latex"
 # log_dir = "/var/log/onedrive/"
 # drive_id = ""
 # upload_only = "false"

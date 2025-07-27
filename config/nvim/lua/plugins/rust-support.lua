@@ -4,7 +4,7 @@ return {
     version = '^5', -- Recommended
     lazy = false,   -- This plugin is already lazy
     ft = "rust",
-    dependencies = { "williamboman/mason.nvim" },
+    dependencies = { "williamboman/mason.nvim", "adaszko/tree_climber_rust.nvim" },
     config = function()
       vim.g.rustaceanvim = {
         server = {
@@ -15,6 +15,17 @@ return {
               }
             },
           },
+          on_attach = function(_client, bufnr)
+            local opts = { noremap = true, silent = true }
+            vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-w>', '<cmd>lua require("tree_climber_rust").init_selection()<CR>',
+              opts)
+            vim.api.nvim_buf_set_keymap(bufnr, 'x', '<C-w>',
+              '<cmd>lua require("tree_climber_rust").select_incremental()<CR>',
+              opts)
+            vim.api.nvim_buf_set_keymap(bufnr, 'x', '<BS>',
+              '<cmd>lua require("tree_climber_rust").select_previous()<CR>',
+              opts)
+          end,
         }
         ------- what follows is now part of the default config, I think?
         -- tools = {
@@ -44,7 +55,7 @@ return {
     'saecki/crates.nvim',
     tag = 'stable',
     config = function()
-      require('crates').setup()
+      require('crates').setup({})
     end
   },
 }

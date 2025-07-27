@@ -1,3 +1,4 @@
+---@diagnostic disable: unused-local
 local ls = require("luasnip")
 local s = ls.snippet
 local sn = ls.snippet_node
@@ -27,12 +28,12 @@ local ms = ls.multi_snippet
 local k = require("luasnip.nodes.key_indexer").new_key
 
 -- test from the doc, reminder for now
-ls.add_snippets("all", {
-  s("ternary", {
-    -- equivalent to "${1:cond} ? ${2:then} : ${3:else}"
-    i(1, "cond"), t(" ? "), i(2, "then"), t(" : "), i(3, "else")
-  })
-})
+-- ls.add_snippets("all", {
+--   s("ternary", {
+--     -- equivalent to "${1:cond} ? ${2:then} : ${3:else}"
+--     i(1, "cond"), t(" ? "), i(2, "then"), t(" : "), i(3, "else")
+--   })
+-- })
 
 ls.add_snippets("tex", {
   s("code", {

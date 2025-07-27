@@ -1,3 +1,5 @@
+vim.cmd [[colorscheme ayu-mirage]]
+
 require("smear_cursor").toggle()
 
 vim.api.nvim_set_hl(0, "FlashLabel", { fg = "black", bg = "#cd78dd" })

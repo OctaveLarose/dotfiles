@@ -1,4 +1,8 @@
--- bootstrap lazy and all plugins
+-- needed first and foremost, because requested by lazy
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
+
+-----  Bootstrap lazy and all plugins -----
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 
 if not vim.uv.fs_stat(lazypath) then
@@ -28,18 +32,14 @@ require('lazy').setup {
   }
 }
 
-vim.cmd [[colorscheme ayu-mirage]]
-
-require("mason").setup()
+----- Done with lazy/plugin setup. -----
 
 require "options"
-
-vim.schedule(function()
-  require "mappings"
-end)
-
-vim.lsp.inlay_hint.enable()
-
+require "mappings"
 require "visuals"
-
 require "autocmds"
+
+-- we scheduled the setup of mappings in the past, but I'm no longer sure it's worth it.
+-- vim.schedule(function()
+--   require "mappings"
+-- end)

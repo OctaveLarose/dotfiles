@@ -2,9 +2,7 @@ local opt = vim.opt
 local o = vim.o
 local g = vim.g
 local wo = vim.wo
-
-g.mapleader = " "
-g.maplocalleader = "\\"
+local lsp = vim.lsp
 
 -- Misc general options
 o.mouse = "a"                 -- mouse enabled
@@ -63,3 +61,6 @@ local is_windows = vim.fn.has "win32" ~= 0
 local sep = is_windows and "\\" or "/"
 local delim = is_windows and ";" or ":"
 vim.env.PATH = table.concat({ vim.fn.stdpath "data", "mason", "bin" }, sep) .. delim .. vim.env.PATH
+
+-- nvim LSP stuff
+lsp.inlay_hint.enable()

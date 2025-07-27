@@ -1,10 +1,9 @@
--- autoformat
--- vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
+-- Autoformatting.
+-- Simpler, more/too generic version: vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
 vim.api.nvim_create_autocmd("BufWritePre", {
   callback = function()
     local mode = vim.api.nvim_get_mode().mode
     local filetype = vim.bo.filetype
-    -- if vim.bo.modified == true and mode == 'n' and filetype ~= "markdown" then
     if vim.bo.modified == true and mode == 'n' and not vim.list_contains({ "markdown", "tex", "bib" }, filetype) then
       vim.cmd('lua vim.lsp.buf.format()')
     else
@@ -13,9 +12,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 
 
--- to not capture when saving sessions:
--- NvimTree or neotree
--- dapui
+-- To not capture when saving sessions: NvimTree/neotree, dapui
 vim.api.nvim_create_autocmd("User", {
   pattern = "PersistedSavePre",
   callback = function()
@@ -28,6 +25,7 @@ vim.api.nvim_create_autocmd("User", {
   end,
 })
 
+-- Show LSP loading progress.
 -- vim.api.nvim_create_autocmd("LspProgress", {
 --   ---@param ev {data: {client_id: integer, params: lsp.ProgressParams}}
 --   callback = function(ev)

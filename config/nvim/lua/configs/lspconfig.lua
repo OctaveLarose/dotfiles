@@ -6,4 +6,5 @@ lspconfig.lua_ls.setup {} -- NB: lazydev does the config for us, for nvim config
 lspconfig.markdown_oxide.setup {}
 lspconfig.jsonls.setup {}
 lspconfig.pyright.setup {}
+-- lspconfig.typos_lsp.setup {}
 -- lspconfig.texlab.setup {}

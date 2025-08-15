@@ -12,6 +12,10 @@ o.signcolumn = "yes"          -- always show signcolumn (warnings etc., left of 
 o.updatetime = 250            -- interval for writing swap file to disk, also used by gitsigns
 -- o.clipboard = "unnamedplus" -- not sure i like sharing the clipboard with the system...
 opt.whichwrap:append "<>[]hl" -- go to previous/next line with h,l,left,right when cursor reaches end/start of line
+opt.swapfile = false
+
+-- PURGATORY FOR OPTIONS
+-- o.winborder = "rounded" -- does this do anything for us?
 
 -- Indenting
 o.expandtab = true

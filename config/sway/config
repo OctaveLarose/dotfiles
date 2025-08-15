@@ -28,7 +28,9 @@ exec hash dbus-update-activation-environment 2>/dev/null && \
 
 # Screenshotting
 # bindsym Print exec --no-startup-id flameshot gui
-bindsym Print exec --no-startup-id grim -g "$(slurp)" - | wl-copy
+# bindsym Print exec --no-startup-id grim -g "$(slurp)" - | wl-copy
+bindsym Print exec wayfreeze --after-freeze-cmd 'grim -g "$(slurp)" - | wl-copy; killall wayfreeze'
+# bindsym Print exec --no-startup-id grim 
 
 set $refresh_i3status killall -SIGUSR1 i3status
 # bindsym XF86AudioLowerVolume    exec --no-startup-id amixer -q -D pulse sset Master 5%- unmute
@@ -180,6 +182,10 @@ exec --no-startup-id waybar
 
 for_window [app_id="flameshot"] border pixel 0, floating enable, fullscreen disable, move absolute position 0 0
 
+# don't lock if apps are fullscreen (mostly for videos)
+for_window [class=".*"] inhibit_idle fullscreen
+for_window [app_id=".*"] inhibit_idle fullscreen
+
 ### Window assignments
 assign [app_id="^org.mozilla.firefox"] → $ws1
 assign [class="^TeXstudio$"] → $ws2
@@ -234,7 +240,6 @@ bindsym $mod+dead_grave exec --no-startup-id copyq toggle
 # Lock screen
 bindsym $mod+Shift+t exec --no-startup-id $lock_command
 # Work apps
-# bindsym Mod1+Shift+asciitilde exec $HOME/bin/open_work_apps.sh
 bindsym Mod1+Shift+numbersign exec $HOME/bin/open_work_apps.sh
 # Shutdown menu
 bindsym Ctrl+Shift+Escape exec nwg-bar
@@ -254,6 +259,7 @@ exec kanshi
 exec $HOME/bin/change_wallpapers.sh -f
 exec ydotoold
 exec blueman-applet
+exec gammastep -l 47.2:-1.5 -t 5700:3000 -g 0.95
 #exec --no-startup-id redshift-gtk
 
 # to disable middle mouse being paste (see my .xbindkeysrc file)

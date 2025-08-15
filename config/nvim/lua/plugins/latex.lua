@@ -8,5 +8,10 @@ return {
       vim.g.vimtex_view_method = "zathura_simple"
       vim.g.vimtex_quickfix_open_on_warning = 0
     end
-  }
+  },
+
+  -- -- I only really use it in tex files
+  -- {
+  --   'kamykn/spelunker.vim'
+  -- }
 }

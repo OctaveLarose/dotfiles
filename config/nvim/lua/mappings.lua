@@ -94,6 +94,10 @@ map("n", "<leader>e", "<cmd>Neotree reveal<CR>", { desc = "neotree focus window"
 -- map("n", "<C-n>", "<cmd>NvimTreeToggle<CR>", { desc = "nvimtree toggle window" })
 -- map("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree focus window" })
 
+----------- TERMINAL STUFF -----------
+map({ "n", "t" }, "<A-t>", "<cmd>ToggleTerm<CR>", { desc = "Toggle term on/off" })
+-- map("t", "jj", "<C-\\><C-n><cmd>ToggleTerm<CR>", { desc = "Exit terminal more easily" })
+
 ----------- GRUG-FAR -----------
 local grug_far = require("grug-far")
 map('n', '<leader>F', function() grug_far.open() end, { desc = "Use grug-far (project wide)" })

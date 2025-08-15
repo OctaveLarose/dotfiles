@@ -56,13 +56,14 @@ return {
     opts = {},
   },
 
-  -- {
-  --   "declancm/cinnamon.nvim",
-  --   version = "*",
-  --   init = function()
-  --     require("cinnamon").setup()
-  --   end
-  -- },
+  {
+    'akinsho/toggleterm.nvim',
+    version = "*",
+    opts = {
+      insert_mappings = true,
+      -- terminal_mappings = true, -- not sure about this one, it's to theoretically keep insert mode
+    }
+  },
 
   -- status bar
   -- maybe https://github.com/bwpge/lualine-pretty-path is nice
@@ -80,6 +81,7 @@ return {
     end
   },
 
+  -- that one huge neovim design changing/prettifying plugin
   {
     "folke/noice.nvim",
     event = "VeryLazy",
@@ -111,20 +113,13 @@ return {
     }
   },
 
+  -- persisting sessions
   {
     "olimorris/persisted.nvim",
     lazy = false, -- make sure the plugin is always loaded at startup
     config = true,
     -- autosave = true,
   },
-
-  -- {
-  --   "nvim-tree/nvim-tree.lua",
-  --   init = function()
-  --     require("nvim-tree").setup()
-  --   end
-  --   -- cmd = { "NvimTreeToggle", "NvimTreeFocus" },
-  -- },
 
   {
     "nvim-neo-tree/neo-tree.nvim",
@@ -144,8 +139,17 @@ return {
     }
   },
 
-  -- better quickfix list
+  -- better quickfix list, makes it a pretty floating window
   { 'kevinhwang91/nvim-bqf' }
+
+  -- smooth scrolling
+  -- {
+  --   "declancm/cinnamon.nvim",
+  --   version = "*",
+  --   init = function()
+  --     require("cinnamon").setup()
+  --   end
+  -- },
 
   -- makes delete not yank + defines a "cut" explicitly
   -- {

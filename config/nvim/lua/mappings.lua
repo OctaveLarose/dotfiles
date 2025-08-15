@@ -1,7 +1,6 @@
 local map = vim.keymap.set
 
 map({ "n", "i" }, "<C-q>", "<cmd>:q<CR>", { desc = "quit" })
-map({ "i" }, "jk", "<ESC>", { desc = "exit insert mode" })
 map({ "n", "i", "v" }, "<C-s>", "<cmd>w<cr><ESC>", { desc = "Ctrl+S save" })
 
 map({ "n", "v" }, "<leader>y", '"+y', { desc = "yank to clipboard" })

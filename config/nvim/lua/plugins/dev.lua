@@ -1,14 +1,19 @@
 return {
-  -- autoformatting
+  -- autoformatting. I had issues with
   {
     "stevearc/conform.nvim",
-    event = 'BufWritePre',
-    formatters_by_ft = {
-      lua = { "stylua" },
-      rust = { "rustfmt", lsp_format = "fallback" },
-      tex = { "latexindent" },
-      -- json = { lsp_format = "prefer" }
-    },
+    -- see autocmds.lua file
+    -- event = 'BufWritePre',
+    opts = {
+      formatters_by_ft = {
+        lua = { "stylua" },
+        rust = { "rustfmt", lsp_format = "fallback" },
+        tex = { "latexindent" },
+        python = { "ruff_format" },
+        ruby = { "standardrb" }
+        -- json = { lsp_format = "prefer" }
+      }
+    }
   },
 
   {

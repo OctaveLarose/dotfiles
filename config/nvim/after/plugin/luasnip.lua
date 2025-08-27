@@ -39,6 +39,9 @@ ls.add_snippets("tex", {
   s("code", {
     t({ "\\code{" }), i(1, "CODE"), t({ "}" })
   }),
+  s("emph", {
+    t({ "\\emph{" }), i(1, "EMPH"), t({ "}" })
+  }),
   s("todo", {
     t({ "\\todo{" }), i(1, "TODO"), t({ "}" })
   }),

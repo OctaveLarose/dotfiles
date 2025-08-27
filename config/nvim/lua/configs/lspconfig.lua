@@ -1,10 +1,9 @@
-local lspconfig = require "lspconfig"
-
 -- NB: Rust handled through rustaceanvim
 
-lspconfig.lua_ls.setup {} -- NB: lazydev does the config for us, for nvim config editing.
-lspconfig.markdown_oxide.setup {}
-lspconfig.jsonls.setup {}
-lspconfig.pyright.setup {}
+vim.lsp.enable("lua_ls") -- NB: lazydev does the config for us, for nvim config editing.
+vim.lsp.enable("markdown_oxide")
+vim.lsp.enable("jsonls")
+vim.lsp.enable("pyright")
+vim.lsp.enable("ruby_lsp")
 -- lspconfig.typos_lsp.setup {}
 -- lspconfig.texlab.setup {}

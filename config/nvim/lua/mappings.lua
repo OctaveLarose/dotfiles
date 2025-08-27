@@ -1,6 +1,8 @@
 local map = vim.keymap.set
 
-map({ "n", "i" }, "<C-q>", "<cmd>:q<CR>", { desc = "quit" })
+-- map({ "n", "i" }, "<C-q>", "<cmd>:q<CR>", { desc = "quit" })
+-- map({ "i" }, "<C-q>", "<ESC>ldwi", { desc = "delete next word in insert mode" })
+map({ "i" }, "<C-q>", "<ESC>ldei", { desc = "delete next word in insert mode" })
 map({ "n", "i", "v" }, "<C-s>", "<cmd>w<cr><ESC>", { desc = "Ctrl+S save" })
 
 map({ "n", "v" }, "<leader>y", '"+y', { desc = "yank to clipboard" })
@@ -12,13 +14,12 @@ map("n", "<C-l>", "<C-w>l", { desc = "switch window right" })
 map("n", "<C-j>", "<C-w>j", { desc = "switch window down" })
 map("n", "<C-k>", "<C-w>k", { desc = "switch window up" })
 
-map("n", "<leader>rr", ":make b <cr>", { silent = true, desc = "Make build" })
-
 map("n", "<leader>/", "gccj", { desc = "comment", remap = true })
 map("v", "<leader>/", "gc", { desc = "toggle comment", remap = true })
+map("n", "yp", "yyp", { desc = "Copy line", remap = true })
 map("n", "yc", "yygccp", { desc = "Copy line and comment it", remap = true })
 
-map("n", "<C-L><C-L>", "<cmd>:set invrelativenumber<CR>", { desc = "Toggle relative line numbers" })
+map("n", "<leader>rr", ":make b <cr>", { silent = true, desc = "Make build" })
 
 -- centered scrolling with C-u/C-d
 -- map("n", "<C-u>", function() require("cinnamon").scroll("<C-U>zz") end)
@@ -83,7 +84,7 @@ vim.keymap.set("n", "<A-0>", "<cmd>BufferLast<CR>", { desc = "buffer goto last" 
 ----------- FZF-LUA: GENERAL COMMANDS -----------
 map("n", "<leader>ff", "<cmd>FzfLua files<cr>", { desc = "fzf-lua find files" })
 map("n", "<leader>fw", "<cmd>FzfLua live_grep<cr>", { desc = "fzf-lua live grep" })
-map("n", "<leader>fe", "<cmd>FzfLua oldfiles<cr>", { desc = "fzf-lua old files" })            -- previously fo
+map("n", "<leader>fo", "<cmd>FzfLua oldfiles<cr>", { desc = "fzf-lua old files" })            -- previously fe
 map("n", "<leader>fr", "<cmd>FzfLua tags_live_grep<cr>", { desc = "fzf-lua tags live grep" }) -- previously ft
 map("n", "<leader>fm", "<cmd>FzfLua marks<cr>", { desc = "fzf-lua marks" })
 
@@ -137,4 +138,4 @@ map({ "i", "s" }, "<C-l>", function()
 end, { silent = true })
 
 -- auto reloads snippets supposedly, used for testing
-map("n", "<leader><leader>s", "<cmd>source ~/.config/nvim/after/plugin/luasnip.lua<CR>")
+-- map("n", "<leader><leader>s", "<cmd>source ~/.config/nvim/after/plugin/luasnip.lua<CR>")

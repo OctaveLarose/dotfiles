@@ -17,6 +17,7 @@ return {
     build = ":TSUpdate html", -- if you have `nvim-treesitter` installed
     opts = {
       lang = "python3",
+      -- image_support = true -- using 3rd/image
     },
   }
 }

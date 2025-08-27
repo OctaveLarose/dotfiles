@@ -24,30 +24,30 @@ return {
   },
 
   -- autosave files
-  {
-    "okuuva/auto-save.nvim",
-    version = '^1.0.0',        -- see https://devhints.io/semver, alternatively use '*' to use the latest tagged release
-    cmd = "ASToggle",          -- optional for lazy loading on command
-    -- event = { "InsertLeave", "TextChanged" }, -- optional for lazy loading on trigger events
-    event = { "InsertLeave" }, -- optional for lazy loading on trigger events
-    opts = {
-      condition = function(buf)
-        local fn = vim.fn
-        local filepath = fn.expand('%:p')
-        local filetype = fn.getbufvar(buf, "&filetype")
-
-        if vim.list_contains({ "tex", "bib" }, filetype) then
-          return false
-        end
-        if filepath:match('^/home/octavel/.config/nvim') then
-          return false
-        end
-
-        return true
-      end
-
-    },
-  },
+  -- {
+  --   "okuuva/auto-save.nvim",
+  --   version = '^1.0.0',        -- see https://devhints.io/semver, alternatively use '*' to use the latest tagged release
+  --   cmd = "ASToggle",          -- optional for lazy loading on command
+  --   -- event = { "InsertLeave", "TextChanged" }, -- optional for lazy loading on trigger events
+  --   event = { "InsertLeave" }, -- optional for lazy loading on trigger events
+  --   opts = {
+  --     condition = function(buf)
+  --       local fn = vim.fn
+  --       local filepath = fn.expand('%:p')
+  --       local filetype = fn.getbufvar(buf, "&filetype")
+  --
+  --       if vim.list_contains({ "tex", "bib" }, filetype) then
+  --         return false
+  --       end
+  --       if filepath:match('^/home/octavel/.config/nvim') then
+  --         return false
+  --       end
+  --
+  --       return true
+  --     end
+  --
+  --   },
+  -- },
 
   {
     "petertriho/nvim-scrollbar",
@@ -138,7 +138,7 @@ return {
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons",
       "MunifTanjim/nui.nvim",
-      -- {"3rd/image.nvim", opts = {}}, -- Optional image support in preview window: See `# Preview Mode` for more information
+      -- { "3rd/image.nvim", opts = {} }, -- Optional image support in preview window: See `# Preview Mode` for more information
     },
     config = {
       buffers = {
@@ -146,6 +146,14 @@ return {
           enabled = true, -- This will find and focus the file in the active buffer every time -- -- the current file is changed while the tree is open.
         }
       }
+    }
+  },
+
+  {
+    "3rd/image.nvim",
+    build = false, -- so that it doesn't build the rock https://github.com/3rd/image.nvim/issues/91#issuecomment-2453430239
+    opts = {
+      processor = "magick_cli",
     }
   },
 

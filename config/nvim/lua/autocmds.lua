@@ -1,11 +1,13 @@
 -- Autoformatting.
 -- Simpler, more/too generic version: vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
 vim.api.nvim_create_autocmd("BufWritePre", {
-  callback = function()
+  callback = function(args)
     local mode = vim.api.nvim_get_mode().mode
     local filetype = vim.bo.filetype
     if vim.bo.modified == true and mode == 'n' and not vim.list_contains({ "markdown", "tex", "bib" }, filetype) then
-      vim.cmd('lua vim.lsp.buf.format()')
+      -- we shouldn't -have- to use conform... But it works better than the default formatter, at the moment, as far as I can tell.
+      -- vim.cmd('lua vim.lsp.buf.format()')  
+      require("conform").format({ bufnr = args.buf, lsp_format = "fallback" })
     else
     end
   end

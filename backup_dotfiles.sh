@@ -18,9 +18,14 @@ echo -e "${MSG_COLOR}\n### Backing up crontab...${NO_COLOR}"
 crontab -l > crontab
 echo "Done."
 
+BIN_LIST=("auto_autorandr.sh" "brightness_adjust.sh" "change_wallpapers.sh" "i3_window_finder.py" "i3_lock_screen.sh" "open_work_apps.sh" "search_error_wayland.sh" "search_error_xorg.sh" "swaylock" "sway_wrapper.sh" "video_dl" "window_killer")
+
 echo -e "${MSG_COLOR}\n### Backing up personal scripts...${NO_COLOR}"
 find ./bin ! -name 'README.md' -type f -exec rm -f {} +
-cp -rv ~/bin .
+for bin_name in "${BIN_LIST[@]}"
+do
+    cp -rv ~/bin/$bin_name ./bin/$bin_name > /dev/null
+done
 
 echo -e "${MSG_COLOR}\n### Backing up wallpapers...${NO_COLOR}"
 rm -rf ./wallpapers && mkdir ./wallpapers && cp -rf ~/Pictures/time_wallpapers/* ./wallpapers/ && echo "Done."

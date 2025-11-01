@@ -29,7 +29,7 @@ case $chosen in
     systemctl reboot
     ;;
   $lock)
-    $HOME/bin/swaylock.sh
+    $HOME/bin/swaylock
     ;;
   $suspend)
     mpc -q pause

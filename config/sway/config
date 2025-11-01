@@ -9,7 +9,7 @@ input * {
   xkb_options caps:escape
 }  
 
-set $lock_command $HOME/bin/swaylock.sh
+set $lock_command $HOME/bin/swaylock
 
 ### Idle configuration
 exec swayidle -w \

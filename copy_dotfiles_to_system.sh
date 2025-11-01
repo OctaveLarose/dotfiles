@@ -14,7 +14,13 @@ confirm_and_copy() {
             return
         fi
     fi
-    cp -rv "$src" "$dest"
+
+    # not sure if there isn't a better solution than this, but whatever works
+    if [ -d "$src" ]; then
+        cp -rv "$src"/* "$dest"/ 
+    else
+        cp -rv "$src" "$dest"
+    fi
 }
 
 echo -e "${MSG_COLOR}### Restoring rc files...${NO_COLOR}"
@@ -34,8 +40,9 @@ for bin_name in bin/*; do
 done
 
 echo -e "${MSG_COLOR}\n### Restoring config settings...${NO_COLOR}"
-for cfg in config/*; do
-    mkdir -p ~/.config/$(basename "$cfg") && confirm_and_copy "$cfg" ~/.config/$(basename "$cfg")
+for cfg in config/*/; do
+    dir_name=$(basename "$cfg")
+    confirm_and_copy "$cfg" "$HOME/.config/$dir_name/"
 done
 
 echo -e "${MSG_COLOR}\n### Restore complete!${NO_COLOR}"

@@ -27,10 +27,10 @@ exec hash dbus-update-activation-environment 2>/dev/null && \
      dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway
 
 # Screenshotting
-# bindsym Print exec --no-startup-id flameshot gui
-# bindsym Print exec --no-startup-id grim -g "$(slurp)" - | wl-copy
-bindsym Print exec wayfreeze --after-freeze-cmd 'grim -g "$(slurp)" - | wl-copy; killall wayfreeze'
-# bindsym Print exec --no-startup-id grim 
+bindsym Print exec flameshot gui
+# bindsym Print exec grim -g "$(slurp)" - | wl-copy
+# bindsym Print exec wayfreeze --after-freeze-cmd 'grim -g "$(slurp)" - | wl-copy; killall wayfreeze'
+# bindsym Print exec grim 
 
 set $refresh_i3status killall -SIGUSR1 i3status
 # bindsym XF86AudioLowerVolume    exec --no-startup-id amixer -q -D pulse sset Master 5%- unmute
@@ -196,7 +196,7 @@ assign [class="^jetbrains-*"] → $ws4
 assign [class="^Code$"] → $ws4
 assign [class="^superProductivity$"] → $ws6
 assign [class="^teams-for-linux$"] → $ws7
-assign [instance="^teams.microsoft.com__v2$"] → $ws7
+assign [app_id="chrome-teams\.microsoft\.com__v2_-Default"] → $ws7 
 for_window [class="^Spotify"] move --no-auto-back-and-forth to workspace $ws9
 assign [class="^YouTube Music$"] → $ws9
 assign [class="youtube_music"] → $ws9
@@ -221,7 +221,6 @@ workspace $ws9 output HDMI-A-1 DP-2 eDP-1
 set $playerctl_cmd playerctl --ignore-player=spotify
 set $file_player_last /tmp/last-player-used
 bindsym Control+Mod1+space exec --no-startup-id $playerctl_cmd -p $(tail -1 $file_player_last) play-pause || $playerctl_cmd play-pause
-# bindsym 201 exec --no-startup-id $playerctl_cmd -p $(tail -1 $file_player_last) play-pause || $playerctl_cmd play-pause
 bindsym Control+Mod1+comma exec --no-startup-id $playerctl_cmd -p $(tail -1 $file_player_last) previous || $playerctl_cmd previous
 bindsym Control+Mod1+period exec --no-startup-id $playerctl_cmd -p $(tail -1 $file_player_last) next || $playerctl_cmd next
 bindsym Control+Shift+space exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
@@ -242,7 +241,7 @@ bindsym $mod+Shift+t exec --no-startup-id $lock_command
 # Work apps
 bindsym Mod1+Shift+numbersign exec $HOME/bin/open_work_apps.sh
 # Shutdown menu
-bindsym Ctrl+Shift+Escape exec nwg-bar
+bindsym Ctrl+Shift+Escape exec /home/octavel/.config/rofi/bin/menu_powermenu
 # Focus on the workspace that has the window with the given name
 # bindsym $mod+Shift+f exec --no-startup-id $HOME/bin/i3_window_finder.py $(dmenu -p "Window name:" < /dev/null)
 

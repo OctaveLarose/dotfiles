@@ -61,6 +61,9 @@ return {
   },
 
   {
-    "ludovicchabant/vim-gutentags"
+    "ludovicchabant/vim-gutentags",
+    config = function()
+      vim.g.gutentags_enabled = false -- I only use it manually with GutentagsUpdate
+    end
   }
 }

@@ -143,7 +143,7 @@ return {
     config = {
       buffers = {
         follow_current_file = {
-          enabled = true, -- This will find and focus the file in the active buffer every time -- -- the current file is changed while the tree is open.
+          enabled = true, -- This will find and focus the file in the active buffer every time the current file is changed while the tree is open.
         }
       }
     }
@@ -168,13 +168,4 @@ return {
   --     require("cinnamon").setup()
   --   end
   -- },
-
-  -- makes delete not yank + defines a "cut" explicitly
-  -- {
-  --   "gbprod/cutlass.nvim",
-  --   opts = {
-  --     cut_key = "m",
-  --     override_del = true
-  --   }
-  -- }
 }

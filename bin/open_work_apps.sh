@@ -21,4 +21,4 @@ for cmd in "${commands[@]}"; do
 done
 
 # nvim
-swaymsg 'workspace 4:IDE; exec --no-startup-id kitty nvim'
+swaymsg 'workspace 4:IDE; exec --no-startup-id kitty --hold nvim'

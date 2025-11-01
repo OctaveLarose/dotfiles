@@ -8,6 +8,8 @@ return {
 
   {
     "navarasu/onedark.nvim",
+    lazy = false,
+    priority = 1000,
     init = function()
       require('onedark').setup {
         -- style = 'warmer'
@@ -25,6 +27,7 @@ return {
   {
     "catppuccin/nvim",
     name = "catppuccin",
+    lazy = false,
     priority = 1000
   },
 
@@ -37,5 +40,9 @@ return {
     name = "rose-pine",
   },
 
-  { "Shatur/neovim-ayu" }
+  {
+    "Shatur/neovim-ayu",
+    lazy = false,
+    priority = 1000,
+  }
 }

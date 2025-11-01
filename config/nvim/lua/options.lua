@@ -54,17 +54,12 @@ o.laststatus = 3
 -- disable nvim intro
 opt.shortmess:append "sI"
 
--- disable some default language providers
-g.loaded_node_provider = 0
+-- nvim LSP stuff
+lsp.inlay_hint.enable()
+g.loaded_node_provider = 0 -- disable some default language providers
 g.loaded_python3_provider = 0
 g.loaded_perl_provider = 0
 g.loaded_ruby_provider = 0
 
 -- add binaries installed by mason.nvim to path (not sure we use/need that to be honest)
-local is_windows = vim.fn.has "win32" ~= 0
-local sep = is_windows and "\\" or "/"
-local delim = is_windows and ";" or ":"
-vim.env.PATH = table.concat({ vim.fn.stdpath "data", "mason", "bin" }, sep) .. delim .. vim.env.PATH
-
--- nvim LSP stuff
-lsp.inlay_hint.enable()
+vim.env.PATH = table.concat({ vim.fn.stdpath "data", "mason", "bin" }, "/") .. ":" .. vim.env.PATH

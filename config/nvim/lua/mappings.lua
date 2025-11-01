@@ -61,7 +61,7 @@ map("n", "<leader>q", vim.diagnostic.setqflist, { desc = "Diagnostics in quickfi
 
 map("n", "<leader>sh", vim.lsp.buf.signature_help, lsp_opts "Show signature help")
 
-map({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, lsp_opts "Code action")
+map({ "n", "v" }, "<leader>a", vim.lsp.buf.code_action, lsp_opts "Code action")
 map("n", "<space>h", vim.lsp.buf.hover,
   { noremap = true, silent = true, desc = "Hover action" }
 )
@@ -75,6 +75,8 @@ map("n", "<S-tab>", "<cmd>BufferPrevious<cr>", { desc = "buffer goto prev" })
 map("n", "<A-c>", "<cmd>BufferClose<cr>", { desc = "buffer close" })
 map("n", "<A-q>", "<cmd>BufferCloseAllButCurrent<cr>", { desc = "buffer close all but current" })
 map("n", "<A-p>", "<cmd>BufferPin<cr>", { desc = "pin current buffer" })
+-- I'm not sure this one ever will be useful outside of me writing my thesis and having tex files for my chapters starting with "1_", "2_", ...
+map("n", "<A-s>", "<cmd>BufferOrderByName<cr>", { desc = "order buffers by name" })
 
 for i = 1, 9 do
   vim.keymap.set("n", "<A-" .. i .. ">", "<cmd>BufferGoto " .. i .. "<CR>", { desc = "buffer goto " .. i })
@@ -84,8 +86,9 @@ vim.keymap.set("n", "<A-0>", "<cmd>BufferLast<CR>", { desc = "buffer goto last" 
 ----------- FZF-LUA: GENERAL COMMANDS -----------
 map("n", "<leader>ff", "<cmd>FzfLua files<cr>", { desc = "fzf-lua find files" })
 map("n", "<leader>fw", "<cmd>FzfLua live_grep<cr>", { desc = "fzf-lua live grep" })
-map("n", "<leader>fo", "<cmd>FzfLua oldfiles<cr>", { desc = "fzf-lua old files" })            -- previously fe
-map("n", "<leader>fr", "<cmd>FzfLua tags_live_grep<cr>", { desc = "fzf-lua tags live grep" }) -- previously ft
+map("n", "<leader>fo", "<cmd>FzfLua oldfiles<cr>", { desc = "fzf-lua old files" }) -- previously fe
+map("n", "<leader>ft", "<cmd>GutentagsUpdate<cr> <cmd>FzfLua tags_live_grep<cr>", { desc = "fzf-lua tags live grep" })
+map("n", "<leader>fr", "<cmd>FzfLua registers<cr>", { desc = "fzf-lua registers" })
 map("n", "<leader>fm", "<cmd>FzfLua marks<cr>", { desc = "fzf-lua marks" })
 
 ----------- [NEO|NVIM]TREE -----------
@@ -102,19 +105,19 @@ map({ "n", "t" }, "<A-t>", "<cmd>ToggleTerm<CR>", { desc = "Toggle term on/off" 
 local grug_far = require("grug-far")
 map('n', '<leader>F', function() grug_far.open() end, { desc = "Use grug-far (project wide)" })
 
-map('v', 'ff',
-  function()
-    local prefill = vim.fn.expand("<cword>")
-    local current_file = vim.fn.expand("%")
-    grug_far.open({ prefills = { search = prefill, replacement = prefill, paths = current_file } })
-    -- grug_far.open({ prefills = { search = prefill, paths = current_file } })
-  end,
-  { desc = "Use grug-far (on current word, in current file)" }
-)
-
-map('v', 'fff',
-  function() grug_far.open({ prefills = { search = vim.fn.expand("<cword>") } }) end,
-  { desc = "Use grug-far (on current-word, project-wide)" })
+-- map('v', 'ff',
+--   function()
+--     local prefill = vim.fn.expand("<cword>")
+--     local current_file = vim.fn.expand("%")
+--     grug_far.open({ prefills = { search = prefill, replacement = prefill, paths = current_file } })
+--     -- grug_far.open({ prefills = { search = prefill, paths = current_file } })
+--   end,
+--   { desc = "Use grug-far (on current word, in current file)" }
+-- )
+--
+-- map('v', 'fff',
+--   function() grug_far.open({ prefills = { search = vim.fn.expand("<cword>") } }) end,
+--   { desc = "Use grug-far (on current-word, project-wide)" })
 
 ----------- SNIPPETS -----------
 local ls = require("luasnip")

@@ -13,8 +13,12 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup {
-  -- install = { colorscheme = { "ayu-mirage" } },
-  { import = "plugins" },
+  spec = { { import = "plugins" } },
+
+  install = { colorscheme = { "ayu-mirage" } },
+  -- install = { colorscheme = { "habamax" } },
+
+  -- checker = { enabled = true }, -- automatically check for plugin updates
 }
 
 ----- Done with lazy/plugin setup. -----

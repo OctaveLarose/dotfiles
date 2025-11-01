@@ -418,3 +418,7 @@
 #    set_stack_tag = "volume"
 #
 # vim: ft=cfg
+
+[ignore_flameshot_warning]
+body = "grim's screenshot component is implemented based on wlroots, it may not be used in GNOME or similar desktop environments"
+format = ""

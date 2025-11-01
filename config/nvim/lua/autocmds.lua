@@ -6,13 +6,12 @@ vim.api.nvim_create_autocmd("BufWritePre", {
     local filetype = vim.bo.filetype
     if vim.bo.modified == true and mode == 'n' and not vim.list_contains({ "markdown", "tex", "bib" }, filetype) then
       -- we shouldn't -have- to use conform... But it works better than the default formatter, at the moment, as far as I can tell.
-      -- vim.cmd('lua vim.lsp.buf.format()')  
+      -- vim.cmd('lua vim.lsp.buf.format()')
       require("conform").format({ bufnr = args.buf, lsp_format = "fallback" })
     else
     end
   end
 })
-
 
 -- To not capture when saving sessions: NvimTree/neotree, dapui
 vim.api.nvim_create_autocmd("User", {
@@ -24,6 +23,16 @@ vim.api.nvim_create_autocmd("User", {
       end
     end
     require("dapui").close()
+  end,
+})
+
+-- I don't like undofiles persisting past vim closing, personally
+vim.api.nvim_create_autocmd("VimLeavePre", {
+  callback = function()
+    local undodir = vim.opt.undodir:get()[1]
+    if undodir and undodir ~= "" then
+      vim.fn.delete(undodir, "rf")
+    end
   end,
 })
 

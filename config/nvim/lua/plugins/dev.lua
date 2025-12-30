@@ -87,25 +87,27 @@ return {
 
   { 'akinsho/git-conflict.nvim',              version = "*", config = true },
 
-  -- not sure i need that one. use actively, or remove from config
-  {
-    'stevearc/overseer.nvim',
-    config = function()
-      require('overseer').setup()
-    end,
-    opts = {},
-  },
+  -- not sure i need that one. use actively, or remove from config (it sounds really great in theory though)
+  -- {
+  --   'stevearc/overseer.nvim',
+  --   config = function()
+  --     require('overseer').setup()
+  --   end,
+  --   opts = {},
+  -- },
 
   -- highlight TODO comments
   {
     "folke/todo-comments.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
-    init = function() require("todo-comments") end,
     opts = {}
   },
 
   -- preview LSP renames
-  { "saecki/live-rename.nvim" },
+  {
+    "smjonas/inc-rename.nvim",
+    opts = {}
+  },
 
   -- snippet plugin
   {
@@ -159,5 +161,14 @@ return {
     opts = function()
       return require "configs.nvim-cmp"
     end,
+  },
+
+  {
+    'stevearc/aerial.nvim',
+    opts = {},
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons"
+    },
   }
 }

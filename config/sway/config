@@ -32,10 +32,9 @@ bindsym Print exec flameshot gui
 # bindsym Print exec wayfreeze --after-freeze-cmd 'grim -g "$(slurp)" - | wl-copy; killall wayfreeze'
 # bindsym Print exec grim 
 
-set $refresh_i3status killall -SIGUSR1 i3status
-# bindsym XF86AudioLowerVolume    exec --no-startup-id amixer -q -D pulse sset Master 5%- unmute
-# bindsym XF86AudioRaiseVolume    exec --no-startup-id amixer -q -D pulse sset Master 5%+ unmute
-# bindsym XF86AudioMute           exec --no-startup-id amixer -q -D pulse sset Master toggle
+# bindsym XF86AudioLowerVolume    exec amixer -q -D pulse sset Master 5%- unmute
+# bindsym XF86AudioRaiseVolume    exec amixer -q -D pulse sset Master 5%+ unmute
+# bindsym XF86AudioMute           exec amixer -q -D pulse sset Master toggle
 bindsym --locked XF86AudioLowerVolume exec pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume \@DEFAULT_SINK@ -5%
 bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-mute @DEFAULT_SINK@ 0 && pactl set-sink-volume \@DEFAULT_SINK@ +5%
 bindsym --locked XF86AudioMute exec pactl set-sink-mute \@DEFAULT_SINK@ toggle
@@ -51,7 +50,7 @@ bindsym $mod+Shift+q kill
 
 bindsym $mod+Shift+d exec tofi-run | xargs swaymsg exec --
 # only .desktop files
-bindsym $mod+d exec --no-startup-id tofi-drun | xargs swaymsg exec --
+bindsym $mod+d exec tofi-drun | xargs swaymsg exec --
 
 # change focus
 bindsym $mod+h focus left
@@ -166,7 +165,7 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-exec --no-startup-id waybar
+exec waybar
 
 # Gaps are neat, but I prefer without with my current setup.
 # gaps inner 3px
@@ -220,52 +219,53 @@ workspace $ws9 output HDMI-A-1 DP-2 eDP-1
 # Play/pause/skip shortcuts for browser+Spotify:
 set $playerctl_cmd playerctl --ignore-player=spotify
 set $file_player_last /tmp/last-player-used
-bindsym Control+Mod1+space exec --no-startup-id $playerctl_cmd -p $(tail -1 $file_player_last) play-pause || $playerctl_cmd play-pause
-bindsym Control+Mod1+comma exec --no-startup-id $playerctl_cmd -p $(tail -1 $file_player_last) previous || $playerctl_cmd previous
-bindsym Control+Mod1+period exec --no-startup-id $playerctl_cmd -p $(tail -1 $file_player_last) next || $playerctl_cmd next
-bindsym Control+Shift+space exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
-bindsym Control+Shift+comma exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
-bindsym Control+Shift+period exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
+bindsym Control+Mod1+space exec $playerctl_cmd -p $(tail -1 $file_player_last) play-pause || $playerctl_cmd play-pause
+bindsym Control+Mod1+comma exec $playerctl_cmd -p $(tail -1 $file_player_last) previous || $playerctl_cmd previous
+bindsym Control+Mod1+period exec $playerctl_cmd -p $(tail -1 $file_player_last) next || $playerctl_cmd next
+bindsym Control+Shift+space exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
+bindsym Control+Shift+comma exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
+bindsym Control+Shift+period exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
 
 # Misc.:
 # Brightness (relies on a wrapper script that prevents it from going below 0)
 set $brightness_adjust 7
-bindsym XF86MonBrightnessUp exec --no-startup-id $HOME/bin/brightness_adjust.sh $brightness_adjust +
-bindsym XF86MonBrightnessDown exec --no-startup-id $HOME/bin/brightness_adjust.sh $brightness_adjust -
+bindsym XF86MonBrightnessUp exec $HOME/bin/brightness_adjust.sh $brightness_adjust +
+bindsym XF86MonBrightnessDown exec $HOME/bin/brightness_adjust.sh $brightness_adjust -
 # Error searching macro
-bindsym Ctrl+Shift+Mod1+a exec --no-startup-id $HOME/bin/search_error_wayland.sh
+bindsym Ctrl+Shift+Mod1+a exec $HOME/bin/search_error_wayland.sh
 # Clipboard manager
-bindsym $mod+dead_grave exec --no-startup-id copyq toggle
+bindsym $mod+dead_grave exec vicinae vicinae://extensions/vicinae/clipboard/history
 # Lock screen
-bindsym $mod+Shift+t exec --no-startup-id $lock_command
+bindsym $mod+Shift+t exec $lock_command
 # Work apps
 bindsym Mod1+Shift+numbersign exec $HOME/bin/open_work_apps.sh
 # Shutdown menu
 bindsym Ctrl+Shift+Escape exec /home/octavel/.config/rofi/bin/menu_powermenu
 # Focus on the workspace that has the window with the given name
-# bindsym $mod+Shift+f exec --no-startup-id $HOME/bin/i3_window_finder.py $(dmenu -p "Window name:" < /dev/null)
-
-bindsym Mod1+F5 exec i3-quickterm shell
+# bindsym $mod+Shift+f exec $HOME/bin/i3_window_finder.py $(dmenu -p "Window name:" < /dev/null)
 
 ### Startup programs
 exec nm-applet
 exec dunst
 # exec yakuake
-exec copyq
-# exec --no-startup-id caffeine
+# exec copyq
+# exec caffeine
 exec libinput-gestures-setup autostart start
 exec kanshi
 exec $HOME/bin/change_wallpapers.sh -f
 exec ydotoold
 exec blueman-applet
 exec gammastep -l 47.2:-1.5 -t 5700:3000 -g 0.95
-#exec --no-startup-id redshift-gtk
+#exec redshift-gtk
+
+# we really should be able to just enable it, though
+exec systemctl --user enable --now vicinae.service
 
 # to disable middle mouse being paste (see my .xbindkeysrc file)
-# TODO fix for wayland exec --no-startup-id xbindkeys
+# TODO fix for wayland exec xbindkeys
 
 # for playerctl commands to apply on the last used player
-exec --no-startup-id $playerctl_cmd status --format '{{ playerName }}' --follow > $file_player_last
+exec $playerctl_cmd status --format '{{ playerName }}' --follow > $file_player_last
 
 # bar {
 #     position top

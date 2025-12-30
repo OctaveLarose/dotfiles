@@ -44,5 +44,21 @@ return {
     "Shatur/neovim-ayu",
     lazy = false,
     priority = 1000,
+  },
+
+  {
+    "Kaikacy/Lemons.nvim",
+    version = "*",
+    lazy = false,
+    priority = 1000,
+    -- config = function()
+    -- vim.cmd.colorscheme("lemons")
+    -- end
+  },
+
+  {
+    'alexpasmantier/hubbamax.nvim',
+    lazy = false,
+    priority = 1000,
   }
 }

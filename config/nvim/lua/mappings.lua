@@ -31,10 +31,10 @@ require('nvim-treesitter.configs').setup {
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = "<C-w>",
-      scope_incremental = "<TAB>",
-      node_incremental = "<C-w>",
-      node_decremental = "<bs>",
+      init_selection = "<A-o>",
+      node_incremental = "<A-o>",
+      scope_incremental = "<A-O>",
+      node_decremental = "<A-i>",
     },
   },
 }
@@ -53,11 +53,13 @@ map("n", "<leader>D", vim.lsp.buf.type_definition, lsp_opts "Go to type definiti
 map("n", "gr", "<cmd>FzfLua lsp_references<CR>", lsp_opts "Show references")
 map("n", "gt", "<cmd>FzfLua lsp_live_workspace_symbols<CR>", lsp_opts "Show live workspace symbols")
 
-map("n", "<leader>ra", function() require("live-rename").rename({ insert = true }) end, lsp_opts "live-rename")
+map("n", "<leader>ra", ":IncRename ", lsp_opts "IncRename")
 
 map("n", "]d", function() vim.diagnostic.jump({ count = 1, float = true }) end, { desc = "Go to next diagnostic" })
 map("n", "[d", function() vim.diagnostic.jump({ count = -1, float = true }) end, { desc = "Go to prev diagnostic" })
-map("n", "<leader>q", vim.diagnostic.setqflist, { desc = "Diagnostics in quickfix list" })
+map("n", "<leader>q", function() vim.diagnostic.setqflist({ severity = vim.diagnostic.severity.ERROR }) end,
+  { desc = "Diagnostics in quickfix list (errors only)" })
+map("n", "<leader>Q", vim.diagnostic.setqflist, { desc = "Diagnostics in quickfix list" })
 
 map("n", "<leader>sh", vim.lsp.buf.signature_help, lsp_opts "Show signature help")
 
@@ -68,6 +70,7 @@ map("n", "<space>h", vim.lsp.buf.hover,
 
 map("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, lsp_opts "Add workspace folder")
 map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, lsp_opts "Remove workspace folder")
+map("n", "<C-a-l>", function() require("conform").format() end, lsp_opts "Format file (originally an IntelliJ binding)")
 
 ---------- TAB/BARBAR STUFF ----------
 map("n", "<tab>", "<cmd>BufferNext<cr>", { desc = "buffer goto next" })

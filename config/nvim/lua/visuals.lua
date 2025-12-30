@@ -1,6 +1,6 @@
 vim.cmd [[colorscheme ayu-mirage]]
 
-require("smear_cursor").toggle()
+-- require("smear_cursor").toggle()
 
 vim.api.nvim_set_hl(0, "FlashLabel", { fg = "black", bg = "#cd78dd" })
 -- vim.api.nvim_set_hl(0, "FlashCursor", { fg = "black", bg = "#1100ff" }) -- experimenting with clearer f/t search results

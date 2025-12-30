@@ -22,3 +22,10 @@ vim.keymap.set("n", "<Leader>dt",
   end,
   { desc = "Debugger testables" }
 )
+
+
+-- vim.api.nvim_create_autocmd("CursorHold", {
+--   callback = function()
+--     vim.cmd('Krust')
+--   end,
+-- })

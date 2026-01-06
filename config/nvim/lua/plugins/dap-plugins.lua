@@ -2,8 +2,11 @@ return {
   {
     'mfussenegger/nvim-dap',
     dependencies = {
+      "rcarriga/nvim-dap-ui",
       -- "jay-babu/mason-nvim-dap.nvim",
-      "mrcjkb/rustaceanvim"
+      "mrcjkb/rustaceanvim",
+      "nvim-neotest/nvim-nio", -- needed by dapui?
+      "theHamsta/nvim-dap-virtual-text"
     },
     config = function()
       local dap, dapui = require("dap"), require("dapui")
@@ -36,41 +39,10 @@ return {
         { desc = "Debugger evaluate expression" }
       )
 
-      --
-      -- ------ nvim dap rr stuff
-      -- -- local cpptools_extension_path = vim.fn.stdpath("data") .. "/mason" .. "/packages" .. "/cpptools" .. "/extension"
-      -- -- local cpptools_path = cpptools_extension_path .. "/debugAdapters/bin/OpenDebugAD7"
-      -- local cpptools_path =
-      -- "/home/octavel/.local/share/nvim/mason/packages/cpptools/extension/debugAdapters/bin/OpenDebugAD7"
-      --
-      -- dap.adapters.cppdbg = {
-      --   id = "cppdbg",
-      --   type = "executable",
-      --   command = cpptools_path,
-      -- }
-      --
-      -- local rr_dap = require("nvim-dap-rr")
-      -- rr_dap.setup({
-      --   mappings = {
-      --     step_over = "<F1>",
-      --     step_into = "<F2>",
-      --     step_out = "<F4>",
-      --     continue = "<F5>",
-      --
-      --     reverse_continue = "<F6>",
-      --     -- reverse_continue = "<F19>",    -- <S-F7>
-      --     reverse_step_over = "<F20>",   -- <S-F8>
-      --     reverse_step_out = "<F21>",    -- <S-F9>
-      --     reverse_step_into = "<F22>",   -- <S-F10>
-      --     -- instruction level stepping
-      --     step_over_i = "<F32>",         -- <C-F8>
-      --     step_out_i = "<F33>",          -- <C-F8>
-      --     step_into_i = "<F34>",         -- <C-F8>
-      --     reverse_step_over_i = "<F44>", -- <SC-F8>
-      --     reverse_step_out_i = "<F45>",  -- <SC-F9>
-      --     reverse_step_into_i = "<F46>", -- <SC-F10>
-      --   }
-      -- })
+      dap.adapters.codelldb = {
+        type = "executable",
+        command = "codelldb",
+      }
 
       -- require('mason-nvim-dap').setup {
       --   -- Makes a best effort to setup the various debuggers with
@@ -81,9 +53,8 @@ return {
       --   -- see mason-nvim-dap README for more information
       --   handlers = {},
       --
-      --   ensure_installed = {}
+      --   ensure_installed = { "codelldb" }
       -- }
-      ------------------------
 
       dap.listeners.before.attach.dapui_config = function()
         dapui.open()
@@ -98,12 +69,48 @@ return {
       --   dapui.close()
       -- end
 
-      -- dap.configurations.cpp = { rr_dap.get_config() }
-      -- dap.configurations.rust = { rr_dap.get_rust_config() }
+      ---@diagnostic disable: missing-fields
+      dapui.setup({
+        layouts = { {
+          elements = {
+            {
+              id = "scopes",
+              size = 0.45
+            },
+            {
+              id = "stacks",
+              size = 0.25
+            },
+            {
+              id = "breakpoints",
+              size = 0.10
+            },
+            -- {
+            --   id = "watches",
+            --   size = 0.25
+            -- }
+          },
+          position = "left",
+          size = 60
+        }, {
+          elements = { {
+            id = "console",
+            size = 0.65
+          }, {
+            id = "repl",
+            size = 0.35
+          } },
+          position = "bottom",
+          size = 10
+        } }
+      })
+      ---@diagnostic disable: missing-parameter
+      require("nvim-dap-virtual-text").setup()
 
-      -- is uncaught needed? does this even work? not sure....
       dap.listeners.after.event_initialized["dap_exception_breakpoint"] = function()
-        dap.set_exception_breakpoints({ "cpp_throw", "cpp_catch", "uncaught" })
+        dap.set_exception_breakpoints({ "cpp_throw", "cpp_catch", "uncaught", "rust_panic" })
+        -- I find that for some reason, rust_panic isn't a default in Rust at least? So I shouldn't use "default", I guess...
+        -- dap.set_exception_breakpoints("default")
       end
 
       -- dap.listeners.after.event_initialized["dapui_config"] = function()
@@ -117,18 +124,7 @@ return {
     end,
   },
 
-  {
-    'rcarriga/nvim-dap-ui',
-    dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio", "theHamsta/nvim-dap-virtual-text" },
-    config = function()
-      require("dapui").setup()
-      ---@diagnostic disable: missing-fields
-      require("nvim-dap-virtual-text").setup({})
-    end,
-  },
-
-  -- { "jonboh/nvim-dap-rr", dependencies = { "nvim-dap", "telescope.nvim" } },
-  { "jonboh/nvim-dap-rr", dependencies = { "nvim-dap" } },
+  -- { "jonboh/nvim-dap-rr", dependencies = { "nvim-dap" } },
 
   -- to have persistent breakpoints (in theory)
   -- {

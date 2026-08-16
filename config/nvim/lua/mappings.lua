@@ -20,6 +20,7 @@ map("n", "yp", "yyp", { desc = "Copy line", remap = true })
 map("n", "yc", "yygccp", { desc = "Copy line and comment it", remap = true })
 
 map("n", "<leader>rr", ":make b <cr>", { silent = true, desc = "Make build" })
+map("n", "<leader>l", "<cmd>ccl<cr>", { silent = true, desc = "Close quickfix list" })
 
 -- centered scrolling with C-u/C-d
 -- map("n", "<C-u>", function() require("cinnamon").scroll("<C-U>zz") end)

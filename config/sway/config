@@ -27,7 +27,8 @@ exec hash dbus-update-activation-environment 2>/dev/null && \
      dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP=sway
 
 # Screenshotting
-bindsym Print exec flameshot gui
+# bindsym Print exec flameshot gui
+bindsym Print exec slurp | grim -g - - | wl-copy
 # bindsym Print exec grim -g "$(slurp)" - | wl-copy
 # bindsym Print exec wayfreeze --after-freeze-cmd 'grim -g "$(slurp)" - | wl-copy; killall wayfreeze'
 # bindsym Print exec grim 

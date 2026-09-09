@@ -5,8 +5,6 @@ SAVEHIST=10000
 export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="agnoster"
-#ZSH_THEME="random" # to know which specific one was loaded, run: echo $RANDOM_THEME
-
 
 ### COMPLETION FLAGS
 CASE_SENSITIVE="false"
@@ -14,11 +12,9 @@ HYPHEN_INSENSITIVE="true"
 COMPLETION_WAITING_DOTS="false"
 ENABLE_CORRECTION="false"
 
-
 ### AUTO UPDATE
 DISABLE_AUTO_UPDATE="false"
 export UPDATE_ZSH_DAYS=15
-
 
 ### Dot extension code I stole from SO. Idea is to support TAB suggestions when using the mutli-dot "..." = "../.." type aliases 
 function expand-dots() {
@@ -33,16 +29,9 @@ function expand-dots-then-expand-or-complete() {
     zle expand-or-complete
 }
 
-#function expand-dots-then-accept-line() {
-#    zle expand-dots
-#    zle accept-line
-#}
-
 zle -N expand-dots
 zle -N expand-dots-then-expand-or-complete
-#zle -N expand-dots-then-accept-line
 bindkey '^I' expand-dots-then-expand-or-complete
-#bindkey '^M' expand-dots-then-accept-line
 
 ### UTILITIES
 
@@ -74,12 +63,7 @@ plugins=(git zsh-autosuggestions colored-man-pages)
 
 source $ZSH/oh-my-zsh.sh
 
-
 ### ALIASES
-
-cs() {
-    cd $1 && ls
-}
 
 reb () {
     # lastcmd=$( tail -2 ~/.zsh_history | head -1 | egrep -o ';.*$' | cut -c2- )
@@ -96,10 +80,26 @@ reb () {
     $@ $args
 }
 
-commit() {
-    git commit -m "$*"
-}
+alias rm="gio trash"
+alias rmf="/bin/rm"
+alias duc="du -sh * | sort -h"
+alias duca="du -sh * .* | sort -h"
+alias vim='nvim'
 
+# Git stuff
+alias lg='lazygit'
+
+alias gs='git status'
+alias ga='git add'
+alias gd='git diff'
+alias gdc='git diff --cached'
+alias gc='git commit'
+alias gl='git log'
+alias gll='git log --max-count=3'
+alias gst='git stash save'
+alias gsl='git stash list'
+
+# lists local branches. Pretty much unused these days
 function gb() {
   current=$(git rev-parse --abbrev-ref HEAD)
   branches=$(git for-each-ref --format='%(refname)' refs/heads/ | sed 's|refs/heads/||')
@@ -114,30 +114,13 @@ function gb() {
   done
 }
 
-alias hibernate="sudo systemctl hibernate"
-alias rm="gio trash"
-alias rmf="/bin/rm"
-alias weather-report="curl wttr.in/$CITY" # v2.wttr.in/${CITY} for v2
-alias please="sudo" # Politeness
-alias psview="pscircle --output=/tmp/proc.png ; gwenview -f /tmp/proc.png"
-alias duc="du -sh * | sort -h"
-alias duca="du -sh * .* | sort -h"
-alias push="git push"
-alias lg='lazygit'
-alias gs='git status'
-alias vim='nvim'
-
-#eval $(thefuck --alias)
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
-
-[ -f "/home/octavel/.ghcup/env" ] && source "/home/octavel/.ghcup/env" # ghcup-env
 
 . "$HOME/.atuin/bin/env"
 
 eval "$(atuin init --disable-up-arrow zsh)"
 eval "$(zoxide init zsh)"
 
-
-export PATH=$PATH:/home/octavel/.spicetify
+# export PATH=$PATH:/home/octavel/.spicetify

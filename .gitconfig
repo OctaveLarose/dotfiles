@@ -1,8 +1,7 @@
 [user]
   email = octave.larose@hotmail.fr
   name = Octave Larose
-[alias]
-  st = status
+
 [core]
   editor = vim
   pager = delta

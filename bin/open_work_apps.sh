@@ -10,7 +10,7 @@ commands=(
     # "$HOME/Programs/PhD_STUFF/Zotero_linux-x86_64/zotero"
     # "rustrover"
 #    "code"
-    # "chromium-browser --app=https://teams.microsoft.com/v2/ --class=WebApp-Teams2161 --user-data-dir=/home/octavel/.local/share/ice/profiles/Teams2161"
+    "chromium-browser --app=https://teams.microsoft.com/v2/ --class=WebApp-Teams2161 --user-data-dir=/home/octavel/.local/share/ice/profiles/Teams2161"
     "flatpak run com.spotify.Client"
     "flatpak run com.github.th_ch.youtube_music"
 )

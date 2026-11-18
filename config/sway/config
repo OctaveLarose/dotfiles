@@ -187,16 +187,13 @@ for_window [class=".*"] inhibit_idle fullscreen
 for_window [app_id=".*"] inhibit_idle fullscreen
 
 ### Window assignments
-assign [app_id="^org.mozilla.firefox"] → $ws1
-assign [class="^TeXstudio$"] → $ws2
-assign [class="^obsidian$"] → $ws2
-assign [instance="overleaf.com"] → $ws2
-assign [app_id="^Zotero$"] → $ws3
-assign [class="^jetbrains-*"] → $ws4
+assign [app_id="org.mozilla.firefox"] → $ws1
+assign [app_id="md.obsidian.Obsidian"] → $ws2
+assign [app_id="Zotero"] → $ws3
+assign [app_id="jetbrains-*"] → $ws4
+assign [class="jetbrains-*"] → $ws4
 assign [class="^Code$"] → $ws4
-assign [class="^superProductivity$"] → $ws6
-assign [class="^teams-for-linux$"] → $ws7
-assign [app_id="chrome-teams\.microsoft\.com__v2_-Default"] → $ws7 
+assign [app_id="superproductivity"] → $ws6
 for_window [class="^Spotify"] move --no-auto-back-and-forth to workspace $ws9
 assign [class="^YouTube Music$"] → $ws9
 assign [class="youtube_music"] → $ws9
@@ -235,7 +232,7 @@ bindsym XF86MonBrightnessDown exec $HOME/bin/brightness_adjust.sh $brightness_ad
 # Error searching macro
 bindsym Ctrl+Shift+Mod1+a exec $HOME/bin/search_error_wayland.sh
 # Clipboard manager
-bindsym $mod+dead_grave exec vicinae vicinae://extensions/vicinae/clipboard/history
+bindsym $mod+dead_grave exec vicinae vicinae://launch/clipboard/history
 # Lock screen
 bindsym $mod+Shift+t exec $lock_command
 # Work apps
@@ -268,16 +265,26 @@ exec systemctl --user enable --now vicinae.service
 # for playerctl commands to apply on the last used player
 exec $playerctl_cmd status --format '{{ playerName }}' --follow > $file_player_last
 
-# bar {
-#     position top
-#
-#     # When the status_command prints a new line to stdout, swaybar updates.
-#     # The default just shows the current date and time.
-#     status_command while date +'%Y-%m-%d %X'; do sleep 1; done
-#
-#     colors {
-#         statusline #ffffff
-#         background #323232
-#         inactive_workspace #32323200 #32323200 #5c5c5c
-#     }
-# }
+### ---
+### Floating terminal from the internet
+
+set $term kitty
+
+# Start with specific app_id/class
+set $ddterm-id dropdown-terminal
+set $ddterm $term --class $ddterm-id
+set $ddterm-resize resize set 100ppt 40ppt, move position 0 0
+
+# resize/move new dropdown terminal windows
+for_window [app_id="$ddterm-id"] {
+  floating enable
+  $ddterm-resize
+  move to scratchpad
+  scratchpad show
+}
+
+# show existing or start new dropdown terminal
+bindsym Ctrl+Escape exec swaymsg '[app_id="$ddterm-id"] scratchpad show' \
+  || $ddterm \
+  && sleep .1 && swaymsg '[app_id="$ddterm-id"] $ddterm-resize'
+# ^-- resize again, case moving to different output

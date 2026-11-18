@@ -6,5 +6,15 @@ vim.lsp.enable("jsonls")
 vim.lsp.enable("pyright")
 vim.lsp.enable("ruby_lsp")
 vim.lsp.enable("clangd")
+
+vim.lsp.config('nixd', {
+  settings = {
+    formatting = {
+      command = { 'nixfmt' },
+    },
+  },
+})
+vim.lsp.enable("nixd")
+
 -- lspconfig.typos_lsp.setup {}
 -- lspconfig.texlab.setup {}

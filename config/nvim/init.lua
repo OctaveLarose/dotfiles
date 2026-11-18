@@ -2,6 +2,10 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
+-- shouldn't have to do this, but it doesn't know e.g. fzf otherwise?
+local nix_paths = vim.fn.expand("~/.nix-profile/bin") .. ":/nix/var/nix/profiles/default/bin"
+vim.env.PATH = nix_paths .. ":" .. vim.env.PATH
+
 -----  Bootstrap lazy and all plugins -----
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 
